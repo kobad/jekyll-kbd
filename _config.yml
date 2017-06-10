@@ -10,14 +10,13 @@ author:
   email: kobad.dogsy@gmail.com
   github: kobad
 
-# Build settings
-markdown: kramdown
-
-paginate: 10   
+paginate: 10
 paginate_path: page:num
 
 sass:
   style: expanded
+
+markdown: kramdown
 
 gems:
   - jekyll-paginate
@@ -25,4 +24,3 @@ gems:
 
 exclude:
   - Gemfile
-  - Gemfile.lock
