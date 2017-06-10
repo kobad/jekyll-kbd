@@ -134,6 +134,27 @@ p{
   }
 }
 
+pre {
+  padding: 24px;
+  background-color: #222;
+  color: #eee;
+  font-family: Monaco,Consolas,Courier New,Courier,monospace,sans-serif;
+  overflow: auto;
+  overflow-y: hidden;
+  display: block;
+  white-space: pre;
+  margin: 1em 0px 1em;
+}
+
+code.highlighter-rouge {
+    font-size: 90%;
+    margin: 0 2px;
+    padding: 0 5px;
+    border: 1px solid rgba(0,0,0,.08);
+    background-color: rgba(0,0,0,.03);
+    border-radius: 3px;
+}
+
 .site-title{
   font-weight: bold;
   padding: 4% 0;
