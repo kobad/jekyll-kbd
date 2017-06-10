@@ -1,3 +1,3 @@
 # kobadbadbad
 
-My Profile and blog.
+プロフィールとブログ
