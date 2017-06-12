@@ -215,6 +215,11 @@ code.highlighter-rouge {
   }
 }
 
+img {
+  max-width: 100%;
+  border: 1px solid #eee;
+}
+
 .social-link{
   display: flex;
   flex-wrap: wrap;
