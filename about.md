@@ -10,7 +10,7 @@ permalink: /about/
 * Like - Network, Security, iOS
 * Accounts
   * Github - @kobad
-  * Twitter - @k0b4db
+  * Twitter - @kobadlv3
 
 ## Logs
 
