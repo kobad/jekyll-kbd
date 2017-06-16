@@ -17,6 +17,15 @@ body{
   color: $font-color;
 }
 
+h1 {
+  border-bottom: solid 2px #a29494;
+  padding: 2px
+}
+
+h1.page__title {
+  border-bottom: none;
+}
+
 h2{
   margin: 2em 0 1.5em 0;
   font-size: 20px;
