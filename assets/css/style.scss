@@ -167,6 +167,8 @@ code.highlighter-rouge {
 }
 
 ul {
+  overflow: auto;
+  overflow-y: hidden;
   word-wrap: break-word;
 }
 
