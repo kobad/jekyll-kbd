@@ -7,6 +7,7 @@ permalink: /about/
 
 ## Profile
 
+* Aizu-University 3rd
 * Like - Network, Security, iOS
 * Accounts
   * Github - @kobad
