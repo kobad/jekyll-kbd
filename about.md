@@ -18,8 +18,3 @@ permalink: /about/
 * CODE BLUE(2016-10-20,21) - Student Staff
 * CODE BLUE(2015-10-28,29) - Student Staff
 
-## Notes
-
-* [HackMD](https://hackmd.io/recent)
-* [Network](https://hackmd.io/OwYwDAbAJgnAHBAtAMwCzGI1AmCBTRAQyikMQCMBmS7QuQgRmhiiA===)
-* [Crypto](https://hackmd.io/BwRgnATArALApgQwLQCMFgCZJgYzsJBCAZmKRADMqcKFgUYIUg==)
