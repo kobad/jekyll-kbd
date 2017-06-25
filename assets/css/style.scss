@@ -51,6 +51,7 @@ h2{
 
 p{
   margin: 0 0 1em 0;
+  word-wrap: break-word;
 }
 
 .archive{
@@ -264,4 +265,12 @@ img {
       padding: 5px;
     }
   }
+}
+
+.pocket-btn {
+  display: inline-block;
+}
+
+.fb_iframe_widget > span {
+  vertical-align: baseline !important;
 }
