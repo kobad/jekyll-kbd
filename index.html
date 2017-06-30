@@ -8,9 +8,8 @@ layout: default
     <!-- Articles -->
     {% for post in paginator.posts %}
       <article class="archive">
-        <h2 class="archive__title"><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h2>
         <p class="archive__date"><time>{{ post.date | date: '%B %d, %Y' }}</time></p>
-        <div class="archive__excerpt">{{ post.excerpt }}</div>
+        <h2 class="archive__title"><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h2>
       </article>
     {% endfor %}
 
