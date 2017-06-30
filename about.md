@@ -10,8 +10,8 @@ permalink: /about/
 * Aizu-University 3rd
 * Like - Network, Security, iOS
 * Accounts
-  * Github - @kobad
-  * Twitter - @kobadlv3
+  * Github - @kobadlve
+  * Twitter - @kobadlve
 
 ## Logs
 
