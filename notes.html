@@ -1,15 +1,16 @@
 ---
 layout: default
+title: Notes
+permalink: /notes/
 ---
 
 <div class="contents front-page">
   <div class="container">
 
     <!-- Articles -->
-    {% for post in site.categories.articles %}
+    {% for post in site.categories.notes %}
       <article class="archive">
-        <p class="archive__date"><time>{{ post.date | date: '%B %d, %Y' }}</time></p>
-        <h2 class="archive__title"><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h2>
+        <h4 class="archive__title"><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h2>
       </article>
     {% endfor %}
 
