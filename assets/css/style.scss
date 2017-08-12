@@ -18,12 +18,10 @@ body{
 }
 
 .page__body h1 {
-  margin: 32px -32px 20px -32px;
   padding: 5px 5px 5px 10px;
 }
 
 .page__body h2 {
-  margin: 36px -32px 20px -32px;
   padding: 5px 5px 5px 10px;
   border-left: 6px solid #333;
   background-color: #f6f6f6;
@@ -35,7 +33,6 @@ body{
 }
 
 .page__body h3 {
-  margin: 32px -32px 20px -32px;
   padding: 5px 5px 5px 10px;
   border-left: 6px solid #444;
   font-size: 15px;
@@ -59,12 +56,10 @@ p{
 }
 
 ol {
-  margin: 15px -32px 20px -32px;
   padding-right: 10px;
 }
 
 ul {
-  margin: 15px -32px 20px -32px;
   padding-right: 10px;
   overflow: auto;
   overflow-y: hidden;
@@ -100,7 +95,7 @@ ul {
 .container{
   max-width: $container-width;
   margin: auto;
-  padding: 0 25px;
+  padding: 0 5px;
 }
 
 .copyright{
@@ -358,6 +353,7 @@ a.sidebar-nav-item:focus {
   &__title{
     margin: 0;
     font-size: 28px;
+    text-align: center;
 
     @include breakpoint(){
       font-size: 40px;
@@ -374,6 +370,7 @@ a.sidebar-nav-item:focus {
 
   &__date{
     @extend %meta;
+    text-align: center;
   }
 }
 
