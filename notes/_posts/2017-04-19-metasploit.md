@@ -2,7 +2,6 @@
 layout: post
 title: "Metasploit"
 date: 2017-04-19 23:00:00 +0900
-categories: note
 ---
 
 ## Metasploit Training
