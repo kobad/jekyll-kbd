@@ -6,15 +6,16 @@
 @import 'extends';
 
 
-a{
+a {
   color: $font-color-a;
   &:hover{
     color: $font-color-a-hover;
   }
 }
 
-body{
+body {
   color: $font-color;
+  font-family: serif;
 }
 
 .page__body h1 {
@@ -22,22 +23,18 @@ body{
 }
 
 .page__body h2 {
-  padding: 5px 5px 5px 10px;
-  border-left: 6px solid #333;
-  background-color: #f6f6f6;
+  padding: 0px 0px 5px 1px;
+  border-bottom: 1px solid #bbb;
   color: #444;
-  font-size: 20px;
+  font-size: 150%;
   font-weight: bold;
   line-height: 1.4;
   letter-spacing: 2px;
 }
 
 .page__body h3 {
-  padding: 5px 5px 5px 10px;
-  border-left: 6px solid #444;
-  font-size: 15px;
-  font-weight: bold;
-  line-height: 1.4;
+  padding: 0px 0px 5px 1px;
+  font-size: 120%;
   letter-spacing: 1px;
 }
 
@@ -50,7 +47,7 @@ h2 {
   }
 }
 
-p{
+p {
   margin: 0 0 1em 0;
   word-wrap: break-word;
 }
