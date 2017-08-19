@@ -3,6 +3,7 @@ layout: post
 title: "OSM To mbtiles"
 date: 2017-07-09 03:59:26
 categories: "other"
+toc: true
 ---
 ## OpenStreetMapからmbtilesを生成する
 
@@ -36,7 +37,7 @@ Tool>Command Promptを開くと下にコマンド入力するところがでる�
 
 ## 3. mbtiles変換
 
-[mbutil](https://github.com/mapbox/mbutil)を使う. 
+[mbutil](https://github.com/mapbox/mbutil)を使う.
 
 Install: `$ easy_install mbutil`
 
@@ -47,5 +48,3 @@ $ mb-util Tiles map.mbtiles
 ```
 
 で作れた.
-
-
