@@ -4,19 +4,14 @@ title: Category
 permalink: /category/
 ---
 
-<h2>Categories</h2>
-<ul>
 {% for category in site.categories %}
   {% if category[0] != 'articles' %}
-    <li>
-    {% assign name = category[0] %}
-      [<a href="#{{ category[0] }}" title="{{ category[0] }}" id="{{ category[0] }}">{{ category[0] }}</a>] ({{ site.categories[name] | size }})
-      <ul>
-        {% for page in site.categories[name] %}
-        <li><a href="{{ site.baseurl }}{{ page.url }}">{{ page.title }}</a> (<time>{{ page.date | date: '%Y-%m-%d' }}</time>)</li>
-        {% endfor %}
-      </ul>
-   </li>
+    <h2>
+      {% assign name = category[0] %}
+      {{ category[0] }} ({{ site.categories[name] | size }})
+    </h2>
+    {% for page in site.categories[name] %}
+      <li><a href="{{ site.baseurl }}{{ page.url }}">{{ page.title }}</a> (<time>{{ page.date | date: '%Y-%m-%d' }}</time>)</li>
+    {% endfor %}
   {% endif %}
 {% endfor %}
-</ul>
