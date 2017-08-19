@@ -9,8 +9,8 @@ permalink: /notes/
 
     <!-- Articles -->
     {% for post in site.categories.notes %}
-      <article class="archive">
-        <h4 class="archive__title"><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h2>
+      <article class="notes">
+        <h4 class="note__title"><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h2>
       </article>
     {% endfor %}
 
