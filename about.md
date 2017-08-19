@@ -15,6 +15,7 @@ permalink: /about/
 
 ## Logs
 
+* セキュリティ・キャンプ全国大会2017 - 参加者
 * CODE BLUE(2016-10-20,21) - Student Staff
 * CODE BLUE(2015-10-28,29) - Student Staff
 
