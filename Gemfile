@@ -7,6 +7,7 @@ gem "jekyll-paginate"
 gem "kramdown"
 gem "jekyll-toc"
 gem "rouge"
+gem "jekyll-seo-tag"
 
 group :jekyll_plugins do
    gem "jekyll-feed", "~> 0.6"
