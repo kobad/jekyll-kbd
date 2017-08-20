@@ -6,7 +6,7 @@ categories: security
 ---
 WordPressの脆弱性を検証するための環境(空のWordPress環境)をDockerで簡単に構築できるので紹介します。
 
-[https://github.com/kobad/docker-wordpress](https://github.com/kobad/docker-wordpress)
+[https://github.com/kobadlve/docker-wordpress](https://github.com/kobadlve/docker-wordpress)
 
 Dockerでは公式にWordPressの環境構築してくれるのがあるので、それを使って環境を作成します。[https://docs.docker.com/compose/wordpress/](https://docs.docker.com/compose/wordpress/)
 

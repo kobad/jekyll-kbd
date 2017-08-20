@@ -21,7 +21,7 @@ toc: true
 
 `OSM XML gzip`, e-mail, 適当な名前を決めてextractを押すと数分後にメールが届くのでそこのリンクからDLできる。
 
-![osm](https://kobadlve.github.io/images/osm.png)
+![osm](https://kobadlve.github.io/assets/images/osm.png)
 
 DLできたら解凍しとく
 

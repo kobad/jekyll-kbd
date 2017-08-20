@@ -18,6 +18,8 @@ sass:
 
 markdown: kramdown
 
+syntax_highlighter: rouge
+
 gems:
   - jekyll-paginate
   - jekyll-feed
