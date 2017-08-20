@@ -15,7 +15,7 @@ categories: diary
 
 １つショックだったのが中学生より身長が小さかったです^^
 
-以下の講義を受けました。どこまで書いて良いかわからないものもあるので別の形でアウトプットできたらと思います。
+以下の講義を受けました。どこまで書いて良いかわからないものもあったりで追って書いていきます.
 
 * C1 - ブラウザの脆弱性とそのインパクト [講義スライド](https://speakerdeck.com/nishimunea/burauzafalsecui-ruo-xing-tosofalseinpakuto)
 * D2-3 - カーネルエクスプロイトによるシステム権限奪取 [講義スライド](https://speakerdeck.com/rkx1209/kaneruekusupuroitoniyorusisutemuquan-xian-duo-qu)
