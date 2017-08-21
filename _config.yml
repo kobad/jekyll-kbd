@@ -23,7 +23,6 @@ syntax_highlighter: rouge
 gems:
   - jekyll-paginate
   - jekyll-feed
-  - jekyll-toc
   - jekyll-seo-tag
 
 exclude:

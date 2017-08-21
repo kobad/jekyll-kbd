@@ -5,7 +5,6 @@ ruby RUBY_VERSION
 gem "jekyll", "3.4.3"
 gem "jekyll-paginate"
 gem "kramdown"
-gem "jekyll-toc"
 gem "rouge"
 gem "jekyll-seo-tag"
 
