@@ -6,22 +6,18 @@ permalink: /notes/
 
 <div class="contents front-page">
   <div class="container">
-
     <!-- Articles -->
     {% for post in site.categories.notes %}
       <article class="notes">
         <h4 class="note__title"><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h2>
       </article>
     {% endfor %}
-
     <!-- Pagination -->
     {% if paginator.total_pages > 1 %}
       <div class="pagination">
-
         {% if paginator.previous_page %}
           <a class="pagination__item" href="{{ paginator.previous_page_path | relative_url }}">&lt; Past</a>
         {% endif %}
-
         {% for page in (1..paginator.total_pages) %}
           {% if page == paginator.page %}
             <span class="pagination__item current">{{ page }}</span>
@@ -31,13 +27,10 @@ permalink: /notes/
             <a class="pagination__item" href="{{ site.paginate_path | relative_url | replace: ':num', page }}">{{ page }}</a>
           {% endif %}
         {% endfor %}
-
         {% if paginator.next_page %}
           <a class="pagination__item" href="{{ paginator.next_page_path | relative_url }}">Next &gt;</a>
         {% endif %}
-
       </div><!--pagination-->
     {% endif %}
-
   </div><!--container-->
 </div><!--main-->

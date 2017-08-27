@@ -47,17 +47,20 @@ h2 {
   }
 }
 
-p {
+.about {
+  text-align: center;
+}
+
+.page__body p {
   margin: 0 0 1em 0;
   word-wrap: break-word;
 }
 
-ol {
+.page__body ol {
   padding-right: 10px;
   padding-left: 20px;
 }
-
-ul {
+.page__body ul {
   padding-right: 10px;
   padding-left: 20px;
   overflow: auto;
@@ -468,6 +471,18 @@ code.highlighter-rouge {
 img {
   max-width: 100%;
   border: 1px solid #eee;
+}
+
+.thumnail {
+  text-align: center;
+  margin-top: 5%;
+}
+
+.thumnail img {
+  border-radius: 50%;
+  border: 5px #0f0 solid;
+  height: 20%;
+  width: 20%;
 }
 
 .social-link{

@@ -11,7 +11,7 @@
 
   <nav class="sidebar-nav">
     <a class="sidebar-nav-item{% if page.url == site.baseurl %} active{% endif %}" href="{{ site.baseurl }}/">Blog</a>
-
+    <a class="sidebar-nav-item{% if page.url == site.baseurl %} active{% endif %}" href="{{ site.baseurl }}/about">About me</a>
 
     {% assign pages_list = site.pages | sort:"url" %}
     {% for node in pages_list %}
@@ -23,13 +23,7 @@
     {% endfor %}
 
     <a class="sidebar-nav-item" href="{{ site.baseurl }}/notes/">Notes</a>
-  <!--
-    {% for post in site.categories.notes %}
-      <a class="sidebar-nav-item" href="{{ post.url | relative_url }}">{{ post.title }}</a>
-    {% endfor %}
-  -->
   </nav>
-
   <div class="sidebar-item">
     <p>
       &copy; {{ site.time | date: '%Y' }}. All rights reserved.
