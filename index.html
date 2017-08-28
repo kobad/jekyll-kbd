@@ -9,10 +9,11 @@ layout: default
       <article class="archive">
         {% if post.thumb %}
         <!-- 変数が存在したら定義されているサムネ -->
-        <img src="{{ post.thumb }}">
+        {% capture thum %}{{ site.url }}{{ post.thumb }}{% endcapture %}
+        <img src="{{ thum }}">
         {% else %}
         <!-- 変数が存在しなければデフォルトのサムネ -->
-        <img src="/assets/thumbs/default.png">
+        <img src="{{ site.baseurl }}/assets/thumbs/default.png">
         {% endif %}
         <a href="{{ post.url | relative_url }}">
         <section class="archive__preview">
