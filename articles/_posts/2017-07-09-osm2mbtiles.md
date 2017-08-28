@@ -3,6 +3,7 @@ layout: post
 title: "OSM To mbtiles"
 date: 2017-07-09 03:59:26
 categories: "other"
+thumb: /assets/images/osm.png
 toc: true
 ---
 

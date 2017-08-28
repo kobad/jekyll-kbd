@@ -3,6 +3,7 @@ layout: post
 title: "セキュリティ・キャンプ全国大会2017参加しました"
 date: 2017-08-20 18:00:00 +0900
 categories: diary
+thumb: /assets/images/camp1.jpg
 ---
 
 8/14-8/18の間セキュリティ・キャンプ全国大会2017に参加しました。

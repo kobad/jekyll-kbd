@@ -5,17 +5,90 @@
 @import 'mixins';
 @import 'extends';
 
-
-a {
-  color: $font-color-a;
-  &:hover{
-    color: $font-color-a-hover;
-  }
+body {
+  background-color: #fff;
+  font-family: system-ui, sans-serif;
 }
 
-body {
-  color: $font-color;
-  font-family: serif;
+.about {
+  text-align: center;
+}
+
+.category {
+  text-align: center;
+}
+
+.archive {
+  width: 100%;
+  margin-bottom: 16px;
+  padding: 30px 20px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  box-sizing: border-box;
+  box-shadow: 0 1px 3px rgba(0,37,55,.06);
+  color: #868a94;
+  background-color: #f1f1f1;
+}
+
+.archive img {
+  width: 100%;
+  vertical-align: middle;
+}
+
+.archive a {
+  color: #4e4e4e;
+  text-decoration: none;
+  cursor: pointer;
+  transition: .2s;
+}
+
+.archive .tag {
+  display: inline-block;
+  width: auto;
+  padding: 0 8px;
+  font-size: 14px;
+  color: #4e4e4e;
+  font-family: -apple-system,Verdana,"PingFang SC","Helvetica Neue",Arial,"Hiragino Sans GB","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
+  box-shadow: 0 0 0.6px #d5dae1;
+  border-radius: 2px;
+  border-color: #ccc;
+  background-color: #fafafa;
+  margin-right: 2px;
+}
+
+.archive__preview {
+  padding: 0;
+  margin: 0;
+  border: 0;
+  outline: 0 none;
+  position: relative;
+  display: block;
+}
+
+.archive__title {
+  font-family: Merriweather,-apple-system,Verdana,"PingFang SC","Helvetica Neue",Arial,"Hiragino Sans GB","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
+  color: #4e4e4e;
+  font-size: 24px;
+  line-height: 5px;
+}
+
+.archive__excerpt {
+  margin-top: 8px;
+  font-size: 16px;
+  font-family: Merriweather-Light,-apple-system,Verdana,"PingFang SC","Helvetica Neue",Arial,"Hiragino Sans GB","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
+  line-height: 20px;
+}
+
+.archive__date {
+  float: right;
+  color: #a9b0bc;
+  display: inline-block;
+  font-size: 14px;
+  letter-spacing: .6px;
+}
+
+.page__body {
+  font-family: Merriweather-Light,-apple-system,Verdana,"PingFang SC","Helvetica Neue",Arial,"Hiragino Sans GB","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
 }
 
 .page__body h1 {
@@ -47,53 +120,6 @@ h2 {
   }
 }
 
-.about {
-  text-align: center;
-}
-
-.page__body p {
-  margin: 0 0 1em 0;
-  word-wrap: break-word;
-}
-
-.page__body ol {
-  padding-right: 10px;
-  padding-left: 20px;
-}
-.page__body ul {
-  padding-right: 10px;
-  padding-left: 20px;
-  overflow: auto;
-  overflow-y: hidden;
-  word-wrap: break-word;
-}
-
-.archive{
-
-  @include pad();
-  border-bottom: $border;
-
-  &__title{
-
-    margin: 0;
-
-    a{
-      color: $font-color;
-      text-decoration: none;
-    }
-  }
-
-  &__date{
-    @extend %meta;
-  }
-
-  &__excerpt{
-    font-size: 14px;
-    color: #666;
-    margin-top: 1em;
-  }
-}
-
 .container{
   max-width: $container-width;
   margin: auto;
@@ -120,273 +146,23 @@ h2 {
 }
 
 .nav{
-
+  font-family: Merriweather-Light,-apple-system,Verdana,"PingFang SC","Helvetica Neue",Arial,"Hiragino Sans GB","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
   border-top: $border;
   border-bottom: $border;
+  text-align: center;
+  padding: 10px;
 
-  &__list{
-    @include resetlist();
-    display: flex;
-    flex-wrap: wrap;
-  }
-
-  &__item{
-    margin-right: 1em;
-
-    a{
-      display: block;
-      text-decoration: none;
-      color: $font-color;
-      padding: 15px 10px;
-      font-size: 0.9em;
-    }
-  }
-}
-
-.section-nav {
-  background-color: #FFF;
-  margin: 5px 0;
-  padding: 10px 30px;
-  border: 1px solid #E8E8E8;
-  border-radius: 3px;
-}
-
-/* Side bar */
-.sidebar {
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  left: -14rem;
-  width: 14rem;
-  visibility: hidden;
-  overflow-y: auto;
-  font-family: "PT Sans", Helvetica, Arial, sans-serif;
-  font-size: .875rem; /* 15px */
-  color: rgba(255,255,255,.6);
-  background-color: #202020;
-  -webkit-transition: all .3s ease-in-out;
-          transition: all .3s ease-in-out;
-}
-@media (min-width: 30em) {
-  .sidebar {
-    font-size: .75rem; /* 14px */
-  }
-}
-
-/* Sidebar content */
-.sidebar a {
-  font-weight: normal;
-  color: #fff;
-}
-.sidebar-item {
-  padding: 1rem;
-}
-.sidebar-item p:last-child {
-  margin-bottom: 0;
-}
-
-/* Sidebar nav */
-.sidebar-nav {
-  border-bottom: 1px solid rgba(255,255,255,.1);
-}
-.sidebar-nav-item {
-  display: block;
-  padding: .5rem 1rem;
-  border-top: 1px solid rgba(255,255,255,.1);
-}
-.sidebar-nav-item.active,
-a.sidebar-nav-item:hover,
-a.sidebar-nav-item:focus {
-  text-decoration: none;
-  background-color: rgba(255,255,255,.1);
-  border-color: transparent;
-}
-
-@media (min-width: 48em) {
-  .sidebar-item {
-    padding: 1.5rem;
-  }
-  .sidebar-nav-item {
-    padding-left:  1.5rem;
-    padding-right: 1.5rem;
-  }
-}
-
-/* Hide the sidebar checkbox that we toggle with `.sidebar-toggle` */
-.sidebar-checkbox {
-  position: absolute;
-  opacity: 0;
-  -webkit-user-select: none;
-     -moz-user-select: none;
-          user-select: none;
-}
-
-/* Style the `label` that we use to target the `.sidebar-checkbox` */
-.sidebar-toggle {
-  position: absolute;
-  top:  .8rem;
-  left: 1rem;
-  display: block;
-  padding: .25rem .75rem;
-  color: #505050;
-  background-color: #fff;
-  border-radius: .25rem;
-  cursor: pointer;
-}
-
-.sidebar-toggle:before {
-  display: inline-block;
-  width: 1rem;
-  height: .75rem;
-  content: "";
-  background-image: -webkit-linear-gradient(to bottom, #555, #555 20%, #fff 20%, #fff 40%, #555 40%, #555 60%, #fff 60%, #fff 80%, #555 80%, #555 100%);
-  background-image:    -moz-linear-gradient(to bottom, #555, #555 20%, #fff 20%, #fff 40%, #555 40%, #555 60%, #fff 60%, #fff 80%, #555 80%, #555 100%);
-  background-image:     -ms-linear-gradient(to bottom, #555, #555 20%, #fff 20%, #fff 40%, #555 40%, #555 60%, #fff 60%, #fff 80%, #555 80%, #555 100%);
-  background-image:         linear-gradient(to bottom, #555, #555 20%, #fff 20%, #fff 40%, #555 40%, #555 60%, #fff 60%, #fff 80%, #555 80%, #555 100%);
-}
-
-.sidebar-toggle:active,
-#sidebar-checkbox:focus ~ .sidebar-toggle,
-#sidebar-checkbox:checked ~ .sidebar-toggle {
-  color: #fff;
-  background-color: #555;
-}
-
-.sidebar-toggle:active:before,
-#sidebar-checkbox:focus ~ .sidebar-toggle:before,
-#sidebar-checkbox:checked ~ .sidebar-toggle:before {
-  background-image: -webkit-linear-gradient(to bottom, #fff, #fff 20%, #555 20%, #555 40%, #fff 40%, #fff 60%, #555 60%, #555 80%, #fff 80%, #fff 100%);
-  background-image:    -moz-linear-gradient(to bottom, #fff, #fff 20%, #555 20%, #555 40%, #fff 40%, #fff 60%, #555 60%, #555 80%, #fff 80%, #fff 100%);
-  background-image:     -ms-linear-gradient(to bottom, #fff, #fff 20%, #555 20%, #555 40%, #fff 40%, #fff 60%, #555 60%, #555 80%, #fff 80%, #fff 100%);
-  background-image:         linear-gradient(to bottom, #fff, #fff 20%, #555 20%, #555 40%, #fff 40%, #fff 60%, #555 60%, #555 80%, #fff 80%, #fff 100%);
-}
-
-@media (min-width: 30.1em) {
-  .sidebar-toggle {
-    position: fixed;
-  }
-}
-
-@media print {
-  .sidebar-toggle {
-    display: none;
-  }
-}
-
-/* Slide effect
- *
- * Handle the sliding effects of the sidebar and content in one spot, seperate
- * from the default styles.
- *
- * As an a heads up, we don't use `transform: translate3d()` here because when
- * mixed with `position: fixed;` for the sidebar toggle, it creates a new
- * containing block. Put simply, the fixed sidebar toggle behaves like
- * `position: absolute;` when transformed.
- *
- * Read more about it at http://meyerweb.com/eric/thoughts/2011/09/12/.
- */
-
-.wrap,
-.sidebar,
-.sidebar-toggle {
-  -webkit-backface-visibility: hidden;
-      -ms-backface-visibility: hidden;
-          backface-visibility: hidden;
-}
-.wrap,
-.sidebar-toggle {
-  -webkit-transition: -webkit-transform .3s ease-in-out;
-          transition: transform .3s ease-in-out;
-}
-
-#sidebar-checkbox:checked + .sidebar {
-  z-index: 10;
-  visibility: visible;
-}
-#sidebar-checkbox:checked ~ .sidebar,
-#sidebar-checkbox:checked ~ .wrap,
-#sidebar-checkbox:checked ~ .sidebar-toggle {
-  -webkit-transform: translateX(14rem);
-      -ms-transform: translateX(14rem);
-          transform: translateX(14rem);
-}
-
-/*
- * Reverse layout
- *
- * Flip the orientation of the page by placing the `.sidebar` and sidebar toggle
- * on the right side.
- */
-
-.layout-reverse .sidebar {
-  left: auto;
-  right: -14rem;
-}
-.layout-reverse .sidebar-toggle {
-  left: auto;
-  right: 1rem;
-}
-
-.layout-reverse #sidebar-checkbox:checked ~ .sidebar,
-.layout-reverse #sidebar-checkbox:checked ~ .wrap,
-.layout-reverse #sidebar-checkbox:checked ~ .sidebar-toggle {
-  -webkit-transform: translateX(-14rem);
-      -ms-transform: translateX(-14rem);
-          transform: translateX(-14rem);
-}
-
-
-.sidebar-overlay #sidebar-checkbox:checked ~ .wrap {
-  -webkit-transform: translateX(0);
-      -ms-transform: translateX(0);
-          transform: translateX(0);
-}
-.sidebar-overlay #sidebar-checkbox:checked ~ .sidebar-toggle {
-  box-shadow: 0 0 0 .25rem #fff;
-}
-.sidebar-overlay #sidebar-checkbox:checked ~ .sidebar {
-  box-shadow: .25rem 0 .5rem rgba(0,0,0,.1);
-}
-
-/* Only one tweak for a reverse layout */
-.layout-reverse.sidebar-overlay #sidebar-checkbox:checked ~ .sidebar {
-  box-shadow: -.25rem 0 .5rem rgba(0,0,0,.1);
-}
-
-.page{
-
-  &__header{
-    border-bottom: $border;
-    @include pad();
-  }
-
-  &__title{
-    margin: 0;
-    font-size: 28px;
-    text-align: center;
-
-    @include breakpoint(){
-      font-size: 40px;
-    }
-  }
-
-  &__description{
-    @extend %meta;
-  }
-
-  &__body{
-    @include pad();
-  }
-
-  &__date{
-    @extend %meta;
-    text-align: center;
+  a {
+    padding: 20px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: .2s;
   }
 }
 
 pre {
   padding: 5px;
-  background-color: #eee;
+  background-color: #fff;
   color: #333;
   font-family: Monaco,Consolas,Courier New,Courier,monospace,sans-serif;
   overflow: auto;
@@ -480,7 +256,7 @@ img {
 
 .thumnail img {
   border-radius: 50%;
-  border: 5px #0f0 solid;
+  border: 1px #000 solid;
   height: 20%;
   width: 20%;
 }

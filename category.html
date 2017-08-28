@@ -1,9 +1,10 @@
 ---
-layout: page
+layout: default
 title: Category
 permalink: /category/
 ---
 
+<div class="category">
 {% for category in site.categories %}
   {% if category[0] != 'articles' %}
     <h2>
@@ -15,3 +16,4 @@ permalink: /category/
     {% endfor %}
   {% endif %}
 {% endfor %}
+</div>
