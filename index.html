@@ -18,9 +18,8 @@ layout: default
         <a href="{{ post.url | relative_url }}">
         <section class="archive__preview">
             <h2 class="archive__title">{{ post.title }}</h2>
-            <p class="archive__date"><time>{{ post.date | date: '%B %d, %Y' }}</time></p>
             <p class="archive__excerpt">{{ post.excerpt | strip_html | strip_newlines | truncate: 126}}</p>
-            <div class="post-tags">
+            <p class="archive__date"><time>{{ post.date | date: '%B %d, %Y' }}</time></p>
         </section>
         </a>
       {% for tag in post.categories %}
