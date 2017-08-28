@@ -23,7 +23,9 @@ layout: default
         </section>
         </a>
       {% for tag in post.categories %}
-      <p class="tag">{{ tag }}</p>
+        {% if tag != "articles" %}
+          <p class="tag">{{ tag }}</p>
+        {% endif %}
       {% endfor %}
       </article>
     {% endfor %}
