@@ -5,33 +5,12 @@
 @import 'mixins';
 @import 'extends';
 
-.nav{
-  font-family: Merriweather-Light,-apple-system,Verdana,"PingFang SC","Helvetica Neue",Arial,"Hiragino Sans GB","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
-  border-top: $border;
-  border-bottom: $border;
-  text-align: center;
-  padding: 10px;
-
-  a {
-    padding: 5px;
-    text-decoration: none;
-    cursor: pointer;
-    transition: .2s;
-  }
-}
-
 body {
   background-color: #fff;
   font-family: "Bitter","Palatino Linotype","Book Antiqua",Palatino,serif;
 }
 
-.about {
-  text-align: center;
-}
-
-.category {
-  text-align: center;
-}
+// .archive
 
 .archive {
   width: 100%;
@@ -100,6 +79,8 @@ body {
   letter-spacing: .6px;
 }
 
+// .page
+
 .page__title {
   text-align: center;
 }
@@ -152,20 +133,80 @@ body {
   word-wrap: break-word;
 }
 
-h2 {
-  margin: 2em 0 1.5em 0;
-  font-size: 20px;
+// about me
 
-  @include breakpoint(){
-    font-size: 24px;
+.about {
+  text-align: center;
+}
+
+.profile {
+  width: 100%;
+  margin-bottom: 16px;
+  padding-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  box-sizing: border-box;
+}
+
+.logs {
+  width: 100%;
+  padding-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  box-sizing: border-box;
+}
+
+// category
+
+.category {
+
+  .name {
+
+  }
+
+  .element {
+
   }
 }
+// header
 
 .header {
   max-width: $container-width;
   margin: auto;
   margin-bottom: 10px;
 }
+
+.nav{
+  font-family: "Bitter","Palatino Linotype","Book Antiqua",Palatino,serif;
+  border-top: $border;
+  border-bottom: $border;
+  text-align: center;
+  padding: 10px;
+
+  a {
+    padding: 5px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: .2s;
+  }
+}
+
+.site-title{
+  font-weight: bold;
+  padding: 4% 0;
+  text-align: center;
+
+  @include breakpoint(){
+    font-size: 20px;
+  }
+
+  a{
+    color: $font-color;
+    text-decoration: none;
+  }
+}
+
+// main
 
 .container {
   max-width: $container-width;
@@ -179,6 +220,9 @@ h2 {
 .page .container {
   border-bottom: 10px;
 }
+
+
+// footer
 
 .copyright{
   margin-bottom: 0;
@@ -199,6 +243,8 @@ h2 {
 .front-page{
   @include pad();
 }
+
+// code
 
 pre {
   padding: 5px;
@@ -223,20 +269,7 @@ code.highlighter-rouge {
     word-wrap: break-word;
 }
 
-.site-title{
-  font-weight: bold;
-  padding: 4% 0;
-  text-align: center;
-
-  @include breakpoint(){
-    font-size: 20px;
-  }
-
-  a{
-    color: $font-color;
-    text-decoration: none;
-  }
-}
+// pagination
 
 .pager{
   @include pad();
@@ -283,6 +316,8 @@ code.highlighter-rouge {
     color: white;
   }
 }
+
+// assets
 
 img {
   max-width: 100%;
