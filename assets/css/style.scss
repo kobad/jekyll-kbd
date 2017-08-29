@@ -22,7 +22,7 @@
 
 body {
   background-color: #fff;
-  font-family: system-ui, sans-serif;
+  font-family: "Bitter","Palatino Linotype","Book Antiqua",Palatino,serif;
 }
 
 .about {
@@ -100,8 +100,18 @@ body {
   letter-spacing: .6px;
 }
 
+.page__title {
+  text-align: center;
+}
+
+.page__date {
+  text-align: center;
+  color: #ccc;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 5px;
+}
 .page__body {
-  font-family: Merriweather-Light,-apple-system,Verdana,"PingFang SC","Helvetica Neue",Arial,"Hiragino Sans GB","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
+  font-family: "Bitter","Palatino Linotype","Book Antiqua",Palatino,serif;
 }
 
 .page__body h1 {
@@ -151,10 +161,23 @@ h2 {
   }
 }
 
-.container{
+.header {
   max-width: $container-width;
   margin: auto;
-  padding: 0 5px;
+  margin-bottom: 10px;
+}
+
+.container {
+  max-width: $container-width;
+  margin: auto;
+  padding: 12px 12px 26px 12px;
+  border-top: 1px solid rgba(255,255,255,0.6);
+  box-shadow: #ADADAD 0 0 5px;
+  display: block;
+}
+
+.page .container {
+  border-bottom: 10px;
 }
 
 .copyright{
@@ -163,7 +186,8 @@ h2 {
 
 .footer{
   border-top: $border;
-  @include pad();
+  max-width: $container-width;
+  margin: auto;
 
   &__container{
     display: flex;
