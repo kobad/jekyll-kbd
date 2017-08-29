@@ -13,15 +13,18 @@ body {
 // .archive
 
 .archive {
-  width: 100%;
-  margin-bottom: 16px;
-  padding: 30px 20px;
+  width: 500px;
+  max-width: 100%;
+  display: inline-block;
+  margin-bottom: 30px;
+  padding: 10px;
   border: 1px solid #ccc;
   border-radius: 3px;
   box-sizing: border-box;
-  box-shadow: 0 1px 3px rgba(0,37,55,.06);
+  box-shadow: 0 1px 3px rgba(0, 37, 55, 0.06);
   color: #868a94;
   background-color: #f1f1f1;
+  vertical-align: top;
 }
 
 .archive img {
@@ -48,6 +51,12 @@ body {
   border-color: #ccc;
   background-color: #fafafa;
   margin-right: 2px;
+  margin-left: 10px;
+  float: left;
+}
+
+.archive__list {
+  text-align: center;
 }
 
 .archive__preview {
@@ -238,10 +247,6 @@ body {
     justify-content: space-between;
     flex-wrap: wrap;
   }
-}
-
-.front-page{
-  @include pad();
 }
 
 // code

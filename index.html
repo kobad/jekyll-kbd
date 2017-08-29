@@ -3,7 +3,7 @@ layout: default
 ---
 
 <div class="contents front-page">
-  <div class="container">
+  <div class="container archive__list">
     <!-- Articles -->
     {% for post in site.categories.articles %}
       <article class="archive">
@@ -20,13 +20,13 @@ layout: default
             <h2 class="archive__title">{{ post.title }}</h2>
             <p class="archive__excerpt">{{ post.excerpt | strip_html | strip_newlines | truncate: 126}}</p>
             <p class="archive__date"><time>{{ post.date | date: '%B %d, %Y' }}</time></p>
+            {% for tag in post.categories %}
+              {% if tag != "articles" %}
+                <p class="tag">{{ tag }}</p>
+              {% endif %}
+            {% endfor %}
         </section>
         </a>
-      {% for tag in post.categories %}
-        {% if tag != "articles" %}
-          <p class="tag">{{ tag }}</p>
-        {% endif %}
-      {% endfor %}
       </article>
     {% endfor %}
     {% include pagination.html %}
