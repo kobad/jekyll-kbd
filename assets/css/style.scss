@@ -141,6 +141,7 @@ body {
 }
 
 .page__body h1 {
+  font-size: 150%;
   padding: 0px 0px 5px 1px;
 }
 
@@ -176,6 +177,25 @@ body {
   overflow: auto;
   overflow-y: hidden;
   word-wrap: break-word;
+}
+
+table {
+	border-collapse: collapse;
+	text-align: left;
+	line-height: 1.5;
+}
+
+table th {
+	padding: 10px;
+	font-weight: bold;
+	vertical-align: top;
+	border: 1px solid #ccc;
+}
+
+table td {
+	padding: 10px;
+	vertical-align: top;
+	border: 1px solid #ccc;
 }
 
 // about me
@@ -224,6 +244,9 @@ body {
   }
   a:hover {
     text-decoration: underline;
+  }
+  li {
+    margin: 10px;
   }
 }
 

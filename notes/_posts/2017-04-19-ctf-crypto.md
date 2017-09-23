@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Crypto"
+title: "CTF-Crypto"
 date: 2017-04-19 23:00:00 +0900
 toc: true
 ---
