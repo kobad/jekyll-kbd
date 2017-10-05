@@ -6,7 +6,7 @@ permalink: /category/
 
 <div class="container category">
 {% for category in site.categories %}
-  {% if category[0] != 'articles' %}
+  {% if category[0] != 'articles' and category[0] != 'notes' %}
   <ul class="name">
       {% assign name = category[0] %}
       {{ category[0] }} ({{ site.categories[name] | size }})
