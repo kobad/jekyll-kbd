@@ -20,7 +20,7 @@
 }
 
 body {
-  background-color: #fff;
+  background-color: #1b1f22;
   font-family: 'Source Sans Pro','helvetica neue',helvetica,arial,verdana;
 }
 
@@ -36,6 +36,7 @@ body {
   box-shadow: 0 2px 3px rgba(10, 10, 10, 0.1);
   color: #868a94;
   vertical-align: top;
+  background-color: #fff;
 }
 
 .archive__img {
@@ -61,6 +62,7 @@ body {
   box-shadow: 0 0 0.6px #d5dae1;
   border-radius: 2px;
   border-color: #ccc;
+  background-color: #fff;
   background-color: #fafafa;
   margin-right: 2px;
   margin-left: 10px;
@@ -123,6 +125,7 @@ body {
 // .page
 
 .page__title {
+  color: #fff;
   text-align: center;
 }
 
@@ -133,6 +136,9 @@ body {
   padding-bottom: 5px;
 }
 .page__body {
+  background-color: #fff;
+  padding: 3%;
+  margin: 3% 0;
   font-family: 'Source Sans Pro','helvetica neue',helvetica,arial,verdana;
   a {
     text-decoration: underline;
@@ -259,15 +265,15 @@ table td {
   margin-bottom: 10px;
 }
 
-.nav{
+.nav {
+  display: inline;
   font-family: 'Source Sans Pro','helvetica neue',helvetica,arial,verdana;
-  padding: 10px;
+  padding: 5px;
   box-shadow: 0 2px 3px rgba(10, 10, 10, 0.1);
-  text-align: center;
+  float: right;
 
   a {
-    padding: 5px;
-    color: #000;
+    color: #fff;
     text-decoration: none;
     cursor: pointer;
     transition: .2s;
@@ -280,15 +286,16 @@ table td {
 
 .site-title{
   font-weight: bold;
-  padding: 3px;
-  text-align: center;
+  padding: 5px;
+  text-align: left;
+  display: inline-block;
 
   @include breakpoint(){
     font-size: 20px;
   }
 
   a{
-    color: $font-color;
+    color: #fff;
     text-decoration: none;
   }
 }
@@ -336,10 +343,11 @@ code.highlighter-rouge {
     word-wrap: break-word;
 }
 
-code a {
-  color: #f8f8f2;
+a.vglnk {
+  color: #fff;
   text-decoration: none;
 }
+
 // pagination
 
 .pager{
@@ -353,7 +361,7 @@ code a {
 
     a{
       text-decoration: underline;
-      color: #000;
+      color: #fff;
     }
 
     &--prev{

@@ -1,0 +1,38 @@
+---
+layout: default
+title: Blog
+parmalink: /blog/
+---
+
+<div class="contents front-page">
+  <div class="container archive__list">
+    <!-- Articles -->
+    {% for post in site.categories.articles %}
+      <div class="archive">
+        <div class="archive__img">
+        {% if post.thumb %}
+        <!-- 変数が存在したら定義されているサムネ -->
+        {% capture thum %}{{ site.url }}{{ post.thumb }}{% endcapture %}
+        <img src="{{ thum }}">
+        {% else %}
+        <!-- 変数が存在しなければデフォルトのサムネ -->
+        <img src="{{ site.baseurl }}/assets/thumbs/default.png">
+        {% endif %}
+        </div>
+        <section class="archive__preview">
+        <a href="{{ post.url | relative_url }}">
+            <h2 class="archive__title">{{ post.title }}</h2>
+            <p class="archive__excerpt">{{ post.excerpt | strip_html | strip_newlines | truncate: 126}}</p>
+            <p class="archive__date"><time>{{ post.date | date: '%B %d, %Y' }}</time></p>
+            {% for tag in post.categories %}
+              {% if tag != "articles" %}
+                <p class="tag">{{ tag }}</p>
+              {% endif %}
+            {% endfor %}
+        </a>
+        </section>
+      </div>
+    {% endfor %}
+    {% include pagination.html %}
+  </div><!--container-->
+</div><!--main-->

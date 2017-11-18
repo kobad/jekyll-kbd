@@ -1,36 +1,92 @@
----
-layout: default
----
+<!DOCTYPE HTML>
+<!--
+	Dimension by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Dimension by HTML5 UP</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/profile.css" />
+		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+	</head>
 
-<div class="contents front-page">
-  <div class="container archive__list">
-    <!-- Articles -->
-    {% for post in site.categories.articles %}
-      <div class="archive">
-        <div class="archive__img">
-        {% if post.thumb %}
-        <!-- 変数が存在したら定義されているサムネ -->
-        {% capture thum %}{{ site.url }}{{ post.thumb }}{% endcapture %}
-        <img src="{{ thum }}">
-        {% else %}
-        <!-- 変数が存在しなければデフォルトのサムネ -->
-        <img src="{{ site.baseurl }}/assets/thumbs/default.png">
-        {% endif %}
-        </div>
-        <section class="archive__preview">
-        <a href="{{ post.url | relative_url }}">
-            <h2 class="archive__title">{{ post.title }}</h2>
-            <p class="archive__excerpt">{{ post.excerpt | strip_html | strip_newlines | truncate: 126}}</p>
-            <p class="archive__date"><time>{{ post.date | date: '%B %d, %Y' }}</time></p>
-            {% for tag in post.categories %}
-              {% if tag != "articles" %}
-                <p class="tag">{{ tag }}</p>
-              {% endif %}
-            {% endfor %}
-        </a>
-        </section>
-      </div>
-    {% endfor %}
-    {% include pagination.html %}
-  </div><!--container-->
-</div><!--main-->
+	<body>
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Header -->
+					<header id="header">
+						<div class="logo">
+							<span class="icon fa-diamond"></span>
+						</div>
+						<div class="content">
+							<div class="inner">
+								<h1>kobadlve</h1>
+							</div>
+						</div>
+						<nav>
+							<ul>
+                <li><a href="#about">About</a></li>
+                <li><a href="#link">Link</a></li>
+                <li><a href="/blog/">Blog</a></li>
+							</ul>
+						</nav>
+					</header>
+
+				<!-- Main -->
+					<div id="main">
+
+						<!-- About -->
+							<article id="about">
+								<h2 class="major">About</h2>
+								<span class="image main"><img src="assets/prof_images/profile.jpg" alt="" /></span>
+                <h3> Profile </h3>
+                <p>
+                  Name: kobadlve <br>
+                  Univ: Aizu 3rd <br>
+                  Like: CTF(wabisabi), Network, Security, iOS <br>
+                </p>
+                <h3> Logs </h3>
+                <ul>
+                  <li> SendaiCTF(2017-11-12) - 2nd Place </li>
+                  <li> セキュリティキャンプ全国大会2017 - 参加 </li>
+                  <li> CODE BLUE(2016-10-20,21) - Student Staff </li>
+                  <li> CODE BLUE(2015-10-28,29) - Student Staff </li>
+                </ul>
+							</article>
+
+						<!-- Link -->
+							<article id="link">
+								<h2 class="major">Link</h2>
+  							<ul>
+                  <li><a href="https://github.com/kobadlve">Github</a></li>
+                  <li><a href="https://twitter.com/kobadlve">Twitter</a></li>
+                  <li>e-mail: kobad.dogsy @ gmail.com</li>
+				  			</ul>
+							</article>
+
+					</div>
+
+				<!-- Footer -->
+					<footer id="footer">
+						<p class="copyright">&copy; Untitled. Design: <a href="https://html5up.net">HTML5 UP</a>.</p>
+					</footer>
+
+			</div>
+
+		<!-- BG -->
+			<div id="bg"></div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/skel.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>
