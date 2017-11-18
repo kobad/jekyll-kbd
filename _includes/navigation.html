@@ -1,5 +1,9 @@
 <nav class="header-nav {% if site.scrollappear_enabled %}scrollappear{% endif %}">
   <a href="{{ '/' | relative_url }}" class="header-logo" title="{{ site.name }}">{{ site.name }}</a>
+  <div class="header-left">
+    <a href="{{ /blog | relative_url }}">Blog Top</a>
+    <a href="{{ /category | relative_url }}">Category</a>
+  </div>
   <ul class="header-links">
     {% if site.about_enabled == true %}
       <li>

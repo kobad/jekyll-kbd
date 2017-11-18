@@ -44,6 +44,18 @@
   }
 }
 
+.header-left {
+  float: right;
+  font-family: $serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: $header-logo-color;
+  a {
+    text-decoration: none;
+    margin: 15px 0 0;
+  }
+}
+
 @include breakpoint(extra-small) {
   .header-nav {
     text-align: center;
