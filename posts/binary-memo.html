@@ -1,0 +1,277 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>kobadlve | Register...</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <meta property="og:title" content="Register...">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="/posts/binary-memo">
+  <meta property="og:description" content="">
+  <meta property="og:site_name" content="kobadlve">
+  <meta property="og:image" content="/assets/og-image.jpg">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:url" content="/posts/binary-memo">
+  <meta name="twitter:title" content="Register...">
+  <meta name="twitter:description" content="">
+  <meta name="twitter:image" content="/assets/og-image.jpg">
+
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+  <link href="/feed.xml" type="application/rss+xml" rel="alternate" title="kobadlve Last 10 blog posts" />
+
+  
+
+  
+    <link rel="stylesheet" href="/assets/dark.css">
+
+  
+</head>
+
+<body>
+  <main>
+    <div class="grid grid-centered">
+      <div class="grid-cell">
+        <nav class="header-nav scrollappear">
+  <a href="/" class="header-logo" title="kobadlve">kobadlve</a>
+  <div class="header-left">
+    <a href="/blog/">Blog Top</a>
+    <a href="/category/">Category</a>
+  </div>
+  <ul class="header-links">
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+  </ul>
+</nav>
+
+        <article class="article scrollappear">
+          <header class="article-header">
+            <h1>Register...</h1>
+            <p></p>
+            <div class="article-list-footer">
+              <span class="article-list-date">
+                April 19, 2017
+              </span>
+              <span class="article-list-divider">-</span>
+              <span class="article-list-minutes">
+                
+                
+                  2 minute read
+                
+              </span>
+              <span class="article-list-divider">-</span>
+              <div class="article-list-tags">
+                
+              </div>
+            </div>
+          </header>
+
+          <div class="article-content">
+            <h2 id="register">Register</h2>
+<h3 id="汎用レジスタ">汎用レジスタ</h3>
+<ul>
+  <li>EAX(アキュムレータレジスタ) - 演算の結果</li>
+  <li>ECX(カウンタレジスタ) - ループのカウントなど</li>
+  <li>EDX(データレジスタ) - 演算に用いるデータ</li>
+  <li>EBX(ベースレジスタ) - アドレスのベース値</li>
+  <li>ESI(ソースインデックスレジスタ) - 一部のデータ転送命令で、データの転送元を格納</li>
+  <li>EDI(デスティネーションインデックスレジスタ) - 一部のデータ転送命令で、データの転送先を格納</li>
+</ul>
+
+<h3 id="特殊レジスタ">特殊レジスタ</h3>
+<ul>
+  <li>EBP(ベースポインタレジスタ) - 現在のスタックフレームにおける底のアドレスを保持</li>
+  <li>ESP(スタックポインタレジスタ) - 現在のスタックトップのアドレスを保持</li>
+  <li>EIP(インストラクションポインタレジスタ) - 次に実行する命令のアドレス</li>
+</ul>
+
+<h3 id="フラグ">フラグ</h3>
+<ul>
+  <li>CF(キャリーフラグ) - 演算命令で桁上がりか桁借りが発生時にセット</li>
+  <li>ZF(ゼロフラグ) - 操作結果が0の時セット</li>
+  <li>SF(符号フラグ) - 操作結果が負の時セット</li>
+  <li>DF(方向フラグ) - ストリームの方向を制御</li>
+  <li>OF(オーバーフローフラグ) - 符号付き算術演算の結果がレジスタの格納可能範囲を超えた時セット</li>
+</ul>
+
+<h3 id="セグメントレジスタ">セグメントレジスタ</h3>
+<ul>
+  <li>CS(コードセグメントレジスタ) - コードセグメントのアドレス</li>
+  <li>DS(データセグメントレジスタ) - データセグメントのアドレス</li>
+  <li>SS(スタックセグメントレジスタ) - スタックセグメントレジスタのアドレス</li>
+  <li>ES(エクストラセグメントレジスタ) - エクストラセグメントのアドレス</li>
+  <li>FS(Fセグメントレジスタ) - Fセグメント(2つ目の追加セグメント)アドレス</li>
+  <li>GS(Gセグメントレジスタ) - Gセグメント(３つ目の追加セグメント)アドレス</li>
+</ul>
+
+<h2 id="記法">記法</h2>
+<ul>
+  <li>b - byte - 8bit</li>
+  <li>s - short(16bit整数) - single(32bit浮動小数点)</li>
+  <li>w - word - 16bit</li>
+  <li>l - long(32bit整数) - double(64bit浮動小数点)</li>
+  <li>q - quad(64bit)</li>
+  <li>t - 10byte - 80bit浮動小数点</li>
+  <li>BYTE - 8bit</li>
+  <li>WORD - 16bit</li>
+  <li>DWORD - 32bit</li>
+  <li>QWORD - 64bit</li>
+</ul>
+
+<h2 id="代表命令">代表命令</h2>
+
+<ul>
+  <li><code class="highlighter-rouge">mov dest, src</code> - dest = src</li>
+  <li><code class="highlighter-rouge">lea dest, src</code> - dest = srcAddress</li>
+  <li><code class="highlighter-rouge">xchg dest1, dest2</code> - xchange dest1 dest2</li>
+  <li><code class="highlighter-rouge">lodsb - lodsw - lodsd</code> - [DS:ESI]のメモリ内容を、(b, word, dword)バイト分(b)ALレジスタに読み込み、ESIレジスタをDFレジスタに基づいて読み込んだサイズ分加算・減算。</li>
+  <li><code class="highlighter-rouge">stosb</code> - ALレジスタの値を(b, word, dword)バイト分、[ES:ESI]メモリに書き込み、EDIレジスタをDFレジスタに基づいて読み込んだサイズ分加算・減算</li>
+  <li><code class="highlighter-rouge">push s r c</code> - argオペランドの値をスタックにpush. ESPレジスタの値をレジスタ幅分(32bit -&gt; 4byte, 64bit -&gt; 8byte)減算し、argオペランドをESPレジスタのさすスタックのトップに格納</li>
+  <li><code class="highlighter-rouge">pop dest</code> - スタックからargオペランドへpop. ESPレジスタの指すスタックのトップの値をargオペランドへ格納し、ESPレジスタの値をレジスタ幅分(32bit -&gt; 4byte, 64bit -&gt; 8byte)減算</li>
+  <li><code class="highlighter-rouge">add dest, src</code> - src = src + dest</li>
+  <li><code class="highlighter-rouge">sub dest, src</code> - src = src - dest</li>
+  <li><code class="highlighter-rouge">mul</code> - srcオペランドにEAXレジスタの値を乗算し、結果の上位４位バイトをEDXレジスタに格納し下位４バイトをEAXに格納</li>
+  <li><code class="highlighter-rouge">div src</code> - EDX:EAXの８バイトをsrcバイトの値で除算する。商をEAXレジスタに剰余をEDXレジスタに格納</li>
+  <li><code class="highlighter-rouge">inc dest</code> - dest++</li>
+  <li><code class="highlighter-rouge">dec dest</code> - dest–</li>
+  <li><code class="highlighter-rouge">cmp src1, src2</code> - 減算するが結果は破棄され、結果に伴ってフラグレジスタを変化させる。</li>
+  <li><code class="highlighter-rouge">shr/shl dest, count</code> - destオペランドcountオペランドで指定したビット数分、それぞれ左、右にビットシフトし、結果をdestに格納。</li>
+  <li><code class="highlighter-rouge">ror/rol dest, count</code> - destオペランドcountオペランドで指定したビット数分、ローテートさせ、結果をdestに格納。</li>
+  <li><code class="highlighter-rouge">xor dest, src</code> - dest xor src. xor eax eax で初期化</li>
+  <li><code class="highlighter-rouge">test src1, src2</code> - 論理積を取る。結果からフラグレジスタを変化</li>
+  <li><code class="highlighter-rouge">jmp arg</code> - フラグレジスタを参照して、分岐</li>
+  <li><code class="highlighter-rouge">call arg</code> - jmpの拡張。分岐後にret命令で戻れるように、callの次の命令アドレスを戻り先としてスタックに保存</li>
+  <li><code class="highlighter-rouge">ret</code> - call元の次の命令へと実行を戻す</li>
+  <li><code class="highlighter-rouge">leave</code> - データ転送命令。retとセットで使われる。retの前に呼ばれ、スタックポインタをベースポインタと同じ位置に戻し、ベースポインタを復元。<code class="highlighter-rouge">mov esp, edp, pop edp</code>と同じ動作。</li>
+</ul>
+
+<h2 id="分岐">分岐</h2>
+
+<ul>
+  <li>ZF = 0           : JE(jump if equal), JZ(jump if zero)</li>
+  <li>ZF = 0           : JNE(jump if not equal), JNZ(jump if not zero)</li>
+  <li>ZF = 0 &amp;&amp; SF = OF: JG(jump if greater)</li>
+  <li>SF &lt;&gt; OF         : L(jump if less)</li>
+</ul>
+
+<h2 id="呼び出し規約">呼び出し規約</h2>
+
+<ul>
+  <li>stdcall  - 後ろの引数からpushされ、返り値はeaxに格納</li>
+  <li>cdecl    - 後ろの引数からpushされ、ESPレジスタの値を戻す処理が呼ばれて、返り値をeaxに格納</li>
+  <li>fastcall - 左から右への引数リストで見つかる最初の 2 つの DWORD またはこれより小さい引数は、ECX および EDX レジスタに渡されます。他の引数はすべてスタック上で右から左へ渡されます。 ESPレジスタの値を戻す処理が呼ばれて、返り値をeaxに格納</li>
+</ul>
+
+<h2 id="セキュリティ機構">セキュリティ機構</h2>
+
+<ul>
+  <li>RELRO(RELocation ReadOnly) - データのどこにReadOnly属性をつけるか。checksecで調べる
+    <ul>
+      <li>No RERLO</li>
+      <li>Partial RELRO(Lazy)</li>
+      <li>Full RELRO(Now) - GOTOverWriteできない</li>
+    </ul>
+  </li>
+  <li>Stack Smash Protection - スタック上でのBOFを防ぐ。スタックフレームのローカル変数領域とSaved EBPの間にCanaryを挿入し、関数終了時に書き換えられてるかを判定して検出し強制終了。
+    <ul>
+      <li>Canaryの値は乱数。先頭がNULLバイトになるようにして、ローカル変数に置かれた文字列がNULLバイトで終わっていなかった時に、Canaryが流出するのを防ぐ。</li>
+      <li>-fno-stack-protector オプションで無効化</li>
+    </ul>
+  </li>
+  <li>NX bit(No eXecute bit), DEP(Data Execution Prevention) - メモリ上の実行する必要のないデータを実行不可能に設定して、不正に実行されるのを防ぐ。
+    <ul>
+      <li>-z execstack オプションで無効化</li>
+    </ul>
+  </li>
+  <li>ASLR(Address Layout Randomization) - スタックやヒープ、共有ライブラリなどをメモリに配置する際にアドレスの一部をランダム化しアドレス推測を困難にする。
+    <ul>
+      <li>OFF: sudo sysctl -w kernel.randomize_va_space=0</li>
+      <li>ON : sudo sysctl -w kernel.randomize_va_space=2</li>
+    </ul>
+  </li>
+  <li>PIE(Position Independent Executable) - 実行コード内のアドレス参照を全て相対アドレスで行い、実行ファイルがメモリのどこに置かれても実行できるようにコンパイルされたファイル。</li>
+</ul>
+
+<h2 id="return-to-pltprocedure-linkage-table">Return to PLT(Procedure Linkage Table)</h2>
+<p>PLTに書かれた短いコード片を関数として呼び出すと、動的リンクされたライブラリのアドレスを解決してライブラリ内の関数を実行してくれる。</p>
+
+<h2 id="return-to-libc">Return to libc</h2>
+<p>system関数などのlibc内の関数を呼び出す。</p>
+
+<h2 id="rop-return-oriented-programming">ROP (Return Oriented Programming)</h2>
+<p>ret命令で終わる命令列の先頭へのジャンプを繰り返すことで、任意の命令列を実行させる</p>
+
+          </div>
+
+          <div class="article-share">
+            
+            
+            <a href="https://twitter.com/home?status=Register... - /posts/binary-memo" title="Share on Twitter" rel="noreferrer noopener" target="_blank">
+              <svg viewBox="0 0 512 512"><path d="M492 109.5c-17.4 7.7-36 12.9-55.6 15.3 20-12 35.4-31 42.6-53.6 -18.7 11.1-39.4 19.2-61.5 23.5C399.8 75.8 374.6 64 346.8 64c-53.5 0-96.8 43.4-96.8 96.9 0 7.6 0.8 15 2.5 22.1 -80.5-4-151.9-42.6-199.6-101.3 -8.3 14.3-13.1 31-13.1 48.7 0 33.6 17.2 63.3 43.2 80.7C67 210.7 52 206.3 39 199c0 0.4 0 0.8 0 1.2 0 47 33.4 86.1 77.7 95 -8.1 2.2-16.7 3.4-25.5 3.4 -6.2 0-12.3-0.6-18.2-1.8 12.3 38.5 48.1 66.5 90.5 67.3 -33.1 26-74.9 41.5-120.3 41.5 -7.8 0-15.5-0.5-23.1-1.4C62.8 432 113.7 448 168.3 448 346.6 448 444 300.3 444 172.2c0-4.2-0.1-8.4-0.3-12.5C462.6 146 479 129 492 109.5z"/></svg>
+            </a>
+            <a href="https://www.facebook.com/sharer/sharer.php?u=/posts/binary-memo" title="Share on Facebook" rel="noreferrer noopener" target="_blank">
+              <svg viewBox="0 0 512 512"><path d="M288 192v-38.1c0-17.2 3.8-25.9 30.5-25.9H352V64h-55.9c-68.5 0-91.1 31.4-91.1 85.3V192h-45v64h45v192h83V256h56.4l7.6-64H288z"/></svg>
+            </a>
+            <a href="https://plus.google.com/share?url=/posts/binary-memo" title="Share on Google+" rel="noreferrer noopener" target="_blank">
+              <svg viewBox="0 0 128 128"><path d="M40.7 55.9v16.1c0 0 15.6 0 22 0C59.2 82.5 53.8 88.2 40.7 88.2c-13.3 0-23.7-10.8-23.7-24.2s10.4-24.2 23.7-24.2c7.1 0 11.6 2.5 15.8 5.9 3.3-3.3 3.1-3.8 11.6-11.9 -7.2-6.6-16.8-10.6-27.4-10.6C18.2 23.3 0 41.5 0 64c0 22.5 18.2 40.7 40.7 40.7 33.6 0 41.8-29.3 39-48.8H40.7zM113.9 56.7V42.6h-10.1v14.1H89.4v10.1h14.5v14.5h10.1V66.8H128V56.7H113.9z"/></svg>
+            </a>
+          </div>
+
+          
+        </article>
+        <footer class="footer scrollappear">
+  <p>
+    Chalk is a high quality, completely customizable, performant and 100% free
+    blog template for Jekyll built by
+    <a href="/about" title="About me">Nielsen Ramon</a>. Download it <a href="https://github.com/nielsenramon/chalk" rel="noreferrer noopener" target="_blank" title="Download Chalk">here</a>.
+  </p>
+</footer>
+
+      </div>
+    </div>
+  </main>
+  
+
+<script src="/assets/vendor.js"></script>
+
+
+
+  <script src="/assets/webfonts.js"></script>
+
+
+
+
+  <script src="/assets/scrollappear.js"></script>
+
+
+
+<script src="/assets/application.js"></script>
+
+
+</body>
+</html>

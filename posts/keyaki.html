@@ -1,0 +1,271 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>kobadlve | 欅坂のブログから画像スクレイピング Golang</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <meta property="og:title" content="欅坂のブログから画像スクレイピング Golang">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="/posts/keyaki">
+  <meta property="og:description" content="">
+  <meta property="og:site_name" content="kobadlve">
+  <meta property="og:image" content="/assets/og-image.jpg">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:url" content="/posts/keyaki">
+  <meta name="twitter:title" content="欅坂のブログから画像スクレイピング Golang">
+  <meta name="twitter:description" content="">
+  <meta name="twitter:image" content="/assets/og-image.jpg">
+
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+  <link href="/feed.xml" type="application/rss+xml" rel="alternate" title="kobadlve Last 10 blog posts" />
+
+  
+
+  
+    <link rel="stylesheet" href="/assets/dark.css">
+
+  
+</head>
+
+<body>
+  <main>
+    <div class="grid grid-centered">
+      <div class="grid-cell">
+        <nav class="header-nav scrollappear">
+  <a href="/" class="header-logo" title="kobadlve">kobadlve</a>
+  <div class="header-left">
+    <a href="/blog/">Blog Top</a>
+    <a href="/category/">Category</a>
+  </div>
+  <ul class="header-links">
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+  </ul>
+</nav>
+
+        <article class="article scrollappear">
+          <header class="article-header">
+            <h1>欅坂のブログから画像スクレイピング Golang</h1>
+            <p></p>
+            <div class="article-list-footer">
+              <span class="article-list-date">
+                November 3, 2016
+              </span>
+              <span class="article-list-divider">-</span>
+              <span class="article-list-minutes">
+                
+                
+                  1 minute read
+                
+              </span>
+              <span class="article-list-divider">-</span>
+              <div class="article-list-tags">
+                
+              </div>
+            </div>
+          </header>
+
+          <div class="article-content">
+            <h2 id="動機">動機</h2>
+
+<p>癒しが欲しかったんや！(Golang使って見たかった)</p>
+
+<h2 id="仕様">仕様</h2>
+
+<p><a href="https://github.com/PuerkitoBio/goquery">goquery</a>を使ってスクレイピング</p>
+
+<p>メンバーの名前を指定して、そのメンバーの最新の画像を取って来て癒される</p>
+
+<p><code class="highlighter-rouge">go run main.go berisa</code></p>
+
+<p>コード -&gt;  [https://github.com/kobad/keyakiGo:title]</p>
+
+<h3 id="コマンドライン引数となるメンバーを設定しとく">コマンドライン引数となるメンバーを設定しとく</h3>
+
+<p>べりさのページURLが</p>
+
+<p>[http://www.keyakizaka46.com/mob/news/diarKiji.php?site=k46o&amp;ima=0000&amp;cd=member&amp;ct=21]</p>
+
+<p>で、最後の<code class="highlighter-rouge">ct=21</code>がメンバーを表してるのでそれを設定</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>var memberList = map[string]string{
+	"ishimori":  "01",
+	"zu-min":    "02",
+	"uemu-":     "03",
+	"ozeki":     "04",
+	"odanana":   "05",
+	"koike":     "06",
+	"kobayashi": "07",
+	"fu-chan":   "08",
+	"si-chan":   "09",
+	"mona":      "10",
+	"yukka":     "11",
+	"kuritarou": "12",
+	"na-ko":     "13",
+	"habu":      "14",
+	"aoi":       "15",
+	"techi":     "17",
+	"moriya":    "18",
+	"yonesan":   "19",
+	"berika":    "20",
+	"berisa":    "21",
+	"neru":      "22"}
+</code></pre></div></div>
+
+<h3 id="引数を取得してurl生成">引数を取得してURL生成</h3>
+
+<p><a href="http://golang.jp/pkg/flag">flag パッケージ</a>を使う</p>
+
+<p><code class="highlighter-rouge">flag.String()</code> -&gt; フラグを定義</p>
+
+<p><code class="highlighter-rouge">flag.Parse()</code>  -&gt; 引数解析してフラグにセット</p>
+
+<p><code class="highlighter-rouge">flag.Args()</code> -&gt; 全取得</p>
+
+<p><code class="highlighter-rouge">flag.Arg(0)</code> -&gt; １つ目取得</p>
+
+<p><code class="highlighter-rouge">memberList</code> から該当する番号を取って来てURLにセットする</p>
+
+<h3 id="画像取得">画像取得</h3>
+
+<p><code class="highlighter-rouge">goquery.NewDocument(targetURL)</code> で指定したサイトを解析してくれる</p>
+
+<p><code class="highlighter-rouge">article</code>以下の -&gt; <code class="highlighter-rouge">img</code> 内の <code class="highlighter-rouge">src</code>からURLを取得</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>	doc.Find("article").Each(func(i int, s *goquery.Selection) {
+		s.Children().Find("img").Each(func(_ int, arg1 *goquery.Selection) {
+			url, _ := arg1.Attr("src")
+			imgURL := baseURL + url
+			fmt.Println("Get: " + imgURL)
+			saveIMG(imgURL, i)
+		})
+	})
+</code></pre></div></div>
+
+<p>楽。</p>
+
+<h3 id="画像保存">画像保存</h3>
+
+<ol>
+  <li>ディレクトリ作成</li>
+</ol>
+
+<p><code class="highlighter-rouge">os.Mkdir(dirName, permission)</code> で作る</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>	if err := os.Mkdir(targetName+t.Format(layout), 0777); err != nil {
+		fmt.Println(err)
+	}
+</code></pre></div></div>
+
+<ol>
+  <li>画像保存</li>
+</ol>
+
+<p><code class="highlighter-rouge">os.Create(name)</code> でファイルを作って、<code class="highlighter-rouge">io.Copy(file, target)</code> でtargetをfileにコピーして保存する</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>func saveIMG(url string, i int) {
+	response, err := http.Get(url)
+	if err != nil {
+		panic(err)
+	}
+	defer response.Body.Close()
+
+	file, err := os.Create(fmt.Sprintf(targetName+t.Format(layout)+"/%s%d.jpg", targetName, i))
+	if err != nil {
+		panic(err)
+	}
+	defer file.Close()
+	io.Copy(file, response.Body)
+}
+</code></pre></div></div>
+
+<p>保存に結構時間がかかる。仕方ないのかなー</p>
+
+<h3 id="結論">結論</h3>
+
+<p>べりさ可愛い。</p>
+
+<p><img src="http://kobadlve.github.io/assets/images/berisa.jpg" alt="berisa" /></p>
+
+<h3 id="参考">参考</h3>
+
+<ul>
+  <li>http://qiita.com/ryurock/items/b0466ad144f5e0555a95</li>
+  <li>http://kitak.hatenablog.jp/entry/2014/10/19/175133:title</li>
+</ul>
+
+          </div>
+
+          <div class="article-share">
+            
+            
+            <a href="https://twitter.com/home?status=%E6%AC%85%E5%9D%82%E3%81%AE%E3%83%96%E3%83%AD%E3%82%B0%E3%81%8B%E3%82%89%E7%94%BB%E5%83%8F%E3%82%B9%E3%82%A... - /posts/keyaki" title="Share on Twitter" rel="noreferrer noopener" target="_blank">
+              <svg viewBox="0 0 512 512"><path d="M492 109.5c-17.4 7.7-36 12.9-55.6 15.3 20-12 35.4-31 42.6-53.6 -18.7 11.1-39.4 19.2-61.5 23.5C399.8 75.8 374.6 64 346.8 64c-53.5 0-96.8 43.4-96.8 96.9 0 7.6 0.8 15 2.5 22.1 -80.5-4-151.9-42.6-199.6-101.3 -8.3 14.3-13.1 31-13.1 48.7 0 33.6 17.2 63.3 43.2 80.7C67 210.7 52 206.3 39 199c0 0.4 0 0.8 0 1.2 0 47 33.4 86.1 77.7 95 -8.1 2.2-16.7 3.4-25.5 3.4 -6.2 0-12.3-0.6-18.2-1.8 12.3 38.5 48.1 66.5 90.5 67.3 -33.1 26-74.9 41.5-120.3 41.5 -7.8 0-15.5-0.5-23.1-1.4C62.8 432 113.7 448 168.3 448 346.6 448 444 300.3 444 172.2c0-4.2-0.1-8.4-0.3-12.5C462.6 146 479 129 492 109.5z"/></svg>
+            </a>
+            <a href="https://www.facebook.com/sharer/sharer.php?u=/posts/keyaki" title="Share on Facebook" rel="noreferrer noopener" target="_blank">
+              <svg viewBox="0 0 512 512"><path d="M288 192v-38.1c0-17.2 3.8-25.9 30.5-25.9H352V64h-55.9c-68.5 0-91.1 31.4-91.1 85.3V192h-45v64h45v192h83V256h56.4l7.6-64H288z"/></svg>
+            </a>
+            <a href="https://plus.google.com/share?url=/posts/keyaki" title="Share on Google+" rel="noreferrer noopener" target="_blank">
+              <svg viewBox="0 0 128 128"><path d="M40.7 55.9v16.1c0 0 15.6 0 22 0C59.2 82.5 53.8 88.2 40.7 88.2c-13.3 0-23.7-10.8-23.7-24.2s10.4-24.2 23.7-24.2c7.1 0 11.6 2.5 15.8 5.9 3.3-3.3 3.1-3.8 11.6-11.9 -7.2-6.6-16.8-10.6-27.4-10.6C18.2 23.3 0 41.5 0 64c0 22.5 18.2 40.7 40.7 40.7 33.6 0 41.8-29.3 39-48.8H40.7zM113.9 56.7V42.6h-10.1v14.1H89.4v10.1h14.5v14.5h10.1V66.8H128V56.7H113.9z"/></svg>
+            </a>
+          </div>
+
+          
+        </article>
+        <footer class="footer scrollappear">
+  <p>
+    Chalk is a high quality, completely customizable, performant and 100% free
+    blog template for Jekyll built by
+    <a href="/about" title="About me">Nielsen Ramon</a>. Download it <a href="https://github.com/nielsenramon/chalk" rel="noreferrer noopener" target="_blank" title="Download Chalk">here</a>.
+  </p>
+</footer>
+
+      </div>
+    </div>
+  </main>
+  
+
+<script src="/assets/vendor.js"></script>
+
+
+
+  <script src="/assets/webfonts.js"></script>
+
+
+
+
+  <script src="/assets/scrollappear.js"></script>
+
+
+
+<script src="/assets/application.js"></script>
+
+
+</body>
+</html>

@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>kobadlve | セキュリティ・キャンプ全国大会2017参加しました</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <meta property="og:title" content="セキュリティ・キャンプ全国大会2017参加しました">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="/posts/seccamp-end">
+  <meta property="og:description" content="">
+  <meta property="og:site_name" content="kobadlve">
+  <meta property="og:image" content="/assets/og-image.jpg">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:url" content="/posts/seccamp-end">
+  <meta name="twitter:title" content="セキュリティ・キャンプ全国大会2017参加しました">
+  <meta name="twitter:description" content="">
+  <meta name="twitter:image" content="/assets/og-image.jpg">
+
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+  <link href="/feed.xml" type="application/rss+xml" rel="alternate" title="kobadlve Last 10 blog posts" />
+
+  
+
+  
+    <link rel="stylesheet" href="/assets/dark.css">
+
+  
+</head>
+
+<body>
+  <main>
+    <div class="grid grid-centered">
+      <div class="grid-cell">
+        <nav class="header-nav scrollappear">
+  <a href="/" class="header-logo" title="kobadlve">kobadlve</a>
+  <div class="header-left">
+    <a href="/blog/">Blog Top</a>
+    <a href="/category/">Category</a>
+  </div>
+  <ul class="header-links">
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+  </ul>
+</nav>
+
+        <article class="article scrollappear">
+          <header class="article-header">
+            <h1>セキュリティ・キャンプ全国大会2017参加しました</h1>
+            <p></p>
+            <div class="article-list-footer">
+              <span class="article-list-date">
+                August 20, 2017
+              </span>
+              <span class="article-list-divider">-</span>
+              <span class="article-list-minutes">
+                
+                
+                  1 minute read
+                
+              </span>
+              <span class="article-list-divider">-</span>
+              <div class="article-list-tags">
+                
+              </div>
+            </div>
+          </header>
+
+          <div class="article-content">
+            <p>8/14-8/18の間セキュリティ・キャンプ全国大会2017に参加しました。</p>
+
+<p>去年セキュリティキャンプの存在を知りその時は「どうせ受からない」と思って応募しなかったのを後悔して今年初めて応募しました。結果的に合格して挑戦してよかったと心から思っています。何よりも楽しく濃密な５日間を過ごせて自分の学生生活の中でも大きな経験となりました。</p>
+
+<p>そして、いろんなタイプの人と関わりいろんなタイプの講義を受け、刺激を受けました。自分に向いているもの・やりたいことのヒントを得ることができました。</p>
+
+<p>参加したことはきっかけに過ぎないので、これから成果を出していきたいです。</p>
+
+<p>１つショックだったのが中学生より身長が小さかったです^^</p>
+
+<p>以下の講義を受けました。どこまで書いて良いかわからないものもあったりで追って書いていきます.</p>
+
+<ul>
+  <li>C1 - ブラウザの脆弱性とそのインパクト <a href="https://speakerdeck.com/nishimunea/burauzafalsecui-ruo-xing-tosofalseinpakuto">講義スライド</a></li>
+  <li>D2-3 - カーネルエクスプロイトによるシステム権限奪取 <a href="https://speakerdeck.com/rkx1209/kaneruekusupuroitoniyorusisutemuquan-xian-duo-qu">講義スライド</a></li>
+  <li>E4 - サイバー犯罪捜査の現場</li>
+  <li>D5 - The Anatomy of Malware</li>
+  <li>E6-7 - インシデントレスポンスで攻撃者を追いかけろ</li>
+</ul>
+
+<h2 id="ブラウザの脆弱性とそのインパクト">ブラウザの脆弱性とそのインパクト</h2>
+<p>西村さんとKinugawaさんの今まで見つけてきた脆弱性を元に、その見つけ方・発想を学んだ。</p>
+
+<p><a href="https://speakerdeck.com/nishimunea/burauzafalsecui-ruo-xing-tosofalseinpakuto">講義スライド</a></p>
+
+<p>脆弱性を探すプロセス</p>
+
+<ol>
+  <li>対象を決める</li>
+  <li>対象を深く知る</li>
+  <li>対象のおかしな動作を探す</li>
+  <li>その悪用シナリオを考える</li>
+</ol>
+
+<h3 id="1-対象を決める">1. 対象を決める</h3>
+<p>ブラウザのどのモジュールを狙うかを決める。むやみに探しても仕方がないので対象を絞る。心がときめくモジュールを狙おう。</p>
+
+<p>モジュール - ドキュメントパーサ、スクリプト処理、プロトコル、マルチメディアサポート、ミドルウェア、API、UI、セキュリティ機構など</p>
+
+<ul>
+  <li>新しい機能を狙う - α版, ReleaseNote, commit log, 開発者向け機能, blogなど
+    <ul>
+      <li>例としてFirefox iOSのホモグラフ攻撃の対策不備が上がった</li>
+    </ul>
+  </li>
+  <li>古い機能を狙う - 標準化されず、イケていないまま残っている機能がある</li>
+  <li>過去に学ぶ - 過去どんな脆弱性があってどんな攻撃方法かを知る。別のブラウザでまだ残っているかも</li>
+  <li>利用されているサードパーティライブラリの脆弱性を使う</li>
+</ul>
+
+<p><a href="https://github.com/mozilla">MozillaGithub</a>, <a href="https://github.com/mozilla-mobile/firefox-ios">Mozilla Mobile</a>, <a href="http://utf-8.jp">はせがわようすけさん資料</a></p>
+
+<p>XSSだけでも様々な手法がある。Content Sniffing, 文字コード, mXSS, etc</p>
+
+<h3 id="2-対象を深く知る">2. 対象を深く知る</h3>
+<p>目的・使い方・制限・悪用できないか？</p>
+
+<ul>
+  <li>実際に使う</li>
+  <li>仕様を読む - どんなInput, Outputがありうるか、制限があるか、仕様通り動くか</li>
+  <li>コードを読む</li>
+  <li>バイナリを読む - 実際にXSSフィルターの正規表現のバグを見つけた</li>
+</ul>
+
+<h3 id="3-対象のおかしな動作を探す">3. 対象のおかしな動作を探す</h3>
+<p>いつもと違う動作を見逃さない</p>
+
+<p>設定通り動かない、クラッシュ、フリーズ、文字化けなど。原因を調べると致命的な問題かもしれない</p>
+
+<p>他の要素(プロトコルスキーム、メソッドなど)と組み合わせる</p>
+
+<p>CSPのバイパス演習をした</p>
+
+<h3 id="4-その悪用シナリオを考える">4. その悪用シナリオを考える</h3>
+<p>最大限に悪用できるシナリオを考え危険性を示す(報奨金UP?)</p>
+
+<h2 id="終わりに">終わりに</h2>
+
+<p>「くだらないものでもアウトプットすること」「１つに特化しているだけではダメ」「情報を発信する」</p>
+
+<p>お疲れ様でした、ありがとうございました！</p>
+
+          </div>
+
+          <div class="article-share">
+            
+            
+            <a href="https://twitter.com/home?status=%E3%82%BB%E3%82%AD%E3%83%A5%E3%83%AA%E3%83%86%E3%82%A3%E3%83%BB%E3%82%AD%E3%83%A3%E3%83%B3%E3%83%97%E5%85%A... - /posts/seccamp-end" title="Share on Twitter" rel="noreferrer noopener" target="_blank">
+              <svg viewBox="0 0 512 512"><path d="M492 109.5c-17.4 7.7-36 12.9-55.6 15.3 20-12 35.4-31 42.6-53.6 -18.7 11.1-39.4 19.2-61.5 23.5C399.8 75.8 374.6 64 346.8 64c-53.5 0-96.8 43.4-96.8 96.9 0 7.6 0.8 15 2.5 22.1 -80.5-4-151.9-42.6-199.6-101.3 -8.3 14.3-13.1 31-13.1 48.7 0 33.6 17.2 63.3 43.2 80.7C67 210.7 52 206.3 39 199c0 0.4 0 0.8 0 1.2 0 47 33.4 86.1 77.7 95 -8.1 2.2-16.7 3.4-25.5 3.4 -6.2 0-12.3-0.6-18.2-1.8 12.3 38.5 48.1 66.5 90.5 67.3 -33.1 26-74.9 41.5-120.3 41.5 -7.8 0-15.5-0.5-23.1-1.4C62.8 432 113.7 448 168.3 448 346.6 448 444 300.3 444 172.2c0-4.2-0.1-8.4-0.3-12.5C462.6 146 479 129 492 109.5z"/></svg>
+            </a>
+            <a href="https://www.facebook.com/sharer/sharer.php?u=/posts/seccamp-end" title="Share on Facebook" rel="noreferrer noopener" target="_blank">
+              <svg viewBox="0 0 512 512"><path d="M288 192v-38.1c0-17.2 3.8-25.9 30.5-25.9H352V64h-55.9c-68.5 0-91.1 31.4-91.1 85.3V192h-45v64h45v192h83V256h56.4l7.6-64H288z"/></svg>
+            </a>
+            <a href="https://plus.google.com/share?url=/posts/seccamp-end" title="Share on Google+" rel="noreferrer noopener" target="_blank">
+              <svg viewBox="0 0 128 128"><path d="M40.7 55.9v16.1c0 0 15.6 0 22 0C59.2 82.5 53.8 88.2 40.7 88.2c-13.3 0-23.7-10.8-23.7-24.2s10.4-24.2 23.7-24.2c7.1 0 11.6 2.5 15.8 5.9 3.3-3.3 3.1-3.8 11.6-11.9 -7.2-6.6-16.8-10.6-27.4-10.6C18.2 23.3 0 41.5 0 64c0 22.5 18.2 40.7 40.7 40.7 33.6 0 41.8-29.3 39-48.8H40.7zM113.9 56.7V42.6h-10.1v14.1H89.4v10.1h14.5v14.5h10.1V66.8H128V56.7H113.9z"/></svg>
+            </a>
+          </div>
+
+          
+        </article>
+        <footer class="footer scrollappear">
+  <p>
+    Chalk is a high quality, completely customizable, performant and 100% free
+    blog template for Jekyll built by
+    <a href="/about" title="About me">Nielsen Ramon</a>. Download it <a href="https://github.com/nielsenramon/chalk" rel="noreferrer noopener" target="_blank" title="Download Chalk">here</a>.
+  </p>
+</footer>
+
+      </div>
+    </div>
+  </main>
+  
+
+<script src="/assets/vendor.js"></script>
+
+
+
+  <script src="/assets/webfonts.js"></script>
+
+
+
+
+  <script src="/assets/scrollappear.js"></script>
+
+
+
+<script src="/assets/application.js"></script>
+
+
+</body>
+</html>

@@ -1,0 +1,264 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>kobadlve | T-Pot構築</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <meta property="og:title" content="T-Pot構築">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="/posts/t-pot">
+  <meta property="og:description" content="">
+  <meta property="og:site_name" content="kobadlve">
+  <meta property="og:image" content="/assets/og-image.jpg">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:url" content="/posts/t-pot">
+  <meta name="twitter:title" content="T-Pot構築">
+  <meta name="twitter:description" content="">
+  <meta name="twitter:image" content="/assets/og-image.jpg">
+
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+  <link href="/feed.xml" type="application/rss+xml" rel="alternate" title="kobadlve Last 10 blog posts" />
+
+  
+
+  
+    <link rel="stylesheet" href="/assets/dark.css">
+
+  
+</head>
+
+<body>
+  <main>
+    <div class="grid grid-centered">
+      <div class="grid-cell">
+        <nav class="header-nav scrollappear">
+  <a href="/" class="header-logo" title="kobadlve">kobadlve</a>
+  <div class="header-left">
+    <a href="/blog/">Blog Top</a>
+    <a href="/category/">Category</a>
+  </div>
+  <ul class="header-links">
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+  </ul>
+</nav>
+
+        <article class="article scrollappear">
+          <header class="article-header">
+            <h1>T-Pot構築</h1>
+            <p></p>
+            <div class="article-list-footer">
+              <span class="article-list-date">
+                June 23, 2017
+              </span>
+              <span class="article-list-divider">-</span>
+              <span class="article-list-minutes">
+                
+                
+                  2 minute read
+                
+              </span>
+              <span class="article-list-divider">-</span>
+              <div class="article-list-tags">
+                
+              </div>
+            </div>
+          </header>
+
+          <div class="article-content">
+            <h2 id="はじめに">はじめに</h2>
+<p>簡単にHoneypot群を作成できるT-Potの紹介.<br />
+前にも別のところでまとめたが、そのアップデート.</p>
+
+<p>VMでもできますが、物理サーバにインストールしています。<br />
+前にやった<a href="https://speakerdeck.com/kobadlve/honey-pot-with-respberry-pi-and-t-pot">発表資料</a></p>
+
+<ul>
+  <li><a href="https://kobadlve.github.io/articles/security/2017/06/23/t-pot.html#はじめに">はじめに</a></li>
+  <li><a href="https://kobadlve.github.io/articles/security/2017/06/23/t-pot.html#T-Potとは">T-Potとは</a></li>
+  <li><a href="https://kobadlve.github.io/articles/security/2017/06/23/t-pot.html#構成">構成</a></li>
+  <li><a href="https://kobadlve.github.io/articles/security/2017/06/23/t-pot.html#導入">導入</a></li>
+  <li><a href="https://kobadlve.github.io/articles/security/2017/06/23/t-pot.html#設定">設定</a></li>
+  <li><a href="https://kobadlve.github.io/articles/security/2017/06/23/t-pot.html#接続">接続</a></li>
+  <li><a href="https://kobadlve.github.io/articles/security/2017/06/23/t-pot.html#まとめ">まとめ</a></li>
+</ul>
+
+<h2 id="t-potとは">T-Potとは</h2>
+<p><a href="http://dtag-dev-sec.github.io/">T-Pot</a></p>
+
+<p>T-Potは複数のハニーポットを運用し、それらから得られたログをELK(Elastic-search, Logstash, Kibana)を使って上手く可視化してくれます。</p>
+
+<p>各ハニーポットとツールをDockerで運用し、それぞれのログを集めてまとめて可視化しています。</p>
+
+<p><img src="http://dtag-dev-sec.github.io/assets/images/tpot.png" alt="tpot" /></p>
+
+<h2 id="構成">構成</h2>
+<p>基本7つのハニーポットと可視化ツールが動いています。</p>
+
+<ul>
+  <li><a href="http://conpot.org">Conpot</a> - ICS/SCADA Honeypot</li>
+  <li><a href="https://github.com/micheloosterhof/cowrie">Cowrie</a> - SSH Honeypot</li>
+  <li><a href="https://github.com/gento/dionaea">Dionaea</a> - 複数のWebアプリケーションを模倣</li>
+  <li><a href="https://hub.docker.com/r/honeynet/elasticpot/">Elasticpot</a>- Elastic search</li>
+  <li><a href="https://github.com/dtag-dev-sec/emobility">eMobility</a></li>
+  <li><a href="http://mushmush.org">Glastopf</a> - Webアプリケーションサーバ&lt;/li&gt;</li>
+  <li><a href="https://github.com/dtag-dev-sec/honeytrap">Honeytrap</a> - ネットワークサービスへの攻撃を検知</li>
+</ul>
+
+<p>加えて、２つのツールが動いています。</p>
+<ul>
+  <li>ELK - Elastic-search, Logstash, Kibana</li>
+  <li><a href="https://mobz.github.io/elasticsearch-head/">Elasticserch Head</a> - Elasticserch GUI</li>
+  <li><a href="http://my-netdata.io/">Netdata</a> - リアルタイムシステムモニタリング</li>
+  <li><a href="http://portainer.io/">Portainer</a> - DockerをWebからいじる</li>
+  <li><a href="http://suricata-ids.org/features/">Suricata</a> - オープンソースのIDS/IPS (侵入検知システム)</li>
+  <li><a href="https://github.com/krishnasrinivas/wetty">Wetty</a> - WebベースのSSHクライアント</li>
+</ul>
+
+<h2 id="導入">導入</h2>
+<p>isoからの方が楽で確実. 途中途中でyes/noを選択するところがあるので放置しすぎると止まってるので注意。</p>
+
+<h3 id="isoイメージからブート">isoイメージからブート</h3>
+<p>isoイメージ作成 or isoイメージDL - http://community-honeypot.de/tpot.iso</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code> git clone https://github.com/dtag-dev-sec/tpotce.git
+ cd tpotce
+ sudo ./makeiso.sh
+</code></pre></div></div>
+
+<p><a href="https://rufus.akeo.ie/?locale=ja_JP">Rufus</a>とか <a href="https://unetbootin.github.io/">unebootin</a>などを使ってUSBブート。Rufusの方が速い感じがする。</p>
+
+<p>GUI install</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo apt-get update
+sudo apt-get install ubuntu-desktop
+sudo shutdown -r now
+</code></pre></div></div>
+
+<h3 id="ubuntu1604に直でインストール">Ubuntu16.04に直でインストール</h3>
+<p>既にUbuntu環境が用意されている場合(16.04.xのみで動作), EC2等を利用する場合</p>
+
+<p>Ubuntu16.04のダウンロード -  <a href="https://www.ubuntu.com/download/desktop/contribute?version=16.04.2&amp;architecture=amd64">Ubuntu16.04.02</a></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git clone https://github.com/dtag-dev-sec/t-pot-autoinstall.git
+cd t-pot-autoinstall/
+sudo su
+./install.sh
+</code></pre></div></div>
+<p>途中で止まると、途中までで生成したファイルとかが残ってるので面倒</p>
+
+<h2 id="ssh設定">SSH設定</h2>
+<ol>
+  <li>ローカルで鍵生成 - <code class="highlighter-rouge">ssh-keygen -t rsa</code></li>
+  <li>共通鍵共有 - <code class="highlighter-rouge">scp -P 64295 .ssh/tpot_id_rsa.pub tsec@ip:~/</code></li>
+  <li>tpot側で登録
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mkdir ~/.ssh
+cat tpot_id_rsa.pub &gt;&gt; .ssh/authorized_keys
+chmod 600 .ssh/authorized_keys
+rm id_rsa.pub
+</code></pre></div>    </div>
+  </li>
+  <li>ローカルで設定 - <code class="highlighter-rouge">~/.ssh/config</code>に追加
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Host 'name'
+  HostName Host IP or Domain
+  IdentityFile ~/.ssh/tpot_id_rsa
+  Port 12345
+</code></pre></div>    </div>
+  </li>
+  <li>接続 - <code class="highlighter-rouge">ssh ip</code> -&gt; 鍵生成時のパスを入力すれば入れます。</li>
+</ol>
+
+<h2 id="接続">接続</h2>
+<p>起動できたら、<a href="http://localhost:64297">localhost:64297</a> に接続するとKibanaの画面が見れます。
+別PCで見るには、sshポートフォワーディングを使います。</p>
+
+<p><code class="highlighter-rouge">ssh -D 8880 ip</code></p>
+
+<p>としてから、ip:64297 に繋げばいけます。</p>
+
+<p>ハニーポットごとのアクセス統計やアクセス元IP・ログ等が見れ、ログもパラメータごとに絞り込み、ソートなどもできます。</p>
+
+<p>こんな感じ
+<img src="/images/tpot2.png" alt="tpot" /></p>
+
+<p><img src="/images/tpot1.png" alt="tpot" /></p>
+
+<h2 id="まとめ">まとめ</h2>
+<p>T-Potは構築は簡単でとっつきやすいわりに、高性能で良い。
+マルウェアに感染したIoT機器からの感染を広げるためのアクセスを見れたりした。</p>
+
+<p>T-Potの拡張・ログからvirustotalにぶん投げたりしている.これらは別に書きたい。</p>
+
+          </div>
+
+          <div class="article-share">
+            
+            
+            <a href="https://twitter.com/home?status=T-Pot%E6%A7%8B%E7%AF%89 - /posts/t-pot" title="Share on Twitter" rel="noreferrer noopener" target="_blank">
+              <svg viewBox="0 0 512 512"><path d="M492 109.5c-17.4 7.7-36 12.9-55.6 15.3 20-12 35.4-31 42.6-53.6 -18.7 11.1-39.4 19.2-61.5 23.5C399.8 75.8 374.6 64 346.8 64c-53.5 0-96.8 43.4-96.8 96.9 0 7.6 0.8 15 2.5 22.1 -80.5-4-151.9-42.6-199.6-101.3 -8.3 14.3-13.1 31-13.1 48.7 0 33.6 17.2 63.3 43.2 80.7C67 210.7 52 206.3 39 199c0 0.4 0 0.8 0 1.2 0 47 33.4 86.1 77.7 95 -8.1 2.2-16.7 3.4-25.5 3.4 -6.2 0-12.3-0.6-18.2-1.8 12.3 38.5 48.1 66.5 90.5 67.3 -33.1 26-74.9 41.5-120.3 41.5 -7.8 0-15.5-0.5-23.1-1.4C62.8 432 113.7 448 168.3 448 346.6 448 444 300.3 444 172.2c0-4.2-0.1-8.4-0.3-12.5C462.6 146 479 129 492 109.5z"/></svg>
+            </a>
+            <a href="https://www.facebook.com/sharer/sharer.php?u=/posts/t-pot" title="Share on Facebook" rel="noreferrer noopener" target="_blank">
+              <svg viewBox="0 0 512 512"><path d="M288 192v-38.1c0-17.2 3.8-25.9 30.5-25.9H352V64h-55.9c-68.5 0-91.1 31.4-91.1 85.3V192h-45v64h45v192h83V256h56.4l7.6-64H288z"/></svg>
+            </a>
+            <a href="https://plus.google.com/share?url=/posts/t-pot" title="Share on Google+" rel="noreferrer noopener" target="_blank">
+              <svg viewBox="0 0 128 128"><path d="M40.7 55.9v16.1c0 0 15.6 0 22 0C59.2 82.5 53.8 88.2 40.7 88.2c-13.3 0-23.7-10.8-23.7-24.2s10.4-24.2 23.7-24.2c7.1 0 11.6 2.5 15.8 5.9 3.3-3.3 3.1-3.8 11.6-11.9 -7.2-6.6-16.8-10.6-27.4-10.6C18.2 23.3 0 41.5 0 64c0 22.5 18.2 40.7 40.7 40.7 33.6 0 41.8-29.3 39-48.8H40.7zM113.9 56.7V42.6h-10.1v14.1H89.4v10.1h14.5v14.5h10.1V66.8H128V56.7H113.9z"/></svg>
+            </a>
+          </div>
+
+          
+        </article>
+        <footer class="footer scrollappear">
+  <p>
+    Chalk is a high quality, completely customizable, performant and 100% free
+    blog template for Jekyll built by
+    <a href="/about" title="About me">Nielsen Ramon</a>. Download it <a href="https://github.com/nielsenramon/chalk" rel="noreferrer noopener" target="_blank" title="Download Chalk">here</a>.
+  </p>
+</footer>
+
+      </div>
+    </div>
+  </main>
+  
+
+<script src="/assets/vendor.js"></script>
+
+
+
+  <script src="/assets/webfonts.js"></script>
+
+
+
+
+  <script src="/assets/scrollappear.js"></script>
+
+
+
+<script src="/assets/application.js"></script>
+
+
+</body>
+</html>

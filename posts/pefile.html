@@ -1,0 +1,408 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>kobadlve | PE File</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <meta property="og:title" content="PE File">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="/posts/pefile">
+  <meta property="og:description" content="">
+  <meta property="og:site_name" content="kobadlve">
+  <meta property="og:image" content="/assets/og-image.jpg">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:url" content="/posts/pefile">
+  <meta name="twitter:title" content="PE File">
+  <meta name="twitter:description" content="">
+  <meta name="twitter:image" content="/assets/og-image.jpg">
+
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+  <link href="/feed.xml" type="application/rss+xml" rel="alternate" title="kobadlve Last 10 blog posts" />
+
+  
+
+  
+    <link rel="stylesheet" href="/assets/dark.css">
+
+  
+</head>
+
+<body>
+  <main>
+    <div class="grid grid-centered">
+      <div class="grid-cell">
+        <nav class="header-nav scrollappear">
+  <a href="/" class="header-logo" title="kobadlve">kobadlve</a>
+  <div class="header-left">
+    <a href="/blog/">Blog Top</a>
+    <a href="/category/">Category</a>
+  </div>
+  <ul class="header-links">
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+  </ul>
+</nav>
+
+        <article class="article scrollappear">
+          <header class="article-header">
+            <h1>PE File</h1>
+            <p></p>
+            <div class="article-list-footer">
+              <span class="article-list-date">
+                April 21, 2017
+              </span>
+              <span class="article-list-divider">-</span>
+              <span class="article-list-minutes">
+                
+                
+                  3 minute read
+                
+              </span>
+              <span class="article-list-divider">-</span>
+              <div class="article-list-tags">
+                
+              </div>
+            </div>
+          </header>
+
+          <div class="article-content">
+            <h2 id="structure">Structure</h2>
+
+<ol>
+  <li>_IMAGE_DOS_HEADER</li>
+  <li>_IMAGE_NT_HEADERS</li>
+  <li>Signature</li>
+  <li>IMAGE_FILE_HEADER</li>
+  <li>IMAGE_OPTIONAL_HEADER</li>
+  <li>_IMAGE_SECTION_HEADER</li>
+  <li>…</li>
+  <li>_IMAGE_SECTION_HEADER</li>
+</ol>
+
+<p>http://www.openrce.org/reference_library/files/reference/PE%20Format.pdf</p>
+
+<h2 id="pe-header">PE Header</h2>
+
+<h3 id="_image_dos_header">_IMAGE_DOS_HEADER</h3>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>struct _IMAGE_DOS_HEADER {
+0x00 WORD e_magic;    // PEファイルかどうかの判断. 5A 4D (MZ)が入る。
+0x02 WORD e_cblp;
+0x04 WORD e_cp;
+0x06 WORD e_crlc;
+0x08 WORD e_cparhdr;
+0x0a WORD e_minalloc;
+0x0c WORD e_maxalloc;
+0x0e WORD e_ss;
+0x10 WORD e_sp;
+0x12 WORD e_csum;
+0x14 WORD e_ip;
+0x16 WORD e_cs;
+0x18 WORD e_lfarlc;
+0x1a WORD e_ovno;
+0x1c WORD e_res[4];
+0x24 WORD e_oemid;
+0x26 WORD e_oeminfo;
+0x28 WORD e_res2[10];
+0x3c DWORD e_lfanew;  // _IMAGE_NT_HEADERSがどこにあるかを調べるための値
+};
+</code></pre></div></div>
+
+<h3 id="_image_nt_headers">_IMAGE_NT_HEADERS</h3>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>struct _IMAGE_NT_HEADERS {
+0x00 DWORD Signature;                       // 50 45 00 00 (PE\0\0)
+0x04 _IMAGE_FILE_HEADER FileHeader;
+0x18 _IMAGE_OPTIONAL_HEADER OptionalHeader;
+};
+</code></pre></div></div>
+
+<h4 id="_image_file_header">_IMAGE_FILE_HEADER</h4>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>struct _IMAGE_FILE_HEADER {
+0x00 WORD Machine;                // どのCPUで実行できるか
+0x02 WORD NumberOfSections;       // セクション数
+0x04 DWORD TimeDateStamp;         // ビルドした日付
+0x08 DWORD PointerToSymbolTable;  //
+0x0c DWORD NumberOfSymbols;       //
+0x10 WORD SizeOfOptionalHeader;   // _IMAGE_OPTIONAL_HEADERのサイズ
+0x12 WORD Characteristics;        // ファイル形式を表す
+};
+
+</code></pre></div></div>
+
+<h4 id="_image_optional_header">_IMAGE_OPTIONAL_HEADER</h4>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>struct _IMAGE_OPTIONAL_HEADER {
+0x00 WORD Magic;                    // 32bit -&gt; 0x10B, 64bit -&gt; 0x20B
+0x02 BYTE MajorLinkerVersion;       // どのバージョンのコンパイラでビルドしたか
+0x03 BYTE MinorLinkerVersion;
+0x04 DWORD SizeOfCode;              // コード全体のサイズ
+0x08 DWORD SizeOfInitializedData;   //
+0x0c DWORD SizeOfUninitializedData;
+0x10 DWORD AddressOfEntryPoint;         // 実行開始アドレス
+0x14 DWORD BaseOfCode;                  // コード領域の開始相対アドレス 0x1000が指定され、実際のアドレスはImageBase + BaseOfCode = 0x401000
+0x18 DWORD BaseOfData;
+0x1c DWORD ImageBase;                   // 実行時に仮想メモリにロードされるアドレス. 0x400000
+0x20 DWORD SectionAlignment;            // セクションの区切り単位. 基本0x1000
+0x24 DWORD FileAlignment;
+0x28 WORD MajorOperatingSystemVersion;
+0x2a WORD MinorOperatingSystemVersion;
+0x2c WORD MajorImageVersion;
+0x2e WORD MinorImageVersion;
+0x30 WORD MajorSubsystemVersion;
+0x32 WORD MinorSubsystemVersion;
+0x34 DWORD Win32VersionValue;
+0x38 DWORD SizeOfImage;                 // 実行ファイルがメモリにロードされた時の全体サイズ
+0x3c DWORD SizeOfHeaders;               // PEヘッダのサイズ
+0x40 DWORD CheckSum;
+0x44 WORD Subsystem;                    // プログラムがGUIかコンソール用か
+0x46 WORD DllCharacteristics;
+0x48 DWORD SizeOfStackReserve;
+0x4c DWORD SizeOfStackCommit;
+0x50 DWORD SizeOfHeapReserve;
+0x54 DWORD SizeOfHeapCommit;
+0x58 DWORD LoaderFlags;
+0x5c DWORD NumberOfRvaAndSizes;
+0x60 _IMAGE_DATA_DIRECTORY DataDirectory[16]; // それぞれ役割がある。
+};
+</code></pre></div></div>
+
+<h4 id="_image_data_directory">_IMAGE_DATA_DIRECTORY</h4>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>struct _IMAGE_DATA_DIRECTORY {
+  0x00 DWORD VirtualAddress;
+  0x04 DWORD Size;
+}
+
+</code></pre></div></div>
+<ul>
+  <li>Image Data Directory - オプションヘッダの最後にある
+    <ul>
+      <li>Export Table  -  他の実行可能ファイルからアクセスできる関数についての情報</li>
+      <li>Import Table  - 他の実行可能ファイルからアクセスして呼び出す関数についての情報</li>
+      <li>IAT                 - 他の実行可能ファイルからアクセスして呼び出す関数のアドレス</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="_image_section_header">_IMAGE_SECTION_HEADER</h3>
+
+<p>プログラムコード、データ、リソースなどを格納する各セクションの構造を示す情報が並ぶ</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>typedef struct _IMAGE_SECTION_HEADER {
+0x00 BYTE Name[IMAGE_SIZEOF_SHORT_NAME];  // UTF-8の文字コードでのセクション名を格納する(8BYTE)
+      union {
+0x08    DWORD PhysicalAddress;
+0x08    DWORD VirtualSize;                // UTF-8の文字コードでのセクション名を格納する
+      } Misc;
+0x0c DWORD VirtualAddress;                // メモリに読み込まれた時のセクション先頭のアドレス
+0x10 DWORD SizeOfRawData;                 // 実行可能ファイル中でのセクションサイズ
+0x14 DWORD PointerToRawData;              // 実行可能ファイル中でのセクション先頭のオフセット
+0x18 DWORD PointerToRelocations;
+0x1c DWORD PointerToLinenumbers;
+0x20 WORD NumberOfRelocations;
+0x22 WORD NumberOfLinenumbers;
+0x24 DWORD Characteristics;               // セクションの属性を示すフラグで各属性を意味する値の論理和が格納
+};
+</code></pre></div></div>
+
+<ul>
+  <li>セクションの属性フラグ
+    <ul>
+      <li>IMAGE_SCN_CNT_CODE(0x00000020) -  実行可能なコード</li>
+      <li>IMAGE_SCN_CNT_INITIALIZED(0x00000040) - 初期化したデータ</li>
+      <li>IMAGE_SCN_CNT_UNINITIALIZED_DATA(0x00000080) - 初期化されてないデータ</li>
+      <li>IMAGE_SCN_MEM_EXECUTE(0x20000000) - コードとして実行できる</li>
+      <li>IMAGE_SCN_MEM_READ(0x40000000) - 読み込みできる</li>
+      <li>IMAGE_SCN_MEM_WRITE(0x80000000) - 書き込みできる</li>
+    </ul>
+  </li>
+  <li>代表セクション
+    <ul>
+      <li>.text -&gt; プログラムコード</li>
+      <li>.edata -&gt; 関数などのエクスポートデータ</li>
+      <li>.idata -&gt; 関数などのインポートデータ</li>
+      <li>.data -&gt; 初期化されたデータ</li>
+      <li>.bss -&gt; 初期化されてないデータ</li>
+      <li>.rsrc -&gt; リソース</li>
+    </ul>
+  </li>
+</ul>
+
+<hr />
+
+<h2 id="net">.NET</h2>
+
+<p>https://codingwithspike.wordpress.com/2012/07/26/building-a-net-disassembler-part-2-reading-virtual-directories-and-sections/</p>
+
+<h3 id="clr_header">clr_header</h3>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>typedef struct IMAGE_COR20_HEADER
+{
+    DWORD                   cb;              
+    WORD                    MajorRuntimeVersion;
+    WORD                    MinorRuntimeVersion;
+    IMAGE_DATA_DIRECTORY    MetaData;        
+    DWORD                   Flags;           
+    union {
+        DWORD               EntryPointToken;
+        DWORD               EntryPointRVA;
+    };
+    IMAGE_DATA_DIRECTORY    Resources;
+    IMAGE_DATA_DIRECTORY    StrongNameSignature;
+
+    IMAGE_DATA_DIRECTORY    CodeManagerTable;
+    IMAGE_DATA_DIRECTORY    VTableFixups;
+    IMAGE_DATA_DIRECTORY    ExportAddressTableJumps;
+    IMAGE_DATA_DIRECTORY    ManagedNativeHeader;
+}
+</code></pre></div></div>
+
+<h3 id="metadata_header">METADATA_HEADER</h3>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>struct MetadataStreamHeader {
+0x00 DWORD Signature
+0x04 WORD MajorVersion
+0x06 WORD MinorVersion
+0x08 DWORD Reserved1
+0x0c DWORD VersionStringLength
+0x10 STRING VersionString
+0xXX WORD Flags
+0xXX WORD NumberOfStreams
+}
+</code></pre></div></div>
+
+<h3 id="resource-file">Resource file</h3>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>struct {
+  DWORD Signature // 0xBEEFCACE
+  DWORD NumberOfReaders
+  DWORD sizeOfReaderTypes
+  strings
+  DWORD ResourceFileVersion
+  DWORD NumberOfActualResources
+  DWORD NumberOfResourceTypes
+}
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="iat-import-address-table">IAT (Import Address Table)</h2>
+
+<p>プログラムで使用するAPI関数のプログラムコード開始位置のアドレスを格納したテーブル。
+プロセスが作成される時に、各DLLファイルが読み込まれたアドレスをベースにしてこのメモリ上の実行可能ファイル内にあるIATを実際の関数開始アドレスで書き換える。
+プログラムはIATを参照すればAPI関数を呼び出せるようになる。</p>
+
+<h2 id="dll-dynamic-link-library">DLL (Dynamic Link Library)</h2>
+
+<p>プログラムに動的にリンクするライブラリ</p>
+
+<p>単体では動かない</p>
+
+<p>実行ファイル内にあらかじめどのDLLがどの関数を使うかの情報を格納しておくことがおおい。実行途中に指定することも可能。LoadLibrary関数を使う</p>
+
+<p>OSからアプリケーションへAPI関数を提供するインターフェイスとも言える</p>
+
+<h2 id="カーネルドライバ---カーネルモードで動作するドライバ">カーネルドライバ - カーネルモードで動作するドライバ</h2>
+
+<p>ドライバ - OSと同じく、カーネルモードで動作するプログラムとして実行される。</p>
+
+<p>OS深部にアクセスできるため、OSのみが保持してる情報を取得できる。OSの深層部にあるデータを変更してプロセスを隠蔽できる。</p>
+
+<h2 id="プロセス実行の仕組みとスレッド">プロセス実行の仕組みとスレッド</h2>
+
+<p>プロセス - 実行処理単位</p>
+
+<ol>
+  <li>初期化処理 - スタックやメモリの準備やIATの書き換えがされて、メモリ領域の確保と実行可能ファイルのリンクをする</li>
+  <li>一つずつニーモニックを実行していく</li>
+</ol>
+
+<p>Windows上でのプロセス実行処理はタイムスライス(ごく短い時間でプロセスを切り替えて実行し、同時に実行しているように見せる)で動いている(マルチタスク)。切り替え時にはレジスタ内のデータを一時退避して、次には復元して続きを行う。</p>
+
+<p>スレッド - プロセスをさらに小さい実行単位に分けた単位</p>
+
+<ul>
+  <li>スレッドの追加 - 新たなスレッドとして次に実行するアドレスを指定して追加。各スレッドはプロセスメモリを共有する。
+    <ul>
+      <li>CreateThread - 自分のプロセス内に追加</li>
+      <li>CreateRemoteThread - 他のプロセス内に追加</li>
+    </ul>
+  </li>
+</ul>
+
+<p>プロセスメモリ上には、詳細な情報が記された構造体がある(PEB - Process Environment Block)。
+各スレッドにも、詳細な情報が記された構造体がある(TEB - Thread Environment Block)。</p>
+
+<p>プロセスメモリ(仮想アドレス空間)は各プロセスごとに独立していて、基本的に互いに干渉できない。ページング方式(プロセスメモリをページという小さな単位に分けて、リアルタイムで使われるページだけメモリに読み込み、他はHDDなどに保存しておく)が使われている。</p>
+
+          </div>
+
+          <div class="article-share">
+            
+            
+            <a href="https://twitter.com/home?status=PE+File - /posts/pefile" title="Share on Twitter" rel="noreferrer noopener" target="_blank">
+              <svg viewBox="0 0 512 512"><path d="M492 109.5c-17.4 7.7-36 12.9-55.6 15.3 20-12 35.4-31 42.6-53.6 -18.7 11.1-39.4 19.2-61.5 23.5C399.8 75.8 374.6 64 346.8 64c-53.5 0-96.8 43.4-96.8 96.9 0 7.6 0.8 15 2.5 22.1 -80.5-4-151.9-42.6-199.6-101.3 -8.3 14.3-13.1 31-13.1 48.7 0 33.6 17.2 63.3 43.2 80.7C67 210.7 52 206.3 39 199c0 0.4 0 0.8 0 1.2 0 47 33.4 86.1 77.7 95 -8.1 2.2-16.7 3.4-25.5 3.4 -6.2 0-12.3-0.6-18.2-1.8 12.3 38.5 48.1 66.5 90.5 67.3 -33.1 26-74.9 41.5-120.3 41.5 -7.8 0-15.5-0.5-23.1-1.4C62.8 432 113.7 448 168.3 448 346.6 448 444 300.3 444 172.2c0-4.2-0.1-8.4-0.3-12.5C462.6 146 479 129 492 109.5z"/></svg>
+            </a>
+            <a href="https://www.facebook.com/sharer/sharer.php?u=/posts/pefile" title="Share on Facebook" rel="noreferrer noopener" target="_blank">
+              <svg viewBox="0 0 512 512"><path d="M288 192v-38.1c0-17.2 3.8-25.9 30.5-25.9H352V64h-55.9c-68.5 0-91.1 31.4-91.1 85.3V192h-45v64h45v192h83V256h56.4l7.6-64H288z"/></svg>
+            </a>
+            <a href="https://plus.google.com/share?url=/posts/pefile" title="Share on Google+" rel="noreferrer noopener" target="_blank">
+              <svg viewBox="0 0 128 128"><path d="M40.7 55.9v16.1c0 0 15.6 0 22 0C59.2 82.5 53.8 88.2 40.7 88.2c-13.3 0-23.7-10.8-23.7-24.2s10.4-24.2 23.7-24.2c7.1 0 11.6 2.5 15.8 5.9 3.3-3.3 3.1-3.8 11.6-11.9 -7.2-6.6-16.8-10.6-27.4-10.6C18.2 23.3 0 41.5 0 64c0 22.5 18.2 40.7 40.7 40.7 33.6 0 41.8-29.3 39-48.8H40.7zM113.9 56.7V42.6h-10.1v14.1H89.4v10.1h14.5v14.5h10.1V66.8H128V56.7H113.9z"/></svg>
+            </a>
+          </div>
+
+          
+        </article>
+        <footer class="footer scrollappear">
+  <p>
+    Chalk is a high quality, completely customizable, performant and 100% free
+    blog template for Jekyll built by
+    <a href="/about" title="About me">Nielsen Ramon</a>. Download it <a href="https://github.com/nielsenramon/chalk" rel="noreferrer noopener" target="_blank" title="Download Chalk">here</a>.
+  </p>
+</footer>
+
+      </div>
+    </div>
+  </main>
+  
+
+<script src="/assets/vendor.js"></script>
+
+
+
+  <script src="/assets/webfonts.js"></script>
+
+
+
+
+  <script src="/assets/scrollappear.js"></script>
+
+
+
+<script src="/assets/application.js"></script>
+
+
+</body>
+</html>

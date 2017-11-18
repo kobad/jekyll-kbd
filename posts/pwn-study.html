@@ -1,0 +1,437 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>kobadlve | Pwn Memo</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <meta property="og:title" content="Pwn Memo">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="/posts/pwn-study">
+  <meta property="og:description" content="">
+  <meta property="og:site_name" content="kobadlve">
+  <meta property="og:image" content="/assets/og-image.jpg">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:url" content="/posts/pwn-study">
+  <meta name="twitter:title" content="Pwn Memo">
+  <meta name="twitter:description" content="">
+  <meta name="twitter:image" content="/assets/og-image.jpg">
+
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+  <link href="/feed.xml" type="application/rss+xml" rel="alternate" title="kobadlve Last 10 blog posts" />
+
+  
+
+  
+    <link rel="stylesheet" href="/assets/dark.css">
+
+  
+</head>
+
+<body>
+  <main>
+    <div class="grid grid-centered">
+      <div class="grid-cell">
+        <nav class="header-nav scrollappear">
+  <a href="/" class="header-logo" title="kobadlve">kobadlve</a>
+  <div class="header-left">
+    <a href="/blog/">Blog Top</a>
+    <a href="/category/">Category</a>
+  </div>
+  <ul class="header-links">
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+  </ul>
+</nav>
+
+        <article class="article scrollappear">
+          <header class="article-header">
+            <h1>Pwn Memo</h1>
+            <p></p>
+            <div class="article-list-footer">
+              <span class="article-list-date">
+                April 21, 2017
+              </span>
+              <span class="article-list-divider">-</span>
+              <span class="article-list-minutes">
+                
+                
+                  2 minute read
+                
+              </span>
+              <span class="article-list-divider">-</span>
+              <div class="article-list-tags">
+                
+              </div>
+            </div>
+          </header>
+
+          <div class="article-content">
+            <h2 id="メモリレイアウト">メモリレイアウト</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">name</th>
+      <th style="text-align: center">exp</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center">.text</td>
+      <td style="text-align: center">アセンブリコード</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">.data</td>
+      <td style="text-align: center">初期値有りデータ</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">.bss</td>
+      <td style="text-align: center">初期値無しデータ</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">heap ↓</td>
+      <td style="text-align: center">動的確保領域</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">shared object</td>
+      <td style="text-align: center">共有オブジェクト(libc.so)</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">stack ↑</td>
+      <td style="text-align: center">スタック領域</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">kernel-area</td>
+      <td style="text-align: center">カーネルが使用</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><code class="highlighter-rouge">$gdb-peda vmmap</code>か、<code class="highlighter-rouge">cat /proc/$PPID/maps</code>で確認</p>
+
+<p><code class="highlighter-rouge">0x1000</code>倍数で確保される(ページ)。プロセス起動時にmmapで確保。</p>
+
+<p>ユーザからは仮想メモリしか見れない。</p>
+
+<p>ASLR(アドレス空間配置のランダム化.下位7bitランダム化)、PIE(位置独立実行形式.下位4bitランダム化)、NS(text領域以外の実行権限を落とす)の確認ができる。</p>
+
+<p>外部ライブラリ(*.so)のアドレスを保存するテーブル(GOT)の権限を決めるのがRELRO</p>
+
+<h2 id="ヒープ">ヒープ</h2>
+
+<p>malloc()でヒープ領域からメモリ確保、free()で解放。</p>
+
+<p>利用中</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>prev_size
+size
+data - sizeが8の倍数になるようにパディング
+</code></pre></div></div>
+<p>sizeの下位３bit</p>
+<ol>
+  <li>PREV_INUSE - 直前チャンクが利用中かどうか</li>
+  <li>IS_MMAPED - mmapで確保されたアドレスかどうか</li>
+  <li>IS_NON_MAINARENA - メインのARENAから確保したかどうか</li>
+</ol>
+
+<p>解放済み</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>prev_size
+size
+fd - 次のfree済みチャンクのアドレス
+bk - 前のfree済みチャンクのアドレス
+</code></pre></div></div>
+
+<p>free()したときに、すぐ隣にfree済みチャンクがあれば結合</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">P2</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center">P</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">P-&gt;fd</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">P-&gt;dk</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>free(P2)した時、P2とPを結合するためにPを一旦リストから外す(unlink. <code class="highlighter-rouge">P-&gt;fd-&gt;bk = P-&gt;bk, P-&gt;dk-&gt;fd = P-&gt;fd</code>)</p>
+
+<h3 id="use-after-free">Use After free</h3>
+
+<ol>
+  <li>new で確保(ptr)</li>
+  <li>delete - この時、バグでこのアドレスに読み書きができてしまうとする</li>
+  <li>new で確保(ptr2)。たまたまptrで確保したアドレスから確保</li>
+  <li>ptr2がオブジェクトなら仮想関数テーブル(vptr)を持っている</li>
+  <li>ptrがまだ利用可能で、ptrを書き換えるとvptrを変更できてしまう。</li>
+</ol>
+
+<h2 id="unlink-attack">Unlink Attack</h2>
+
+<p>ヒープBOF時に直下がfree済みチャンクの時、fd/dkメンバを上書きできる</p>
+
+<ul>
+  <li>P-&gt;fd-&gt;bk == P</li>
+  <li>P-&gt;bk-&gt;fd == P
+の時、発動できる</li>
+</ul>
+
+<h3 id="fastbins">fastbins</h3>
+
+<p>高速化のためにデータサイズごとにリストを作る(8の倍数)</p>
+
+<h2 id="スタック">スタック</h2>
+
+<h3 id="stack-bof">Stack BOF</h3>
+
+<ul>
+  <li>サイズ制限がなければ自由に上書きできる -&gt; Return先も指定可</li>
+</ul>
+
+<p>リターン先アドレス（例えばシェルコード）のアドレスを推測するには？</p>
+
+<ul>
+  <li>nop-sled - shellcodeまでをnop(0x90)で埋めれば、nop-sledのどこかにたどり着けばshellcodeまでたどり着ける。</li>
+  <li>ret2esp - jmp esp, call espなどを使いshellcodeを呼ぶ</li>
+  <li>Stager - 短いアセンブリコードを送り込み、shellcodeを追加読み込みさせる</li>
+</ul>
+
+<h3 id="スタック実行不可nx---stackheap領域を実行不可にする">スタック実行不可(NX) - stack,heap領域を実行不可にする</h3>
+
+<p>回避するには？？</p>
+
+<p>書き込み可能な固定アドレスを作り、シェルコードを書き込み実行する。</p>
+
+<p>ここでplt(外部関数アドレスを動的に求める機構)を使う。 -&gt; ret2plt</p>
+<ul>
+  <li>ret2plt - ret2pop(コード中のpopを呼び出す)を組み合わせるとret2pltを連続で呼べる
+    <ul>
+      <li>pedaで ropgadgetで見つかる</li>
+    </ul>
+  </li>
+</ul>
+
+<p>使いたい関数がpltにない場合 -&gt; ret2libc</p>
+
+<h2 id="ret2libc">ret2libc</h2>
+
+<p>libc内の関数オフセットはファイルでもメモリでも固定なので、ベースアドレスを加算されるだけ。</p>
+
+<p>使いたい関数のオフセットを調べておき、あとはlibc.soの先頭アドレスに加算すれば良い。</p>
+
+<ul>
+  <li>libc内の関数アドレス調査
+    <ul>
+      <li>ldd ropasaurusrex - libc path</li>
+      <li>
+        <table>
+          <tbody>
+            <tr>
+              <td>objdump -d path2libc</td>
+              <td>grep “system&gt;:”</td>
+            </tr>
+          </tbody>
+        </table>
+      </li>
+    </ul>
+  </li>
+  <li>libc内の固定文字列調査
+    <ul>
+      <li>
+        <table>
+          <tbody>
+            <tr>
+              <td>strings -tx /lib/i386-linux-gnu/libc.so.6</td>
+              <td>grep ‘bin/sh’</td>
+            </tr>
+          </tbody>
+        </table>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<p>対象と自分の環境でアドレスが変わる場合は0x1000ごとにブルートフォース</p>
+
+<p>ret2libcの対策としてASLR(アドレスのランダム化)</p>
+
+<ul>
+  <li>ASLRの回避
+    <ul>
+      <li>GOTを利用。一度解決されたGOTには元の外部アドレスが書かれる。ここからlibcのベースアドレスを求め、オフセットを足して目的の関数を計算。</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="rop">ROP</h3>
+
+<p>.text内のコードの断片(rop gadget)を組み合わせていく。</p>
+
+<p>ropgadgetの探索 -&gt; rp++</p>
+
+<p>.text内に、ropgadgetが少ない場合にlibc内のガジェットを利用もできる。</p>
+
+<p>大量のBOF量が必要なので、-&gt; stack pivot</p>
+
+<ul>
+  <li>stack pivot
+    <ul>
+      <li>bss(適当なところ)にROPを読み込んで置いて、最後にleaveでbssへ飛ばして、bssをスタックとして続けていく。</li>
+      <li>off-by-one stack bof(1バイトしかbofしない)にも有効。</li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="動的デバッグ環境">動的デバッグ環境</h2>
+
+<p>接続先の実行ファイルをgdbで見たい。</p>
+
+<ul>
+  <li>main.sh - <code class="highlighter-rouge">gdbserver localhost:40800 ./ropasaurusrex</code></li>
+  <li><code class="highlighter-rouge">socat tcp-listen:40801, reuseaddr,fork exec:"./main.sh"</code></li>
+  <li>Attack
+    <ul>
+      <li><code class="highlighter-rouge">perl -e 'print "A"*128 ."BBBB"' | nc localhost 408001</code></li>
+    </ul>
+  </li>
+  <li>vi cmd - <code class="highlighter-rouge">file ./ropasaurusrex \n target remote localhost:40800 \n c</code></li>
+  <li><code class="highlighter-rouge">gdb ./ropasaurusrex -q -x cmd</code></li>
+</ul>
+
+<h2 id="情報収集">情報収集</h2>
+
+<ul>
+  <li>plt/got - <code class="highlighter-rouge">objdump -d -M intel file | grep "@plt&gt;:" -A1</code>, <code class="highlighter-rouge">readelf -r</code></li>
+  <li>ropgadget - <code class="highlighter-rouge">gdb ropgadget</code></li>
+  <li>.data - <code class="highlighter-rouge">readelf -S file | fgrep .data</code></li>
+  <li>libc system offset - <code class="highlighter-rouge">$ldd file $objdump -d /lib/i386-linux-gnu/libc.so.6 | grep "system&gt;:"</code></li>
+</ul>
+
+<h2 id="テクニック">テクニック</h2>
+<p>ROP</p>
+<ul>
+  <li>__libc_csu_init - スタックからレジスタへ値を入れられる汎用ガジェット</li>
+  <li>alarm(x) - exa/raxにropで任意の値を入れたい
+    <ul>
+      <li>alarm(x) -&gt; alarm(0)と実行するとeax/raxにxが入る</li>
+    </ul>
+  </li>
+  <li>Repeat-code - サンドボックスによりシステムコールが制限されているケース
+    <ul>
+      <li>libcにある\xEB\xFEを活用し１バイトずつ特定していく</li>
+    </ul>
+  </li>
+  <li>One-gadget-RCE - libc内に自動的にexecve(“/bin/sh”,0,0)を呼ぶアドレスがあるx64のみ</li>
+  <li>ROP発展
+    <ul>
+      <li>JOP - jumpをベースにしたROP</li>
+      <li>COP - callをベースにしたrop</li>
+      <li>SROP - シグナル割り込みからの復帰を使って、レジスタを書き換えropを簡略化</li>
+      <li>BROP - 手元にバイナリがない状態でのROP</li>
+    </ul>
+  </li>
+</ul>
+
+<p>GOT Overwrite</p>
+<ul>
+  <li>気をつける関数 - strlen(), strcmp, memcmp, atoi, strtol, free</li>
+</ul>
+
+<p>libcオフセット特定</p>
+<ul>
+  <li>http://libcdb.com/</li>
+</ul>
+
+<p>その他</p>
+<ul>
+  <li>ret2dl_runtime_resolve</li>
+  <li>_IO_jump_t Overwrite</li>
+  <li>ld specific ptr Overwrite</li>
+  <li>canary brute force</li>
+  <li>master canary forging</li>
+  <li>partial Overwrite</li>
+  <li>gmesg command</li>
+</ul>
+
+          </div>
+
+          <div class="article-share">
+            
+            
+            <a href="https://twitter.com/home?status=Pwn+Memo - /posts/pwn-study" title="Share on Twitter" rel="noreferrer noopener" target="_blank">
+              <svg viewBox="0 0 512 512"><path d="M492 109.5c-17.4 7.7-36 12.9-55.6 15.3 20-12 35.4-31 42.6-53.6 -18.7 11.1-39.4 19.2-61.5 23.5C399.8 75.8 374.6 64 346.8 64c-53.5 0-96.8 43.4-96.8 96.9 0 7.6 0.8 15 2.5 22.1 -80.5-4-151.9-42.6-199.6-101.3 -8.3 14.3-13.1 31-13.1 48.7 0 33.6 17.2 63.3 43.2 80.7C67 210.7 52 206.3 39 199c0 0.4 0 0.8 0 1.2 0 47 33.4 86.1 77.7 95 -8.1 2.2-16.7 3.4-25.5 3.4 -6.2 0-12.3-0.6-18.2-1.8 12.3 38.5 48.1 66.5 90.5 67.3 -33.1 26-74.9 41.5-120.3 41.5 -7.8 0-15.5-0.5-23.1-1.4C62.8 432 113.7 448 168.3 448 346.6 448 444 300.3 444 172.2c0-4.2-0.1-8.4-0.3-12.5C462.6 146 479 129 492 109.5z"/></svg>
+            </a>
+            <a href="https://www.facebook.com/sharer/sharer.php?u=/posts/pwn-study" title="Share on Facebook" rel="noreferrer noopener" target="_blank">
+              <svg viewBox="0 0 512 512"><path d="M288 192v-38.1c0-17.2 3.8-25.9 30.5-25.9H352V64h-55.9c-68.5 0-91.1 31.4-91.1 85.3V192h-45v64h45v192h83V256h56.4l7.6-64H288z"/></svg>
+            </a>
+            <a href="https://plus.google.com/share?url=/posts/pwn-study" title="Share on Google+" rel="noreferrer noopener" target="_blank">
+              <svg viewBox="0 0 128 128"><path d="M40.7 55.9v16.1c0 0 15.6 0 22 0C59.2 82.5 53.8 88.2 40.7 88.2c-13.3 0-23.7-10.8-23.7-24.2s10.4-24.2 23.7-24.2c7.1 0 11.6 2.5 15.8 5.9 3.3-3.3 3.1-3.8 11.6-11.9 -7.2-6.6-16.8-10.6-27.4-10.6C18.2 23.3 0 41.5 0 64c0 22.5 18.2 40.7 40.7 40.7 33.6 0 41.8-29.3 39-48.8H40.7zM113.9 56.7V42.6h-10.1v14.1H89.4v10.1h14.5v14.5h10.1V66.8H128V56.7H113.9z"/></svg>
+            </a>
+          </div>
+
+          
+        </article>
+        <footer class="footer scrollappear">
+  <p>
+    Chalk is a high quality, completely customizable, performant and 100% free
+    blog template for Jekyll built by
+    <a href="/about" title="About me">Nielsen Ramon</a>. Download it <a href="https://github.com/nielsenramon/chalk" rel="noreferrer noopener" target="_blank" title="Download Chalk">here</a>.
+  </p>
+</footer>
+
+      </div>
+    </div>
+  </main>
+  
+
+<script src="/assets/vendor.js"></script>
+
+
+
+  <script src="/assets/webfonts.js"></script>
+
+
+
+
+  <script src="/assets/scrollappear.js"></script>
+
+
+
+<script src="/assets/application.js"></script>
+
+
+</body>
+</html>
