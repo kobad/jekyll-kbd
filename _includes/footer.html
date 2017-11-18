@@ -1,13 +1,7 @@
-<footer class="footer">
-    <div class="footer__container">
-      <p class="copyright"><small>&copy; 2017 {{ site.author.name }}</small></p>
-
-      <div class="social-link">
-        {% if site.author.github %}
-          <p class="social-link__item">
-            <a href="https://github.com/{{ site.author.github }}"><i class="fa fa-github"></i></a>
-          </p>
-        {% endif %}
-      </div>
-    </div><!--footer__container-->
+<footer class="footer {% if site.scrollappear_enabled %}scrollappear{% endif %}">
+  <p>
+    Chalk is a high quality, completely customizable, performant and 100% free
+    blog template for Jekyll built by
+    <a href="{{ 'about' | relative_url }}" title="About me">Nielsen Ramon</a>. Download it <a href="https://github.com/nielsenramon/chalk" rel="noreferrer noopener" target="_blank" title="Download Chalk">here</a>.
+  </p>
 </footer>

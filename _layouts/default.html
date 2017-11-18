@@ -1,21 +1,16 @@
-<!DOCTYPE html>
-<html lang="ja">
+<!doctype html>
+<html lang="en">
 {% include head.html %}
 <body>
-
-  {% include header.html %}
-
-  <main class="page-content" aria-label="Content">
-  <section class="chapters cf">
-      <div class="wrapper">
-      {{ content }}
+  <main>
+    <div class="grid grid-centered">
+      <div class="grid-cell">
+        {% include navigation.html %}
+        {{ content }}
+        {% include footer.html %}
       </div>
-  </section>
+    </div>
   </main>
-
-  {% include footer.html %}
-
-  {% include analytics.html %}
-
+  {% include javascripts.html %}
 </body>
 </html>
