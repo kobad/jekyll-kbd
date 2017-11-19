@@ -15,6 +15,11 @@ parmalink: /blog/
       </a>
       <p>{{ post.description }}</p>
       <div class="article-list-footer">
+        {% for category in post.categories %}
+          {% if category != "articles" %}
+            <div class=ariticle-category>{{ category }}</div>
+          {% endif %}
+        {% endfor %}
         <span class="article-list-date">
           {{ post.date | date: "%B %-d, %Y" }}
         </span>
