@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: post 
 title: Category
 permalink: /category/
 ---
@@ -9,7 +9,7 @@ permalink: /category/
   {% if category[0] != 'articles' and category[0] != 'notes' %}
   <ul class="name">
       {% assign name = category[0] %}
-      {{ category[0] }} ({{ site.categories[name] | size }})
+      <h2> {{ category[0] }} ({{ site.categories[name] | size }}) </h2>
     {% for page in site.categories[name] %}
       <li class="element"><a href="{{ site.baseurl }}{{ page.url }}">{{ page.title }}</a> (<time>{{ page.date | date: '%Y-%m-%d' }}</time>)</li>
     {% endfor %}
