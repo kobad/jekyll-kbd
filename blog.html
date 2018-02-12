@@ -1,7 +1,7 @@
 ---
 layout: default
-title: "kobadlve"
-parmalink: /blog/
+title: "blog"
+permalink: /blog/
 ---
 
 <ul class="article-list">
@@ -10,16 +10,21 @@ parmalink: /blog/
       <a href="{{ post.url | relative_url }}" title="{{ post.title }}">
         <h5>
           {{ post.title }}
-          <svg class="icon-arrow-right"><use href="{% asset_path icon-arrow-right.svg %}#icon-arrow-right" xlink:href="{% asset_path icon-arrow-right.svg %}#icon-arrow-right"></use></svg>
         </h5>
       </a>
-      <p>{{ post.description }}</p>
-      <div class="article-list-footer">
+      <p>
         {% for category in post.categories %}
           {% if category != "articles" %}
             <div class=ariticle-category>{{ category }}</div>
           {% endif %}
         {% endfor %}
+        {% if post.description %}
+          {{ post.description }}  
+        {% else %}
+          {{ post.excerpt }}
+        {% endif %}
+      </p>
+      <div class="article-list-footer">
         <span class="article-list-date">
           {{ post.date | date: "%B %-d, %Y" }}
         </span>
@@ -44,10 +49,10 @@ parmalink: /blog/
   {% if paginator.total_pages > 1 %}
     <li class="article-pagination {% if site.settings.scrollappear_enabled %}scrollappear{% endif %}">
       {% if paginator.next_page %}
-        <a href="{{ paginator.next_page_path }}" class="article-pagination-left"><svg class="icon-arrow-left"><use href="{% asset_path icon-arrow-left.svg %}#icon-arrow-left" xlink:href="{% asset_path icon-arrow-left.svg %}#icon-arrow-left"></use></svg> Older posts</a>
+        <a href="{{ paginator.next_page_path }}" class="article-pagination-left">{% include svg-icon.html icon="arrow-left" %} Older posts</a>
       {% endif %}
       {% if paginator.previous_page %}
-        <a href="{{ paginator.previous_page_path }}" class="article-pagination-right">Newer posts <svg class="icon-arrow-right"><use href="{% asset_path icon-arrow-right.svg %}#icon-arrow-right" xlink:href="{% asset_path icon-arrow-right.svg %}#icon-arrow-right"></use></svg></a>
+        <a href="{{ paginator.previous_page_path }}" class="article-pagination-right">Newer posts {% include svg-icon.html icon="arrow-right" %}</a>
       {% endif %}
     </li>
   {% endif %}

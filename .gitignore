@@ -1,7 +1,13 @@
-*.gem
-.bundle
-.sass-cache
-_site
-_drafts
+*.DS_Store
+Desktop.ini
+Thumbs.db
+
+# Project
+!.keep
+*.sass-cache
+/_assets/yarn/
+/_site/
+/.jekyll-cache/
 Gemfile.lock
-.asset-cache
+yarn.lock
+.idea
