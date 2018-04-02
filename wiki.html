@@ -1,21 +1,6 @@
 ---
-layout: wiki_page 
+layout: wiki 
 title: Wiki 
-permalink: /wiki/
+icon: fa-book
+order: 2
 ---
-
-<div class="container wiki">
-{% for category in site.categories %}
-  {% if category[0] != 'articles' and category[0] != 'wiki' %}
-  <ul class="name">
-    {% assign name = category[0] %}
-    {% for page in site.categories[name] %}
-      {% if page.categories[0] == 'wiki' %}
-        <h2> {{ category[0] }} </h2>
-        <li class="element"><a href="{{ site.baseurl }}{{ page.url }}">{{ page.title }}</a> (<time>{{ page.date | date: '%Y-%m-%d' }}</time>)</li>
-      {% endif %}
-    {% endfor %}
-  </ul>
-  {% endif %}
-{% endfor %}
-</div>
