@@ -1,6 +1,4 @@
-My web site.
+# kobadbadbad
 
-theme: Prologue
-
-
+Theme: [chalk](https://github.com/nielsenramon/chalk)
 
