@@ -10,6 +10,9 @@ echo "Started deploying"
 # Checkout master branch.
 git checkout master 
 
+# Merge develop
+git reset --hard develop
+
 # Build site.
 yarn install --modules-folder ./_assets/yarn
 bundle exec jekyll build
