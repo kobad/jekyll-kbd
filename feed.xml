@@ -1,20 +1,90 @@
----
----
 <?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="https://www.w3.org/2005/Atom" xmlns:dc="https://purl.org/dc/elements/1.1/">
   <channel>
-    <title>{{ site.name | xml_escape }}</title>
-    <description>{% if site.description %}{{ site.description | xml_escape }}{% endif %}</description>
-    <link>{{ site.url }}</link>
-    <atom:link href="{{ page.path | absolute_url }}" rel="self" type="application/rss+xml" />
-    {% for post in site.posts limit:10 %}
+    <title>kobadbadbad</title>
+    <description></description>
+    <link></link>
+    <atom:link href="/feed.xml" rel="self" type="application/rss+xml" />
+    
       <item>
-        <title>{{ post.title | xml_escape }}</title>
-        <description>{{ post.description | xml_escape }}</description>
-        <pubDate>{{ post.date | date_to_rfc822 }}</pubDate>
-        <link>{{ post.url | absolute_url }}</link>
-        <guid isPermaLink="true">{{ post.url | absolute_url }}</guid>
+        <title>SECCON 2017 Writeup</title>
+        <description></description>
+        <pubDate>Sun, 10 Dec 2017 16:40:00 +0900</pubDate>
+        <link>/posts/seccon2017</link>
+        <guid isPermaLink="true">/posts/seccon2017</guid>
       </item>
-    {% endfor %}
+    
+      <item>
+        <title>katagaitaiCTF #9 XSS Knock Writeup</title>
+        <description></description>
+        <pubDate>Tue, 29 Aug 2017 21:00:00 +0900</pubDate>
+        <link>/posts/katagaitaictf-9</link>
+        <guid isPermaLink="true">/posts/katagaitaictf-9</guid>
+      </item>
+    
+      <item>
+        <title>セキュリティ・キャンプ全国大会2017参加しました</title>
+        <description></description>
+        <pubDate>Sun, 20 Aug 2017 18:00:00 +0900</pubDate>
+        <link>/posts/seccamp-end</link>
+        <guid isPermaLink="true">/posts/seccamp-end</guid>
+      </item>
+    
+      <item>
+        <title>OSM To mbtiles</title>
+        <description></description>
+        <pubDate>Sun, 09 Jul 2017 12:59:26 +0900</pubDate>
+        <link>/posts/osm2mbtiles</link>
+        <guid isPermaLink="true">/posts/osm2mbtiles</guid>
+      </item>
+    
+      <item>
+        <title>TMCTF 2017 Writeup</title>
+        <description></description>
+        <pubDate>Sun, 25 Jun 2017 21:00:12 +0900</pubDate>
+        <link>/posts/tmctf-2017</link>
+        <guid isPermaLink="true">/posts/tmctf-2017</guid>
+      </item>
+    
+      <item>
+        <title>T-Pot構築</title>
+        <description></description>
+        <pubDate>Fri, 23 Jun 2017 09:19:00 +0900</pubDate>
+        <link>/posts/t-pot</link>
+        <guid isPermaLink="true">/posts/t-pot</guid>
+      </item>
+    
+      <item>
+        <title>セキュリティキャンプ2017応募用紙晒し</title>
+        <description></description>
+        <pubDate>Sat, 17 Jun 2017 22:00:31 +0900</pubDate>
+        <link>/posts/seccamp2017</link>
+        <guid isPermaLink="true">/posts/seccamp2017</guid>
+      </item>
+    
+      <item>
+        <title>DockerでWordPressやられ環境を作る。</title>
+        <description></description>
+        <pubDate>Sun, 11 Jun 2017 01:32:22 +0900</pubDate>
+        <link>/posts/docker-wordpress</link>
+        <guid isPermaLink="true">/posts/docker-wordpress</guid>
+      </item>
+    
+      <item>
+        <title>DockerでDionaea構築</title>
+        <description></description>
+        <pubDate>Sat, 10 Jun 2017 23:47:31 +0900</pubDate>
+        <link>/posts/docker-dionaea</link>
+        <guid isPermaLink="true">/posts/docker-dionaea</guid>
+      </item>
+    
+      <item>
+        <title>PS4　パケットキャプチャ</title>
+        <description></description>
+        <pubDate>Wed, 14 Dec 2016 23:00:00 +0900</pubDate>
+        <link>/posts/packet-ps4</link>
+        <guid isPermaLink="true">/posts/packet-ps4</guid>
+      </item>
+    
   </channel>
 </rss>

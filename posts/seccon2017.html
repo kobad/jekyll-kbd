@@ -1,0 +1,388 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>kobadbadbad | SECCON 2017 Writeup</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <meta property="og:title" content="SECCON 2017 Writeup">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="/posts/seccon2017">
+  <meta property="og:description" content="">
+  <meta property="og:site_name" content="kobadbadbad">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:url" content="/posts/seccon2017">
+  <meta name="twitter:title" content="SECCON 2017 Writeup">
+  <meta name="twitter:description" content="">
+
+  
+    <meta property="og:image" content="/assets/og-image-ee46bbc61b334e821e81534b1fd43f3fee6f020ec174b3c2114445695fd48c01.jpg">
+    <meta name="twitter:image" content="/assets/og-image-ee46bbc61b334e821e81534b1fd43f3fee6f020ec174b3c2114445695fd48c01.jpg">
+  
+
+  <link href="/feed.xml" type="application/rss+xml" rel="alternate" title="kobadbadbad Last 10 blog posts" />
+
+  
+
+  
+    <link rel="icon" type="image/x-icon" href="/assets/favicon-light-11327753546b2135c989eee5cd83497a2734b702928d016839d795f6c706e3d5.ico">
+    <link rel="apple-touch-icon" href="/assets/apple-touch-icon-light-d161409442b7e523089f24d08d0a55951549ece7504207c376d53b020713494d.png">
+    <link rel="stylesheet" type="text/css" href="/assets/light-9292c3bf9174b806d63296935d8603541802db853eb635d9b92797feb904b915.css">
+  
+</head>
+
+<body>
+  <main>
+    <div class="grid grid-centered">
+      <div class="grid-cell">
+        <nav class="header-nav scrollappear">
+  <a href="/" class="header-logo" title="kobadbadbad">kobadbadbad</a>
+  <ul class="header-links">
+    
+      <li>
+        <a href="/about" title="About me">
+          <svg xmlns="http://www.w3.org/2000/svg" class="icon-about">
+  <use href="/assets/about-ecf154b571ab8034ae00aeed91a3b7ad68db80b46d958753ad6216c919486e88.svg#icon-about" xlink:href="/assets/about-ecf154b571ab8034ae00aeed91a3b7ad68db80b46d958753ad6216c919486e88.svg#icon-about"></use>
+</svg>
+
+        </a>
+      </li>
+    
+    
+    
+    
+    
+      <li>
+        <a href="https://github.com/kobadlve" rel="noreferrer noopener" target="_blank" title="GitHub">
+          <svg xmlns="http://www.w3.org/2000/svg" class="icon-github">
+  <use href="/assets/github-094f81040819f34343ee6ffff0980f17e2807b08b595eaaf66ae3554934fd78d.svg#icon-github" xlink:href="/assets/github-094f81040819f34343ee6ffff0980f17e2807b08b595eaaf66ae3554934fd78d.svg#icon-github"></use>
+</svg>
+
+        </a>
+      </li>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      <li>
+        <a href="/feed.xml" rel="noreferrer noopener" target="_blank" title="RSS">
+          <svg xmlns="http://www.w3.org/2000/svg" class="icon-rss">
+  <use href="/assets/rss-541ec5cea9cefd10d2fcfec01888f3f231a8829940249835fa7b7b3a12ae0d0d.svg#icon-rss" xlink:href="/assets/rss-541ec5cea9cefd10d2fcfec01888f3f231a8829940249835fa7b7b3a12ae0d0d.svg#icon-rss"></use>
+</svg>
+
+        </a>
+      </li>
+    
+  </ul>
+</nav>
+
+        <article class="article scrollappear">
+          <header class="article-header">
+            <h1>SECCON 2017 Writeup</h1>
+            <p></p>
+            <div class="article-list-footer">
+              <span class="article-list-date">
+                December 10, 2017
+              </span>
+              <span class="article-list-divider">-</span>
+              <span class="article-list-minutes">
+                
+                
+                  3 minute read
+                
+              </span>
+              <span class="article-list-divider">-</span>
+              <div class="article-list-tags">
+                
+                  <a href="/tag/ctf">ctf</a>
+                
+              </div>
+            </div>
+          </header>
+
+          <div class="article-content">
+            <p>SECCON 2017のWriteupです。お疲れ様でした!</p>
+
+<p>Team wabisabi で参加して、</p>
+
+<ul>
+  <li>Run me - 100pt</li>
+  <li>Putchar music - 100pt</li>
+  <li>SHA-1 is dead - 100pt</li>
+  <li>Ps and Qs - 200pt</li>
+  <li>JPEG file - 100pt</li>
+</ul>
+
+<p>を解きました。
+高得点問題解けるようにならねば、、、</p>
+
+<p>以下Writeupです</p>
+
+<h2 id="run-me">Run me</h2>
+<p>フィボナッチ数列の問題
+そのままだと遅くてもとまらない</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">fib</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">n</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">n</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+    <span class="n">matrix</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+    <span class="k">while</span> <span class="n">n</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">n</span> <span class="o">%</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="n">mul</span><span class="p">(</span><span class="n">matrix</span><span class="p">,</span> <span class="n">result</span><span class="p">)</span>
+        <span class="n">matrix</span> <span class="o">=</span> <span class="n">mul</span><span class="p">(</span><span class="n">matrix</span><span class="p">,</span> <span class="n">matrix</span><span class="p">)</span>
+        <span class="n">n</span> <span class="o">//=</span> <span class="mi">2</span>
+    <span class="k">return</span> <span class="n">result</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+
+<span class="k">print</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">fib</span><span class="p">(</span><span class="mi">11011</span><span class="p">))[:</span><span class="mi">32</span><span class="p">])</span>
+</code></pre></div></div>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>python fib.py
+65076140832331717667772761541872
+</code></pre></div></div>
+
+<p>で答えは、<code class="highlighter-rouge">SECCON{65076140832331717667772761541872}</code> だったはず</p>
+
+<h2 id="putchar-music">Putchar music</h2>
+
+<p>整形すると</p>
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include &lt;math.h&gt;
+</span>
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kt">int</span> <span class="n">t</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">;</span>
+  <span class="kt">unsigned</span> <span class="kt">char</span> <span class="n">p</span><span class="p">[]</span> <span class="o">=</span> <span class="s">"###&lt;f_YM</span><span class="se">\204</span><span class="s">g_YM</span><span class="se">\204</span><span class="s">g_Y_H #&lt;f_YM</span><span class="se">\204</span><span class="s">g_YM</span><span class="se">\204</span><span class="s">g_Y_H #+-?[WKAMYJ/7 #+-?[WKgH #+-?[WKAMYJ/7hk</span><span class="se">\206\203</span><span class="s">tk</span><span class="se">\\</span><span class="s">YJAfkkk"</span><span class="p">;</span>
+  <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">t</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;;</span> <span class="n">i</span> <span class="o">=</span> <span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">p</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))</span> <span class="p">{</span>
+    <span class="kt">double</span> <span class="n">x</span> <span class="o">=</span> <span class="n">pow</span><span class="p">(</span><span class="mi">1</span><span class="p">.</span><span class="mo">05</span><span class="mi">946309435931</span><span class="p">,</span> <span class="n">p</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">/</span> <span class="mi">6</span> <span class="o">+</span> <span class="mi">13</span><span class="p">);</span>
+    <span class="k">for</span> <span class="p">(</span><span class="n">j</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">p</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">%</span> <span class="mi">6</span><span class="p">;</span> <span class="n">t</span><span class="o">++</span> <span class="o">%</span> <span class="p">(</span><span class="mi">8192</span> <span class="o">/</span> <span class="n">j</span><span class="p">);)</span>
+      <span class="n">putchar</span><span class="p">(</span><span class="n">t</span> <span class="o">&gt;&gt;</span> <span class="mi">5</span> <span class="o">|</span> <span class="p">(</span><span class="kt">int</span><span class="p">)(</span><span class="n">t</span> <span class="o">*</span> <span class="n">x</span><span class="p">));</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ gcc music.c
+$ ./a.out &gt; a.raw
+</code></pre></div></div>
+
+<p>別ターミナルで</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ sox -V -r 8k -e un -b 8 -c 1 a.raw -b 16 -e si -L a.wav rate -h 44.1k gain -1 trim 0 30
+</code></pre></div></div>
+
+<p>とすると、wavファイルができる</p>
+
+<p>聞くと、スターウォーズの音楽が流れる
+よって、<code class="highlighter-rouge">SECCON{STAR_WARS}</code>がフラグ</p>
+
+<p>参考</p>
+<ul>
+  <li>http://meandering-through-mathematics.blogspot.jp/2012/12/algorithmic-music.html</li>
+  <li>http://royal-paw.com/2012/01/bytebeats-in-c-and-python-generative-symphonies-from-extremely-small-programs/</li>
+</ul>
+
+<h2 id="sha-1-is-dead">SHA-1 is dead</h2>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>file1 != file2
+SHA1(file1) == SHA1(file2)
+SHA256(file1) &lt;&gt; SHA256(file2)
+2017KiB &lt; sizeof(file1) &lt; 2018KiB
+2017KiB &lt; sizeof(file2) &lt; 2018KiB
+* 1KiB = 1024 bytes
+</code></pre></div></div>
+
+<p>これを満たす奴を作る</p>
+
+<p>こちら(https://github.com/sonickun/sha1-collider)のスクリプトを拝借してpdfを作成した。</p>
+
+<p><code class="highlighter-rouge">convert</code>, <code class="highlighter-rouge">exiftool</code>を使って画像のリサイズと、コメントで地道にサイズを合わせた</p>
+
+<p>参考</p>
+<ul>
+  <li>http://73spica.tech/blog/sha1-collision/</li>
+  <li>https://github.com/73spica/sha1-collision/blob/master/collision.py</li>
+  <li>https://github.com/sonickun/sha1-collider</li>
+</ul>
+
+<h2 id="ps-and-qs">Ps and Qs</h2>
+<p>チームメイトがほとんどやっていたため、最後のデコード部だけやった。</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cipher
+pub1.pub
+pub2.pub
+</code></pre></div></div>
+<p>が渡される。</p>
+
+<p>RsaCtfToolを使って、pub1.pub, pub2.pubからn, eを求める</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ python RsaCtfTool.py --dumpkey --key ./pub1.pub
+[*] n: 847796795638781450678718708664542960446354226336422534142899480441478781747168340722544245493739168125415291376063352480076469305992008517388366298914970810765149321160596112226917023146371080685458239747986992197343482255681414590678694753885521068656675164266739274608505094927725285868801825144058835115051061857233824816176186349372737400492228548130718029270482313906040935333159681273527671359469173939861889228505791626525994180917670701909816457560622922219797109618405842358250940062127841301193206255543580550667149741357342408703680375118252445296600962244008043713708516004025217199954286478272550961283413053789743740774140439284662596273452124779590753836094450154459078034659421366584354005421566290862244000178569163732971816333961711759000171156293724203334889496589376907683142167883476184246287660764821622298961378903818077158234683927321823293466245584486980446609569799420950073036635602004293246754252079757527610246223280774592566063422181158810677919909523144033543195999214800559998598003329294711989868113423468536273984117507008756542731210465222475943122324672467669623079721727526348599823126409108190030551584092950358235465140166515452377475799157617227362838246912839086733412861436353117994501342653
+[*] e: 65537
+$ python RsaCtfTool.py --dumpkey --key ./pub2.pub
+[*] n: 763718912475160487902804749669814117361530270298225094625871588939939773892509348006077810445741086683427253000695920011673348476297973798322806091336777405584801442639626925406721932533140226556519019440300864340670199686368307155860493615065198319490060598587202051942638792919648596288576294804549738135969737494734307362891313864027749187674251692407867312885251279302785352318725391842117065840058358065676707016006124478822206302825992616559261930620693061673348139416033418864269248381876692676529410115745518353146254670349865568255213560376368953292931958006941630719304442332912813624543600126197554727832190226632919876204677667384620275620336951964833888599634720101911051166398907898747710391394105753614253527704990658698844796442515669670816004761855554187277637871343595647487793209271354240148469085627742503649786300484610102224828274384484809539697728008552925590472129497180290668277790132130824141651399551803499770513576176720509094833332201946177880267399933460994496277590932311628302240154240967341858152145815276163397709272690500041597393678630136932574450837982593210399370333578887450410911663220219423601973078501237709613593311133945501455828164291429228495931943107997137587307522565029820756690578833
+[*] e: 65537
+</code></pre></div></div>
+
+<p>2つのnに共通の素因数があると、求まるらしい</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ cat decrypt.py
+# coding:utf-8
+
+n1 = '847796795638781450678718708664542960446354226336422534142899480441478781747168340722544245493739168125415291376063352480076469305992008517388366298914970810765149321160596112226917023146371080685458239747986992197343482255681414590678694753885521068656675164266739274608505094927725285868801825144058835115051061857233824816176186349372737400492228548130718029270482313906040935333159681273527671359469173939861889228505791626525994180917670701909816457560622922219797109618405842358250940062127841301193206255543580550667149741357342408703680375118252445296600962244008043713708516004025217199954286478272550961283413053789743740774140439284662596273452124779590753836094450154459078034659421366584354005421566290862244000178569163732971816333961711759000171156293724203334889496589376907683142167883476184246287660764821622298961378903818077158234683927321823293466245584486980446609569799420950073036635602004293246754252079757527610246223280774592566063422181158810677919909523144033543195999214800559998598003329294711989868113423468536273984117507008756542731210465222475943122324672467669623079721727526348599823126409108190030551584092950358235465140166515452377475799157617227362838246912839086733412861436353117994501342653'
+p = int("28491351268021265385526651386538607807309659986276688343064670073891013400825164415230601338782473025742402049394830630675805725885088430112149497869242346184436501498250656252478654366186925359496427622140658107345546543257713919694302487049954761322101254188444207888427451979864984635323522901072705782835553010119115529960199616134426518090324707055730908978182075401070044276443957929403874512391698813306139691898167549756758189122432373003019206630611377319244160315312008084214038516008026804548925876733577843139353697227433645926176332422253880445694249081777712571005410284034477749618735562684652311433029")
+
+e = 65537
+
+q1 = int(n1) / p
+
+print "p=", p
+print "q=", q1
+</code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ python decrypt.py
+p= 28491351268021265385526651386538607807309659986276688343064670073891013400825164415230601338782473025742402049394830630675805725885088430112149497869242346184436501498250656252478654366186925359496427622140658107345546543257713919694302487049954761322101254188444207888427451979864984635323522901072705782835553010119115529960199616134426518090324707055730908978182075401070044276443957929403874512391698813306139691898167549756758189122432373003019206630611377319244160315312008084214038516008026804548925876733577843139353697227433645926176332422253880445694249081777712571005410284034477749618735562684652311433029
+q= 29756285957217824990174038832451778402099067307810847648290595785058431646976908322304147959112427140159792888914923236200167490011201811250432742134955076467161512399957077313964630071141735504154569672191460389697633956438555548934921730829103416692214221897316036431719854727062122070711252924237859981650839082127947619246716311728507350521260831762017879211408671194883521699107885995227760052190268561172377288494647487407578357795768368061699760835305355222313206649747987980403480055830409354654506995090037005532480704961830183236922268938782515705140754745094708066416483123932606937140087049605071066540057
+</code></pre></div></div>
+
+<p>rsatoolで秘密鍵を生成</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code> python rsatool.py -f PEM -o key.pem -p 28491351268021265385526651386538607807309659986276688343064670073891013400825164415230601338782473025742402049394830630675805725885088430112149497869242346184436501498250656252478654366186925359496427622140658107345546543257713919694302487049954761322101254188444207888427451979864984635323522901072705782835553010119115529960199616134426518090324707055730908978182075401070044276443957929403874512391698813306139691898167549756758189122432373003019206630611377319244160315312008084214038516008026804548925876733577843139353697227433645926176332422253880445694249081777712571005410284034477749618735562684652311433029 -q 29756285957217824990174038832451778402099067307810847648290595785058431646976908322304147959112427140159792888914923236200167490011201811250432742134955076467161512399957077313964630071141735504154569672191460389697633956438555548934921730829103416692214221897316036431719854727062122070711252924237859981650839082127947619246716311728507350521260831762017879211408671194883521699107885995227760052190268561172377288494647487407578357795768368061699760835305355222313206649747987980403480055830409354654506995090037005532480704961830183236922268938782515705140754745094708066416483123932606937140087049605071066540057
+Using (p, q) to initialise RSA instance
+
+n =
+cfcfbbeea7df143a8ac208b1aa1d2f86545ac4cb588c94a3fb1c14ad91a4f0b936157c5a4b869c18
+a8b864f4726bf8fcdc020cb41042bac96784ab7d03f9374947efb0bc3d665831974340159ffc3db7
+c8e74b6390fda6eec30b81c6ff624e8d3f5b17bfb7a5c7ffd8ecf4e6518b393abefddd0faeba4308
+746ba63f8106b59d7e058943a00131a7d4e538c464b270577647edbc478cc1ce9585efe877305b3a
+7c2e7c44db5475eddadc345a2c90a946771cac0a454cdbcb461f2840e7613c83e9cecc94037fa09b
+b9daa3f180562c01df0be6c51f0c06e8f0e2d6e1a5e50d0a28c3881140770a9f45934146b7f359b9
+39ce23f0fa507a6f4e454571430952003c20f1d97a67140b6e5fcbfb3b376e4e24969aeb1d489cfc
+72af4f15a4788a1aa97c89756d1d4d94aa47e7cd3a81aecb92448cc92c77d2ef576aa0dbc1350862
+accddaddbce80357f0cd5b854dd0f8c4627fe4b718b24ecfe11ed24c3be22f00643bbed4ee5e345a
+f176e5b76d23a2f80e0ec6f34e5718c62a70fe5570c28b807b44f22eadebd9b5ff906f6a85be88c0
+c8f6e5f880a51f17f84db1c2eefea8af34040444ced1a37df0e4f5f72cc3f50b7e427c8c2d8b6186
+ead762f0c444b3ca3a0103ed12a93bce9cae7479a229ebbc0a648eaa6f97e5051a66eb09ebd7348e
+92f75f125ebdc367e2a7d1da7759d41fae2e2635bf4b7a7f91becab3ac7d05bd
+
+e = 65537 (0x10001)
+
+d =
+cc151d61f6189d3c14d31348af60b4307e9d1990fda829bd94b8f211b6ebbdc0963da97edf9715ab
+1ddee0be33b497b473b7cb93f6382249f2d096bd526ea7fdde98a4ff68691f09ac9c4dce2eecc00b
+c2506b781f870b2e85fbc1fa95098d4d27c024e591cc4c4a9555b7f88c7266c4ab9692477977d0a6
+f7f654311f5c607587b296280475c7b723dbecd0ea7756de7df98b9e90c1c9ff405665d1ed635ee4
+63da1f0e5c3b69092b1b808a6223bb29c9862dea743e53c820582ee6f69446a2e1b5c6b14172505f
+3eb95ab1ac30744d6e27b8fd334d5367e6514f6810cc8deec133ad680be01c5d682d82389a2471a3
+f701dbc8277b6b91edd317ac708231b4e634dcc024e8d79767139277fe6198a1df09cd3d7743d43e
+906b083944c82cc663b70bcf8589eb6534f78d46a4df5e21029482e33a6fe86676b1ffbbad380dc8
+a77eb3e667f131c856754a364ae8b369f9eaa0903b3a4a73327eddbe6bddbbf59d79839fe65980ef
+2d6f9cfa0b4c5069fa84902c5ab97a8ddfe4b4ec912bbabefc27b8f8d5e554e3671814a73cc2a7d1
+19430abddce1a33dc463f5291a1b6da01ab56ad17d3713d099c7fa9de7df39d6c37f10cb35dcdc33
+3241798a70a44e9d2666bac0c5cd96eb1f0345bbaaca33fe16f80b4862ca690880a7466b15989d67
+dbb19fa4511269b8112e83e4bc41e38d585036ee35798dd4c5c6a4a07cf10561
+
+p =
+e1b1e9fa3b5075f426eb220a9aa8d7a674219045ae500e0a45dc40b71ecd6ff56317efa5ada5d48d
+49a5e83d6f6042c35c5dd06d2a182cdd6d15f0588ab429b7a001943c7dd83a14818c172be911841f
+f4ce430646c0a3bb877d07a50306da67a02d3042edb1169740f7e30a1e3aed163afbb4ffed13b8dd
+d29b5567231026ca5c38994dd0920e04965625153e06140e03358b758f7d2d49e12e9eb246f65715
+05920cbeb1537d2996ea4453b5018348bbd6c80f5ebe640f97a8cc74b1c20ca6d33f96f0699b852b
+ab50027f8bd704cf088ac6db47c7d6d8ed0416d0b61e9d7ebfb94e31bcc84368d37914af9539b8d3
+0fe35bba367a64b278c3353fa0f24f45
+
+q =
+ebb716a60ff65464c67bb9cee4e093f5da8c9054c22e2e8f62bbe56d4d80dec018818d2a21f824ac
+112b8482d068a2e4a2e98ed85dd4478cb5d8534593a6ac2c950d4db398706a0bdefc77e77098d91d
+e9f666daea5d3b18e17b418a9cef85719def74b8f378181e170ceda51e0a0c2ea2b1774582534aaf
+95e0d978d365c3117d843c03d3f585ab471823d74a072754eae5b047b3a10b83affe00b865ab306b
+5822cca155632148830a952ae7e9115324c95c0ea68a20831fe27851b3db7681bbb577f37b5eab7e
+1541c5a014af83360a187d621f4b285e80af618358fcc1f025bf448ee619868eb18a5a972e09e99f
+604591437c2732bd993cd68ebb76a819
+
+Saving PEM as key.pem
+</code></pre></div></div>
+
+<p>秘密鍵を使って, cipherをデコードすると、フラグが出る</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>kobadlve ~/ctfs/2017/SECCON-2017/psqs master* $ openssl rsautl -decrypt -inkey key.pem -in cipher -out result
+kobadlve ~/ctfs/2017/SECCON-2017/psqs master* $ cat result
+SECCON{1234567890ABCDEF}
+
+</code></pre></div></div>
+
+<p>参考</p>
+<ul>
+  <li>https://github.com/Ganapati/RsaCtfTool</li>
+  <li>http://sonickun.hatenablog.com/entry/2016/03/23/220652</li>
+  <li>https://qiita.com/kunichiko/items/12cbccaadcbf41c72735</li>
+  <li>https://www.slideshare.net/sonickun/rsa-n-ssmjp</li>
+</ul>
+
+<h2 id="jpeg-file">JPEG file</h2>
+<p>https://www.stellarinfo.com/mac-software/jpeg-repair-mac.php</p>
+
+<p>これでリペアしただけ</p>
+
+<h2 id="最後に">最後に</h2>
+
+<p>very smoothもやったが解けなかった.
+300,400〜点問題がなかなか解けないので精進します…</p>
+
+<p>お疲れ様でした!</p>
+
+          </div>
+          <div class="article-share">
+            
+            
+            <a href="https://twitter.com/home?status=SECCON+2017+Writeup%20-%20/posts/seccon2017" title="Share on Twitter" rel="noreferrer noopener" target="_blank">
+              <svg viewBox="0 0 512 512"><path d="M492 109.5c-17.4 7.7-36 12.9-55.6 15.3 20-12 35.4-31 42.6-53.6 -18.7 11.1-39.4 19.2-61.5 23.5C399.8 75.8 374.6 64 346.8 64c-53.5 0-96.8 43.4-96.8 96.9 0 7.6 0.8 15 2.5 22.1 -80.5-4-151.9-42.6-199.6-101.3 -8.3 14.3-13.1 31-13.1 48.7 0 33.6 17.2 63.3 43.2 80.7C67 210.7 52 206.3 39 199c0 0.4 0 0.8 0 1.2 0 47 33.4 86.1 77.7 95 -8.1 2.2-16.7 3.4-25.5 3.4 -6.2 0-12.3-0.6-18.2-1.8 12.3 38.5 48.1 66.5 90.5 67.3 -33.1 26-74.9 41.5-120.3 41.5 -7.8 0-15.5-0.5-23.1-1.4C62.8 432 113.7 448 168.3 448 346.6 448 444 300.3 444 172.2c0-4.2-0.1-8.4-0.3-12.5C462.6 146 479 129 492 109.5z"/></svg>
+            </a>
+            <a href="https://www.facebook.com/sharer/sharer.php?u=/posts/seccon2017" title="Share on Facebook" rel="noreferrer noopener" target="_blank">
+              <svg viewBox="0 0 512 512"><path d="M288 192v-38.1c0-17.2 3.8-25.9 30.5-25.9H352V64h-55.9c-68.5 0-91.1 31.4-91.1 85.3V192h-45v64h45v192h83V256h56.4l7.6-64H288z"/></svg>
+            </a>
+            <a href="https://plus.google.com/share?url=/posts/seccon2017" title="Share on Google+" rel="noreferrer noopener" target="_blank">
+              <svg viewBox="0 0 128 128"><path d="M40.7 55.9v16.1c0 0 15.6 0 22 0C59.2 82.5 53.8 88.2 40.7 88.2c-13.3 0-23.7-10.8-23.7-24.2s10.4-24.2 23.7-24.2c7.1 0 11.6 2.5 15.8 5.9 3.3-3.3 3.1-3.8 11.6-11.9 -7.2-6.6-16.8-10.6-27.4-10.6C18.2 23.3 0 41.5 0 64c0 22.5 18.2 40.7 40.7 40.7 33.6 0 41.8-29.3 39-48.8H40.7zM113.9 56.7V42.6h-10.1v14.1H89.4v10.1h14.5v14.5h10.1V66.8H128V56.7H113.9z"/></svg>
+            </a>
+          </div>
+
+          
+        </article>
+        <footer class="footer scrollappear">
+  <p>
+    Chalk is a high quality, completely customizable, performant and 100% free
+    blog template for Jekyll built by
+    <a href="/about" title="About me">Nielsen Ramon</a>. Download it <a href="https://github.com/nielsenramon/chalk" rel="noreferrer noopener" target="_blank" title="Download Chalk">here</a>.
+  </p>
+</footer>
+
+      </div>
+    </div>
+  </main>
+  
+
+<script src="/assets/vendor-63ea9477fcfd6d93c69d70b59ef115261b687f763d55df063804ab63b982b9e5.js" type="text/javascript"></script>
+
+
+  <script src="/assets/webfonts-e3010885de8c083c4b2935d463b1649e8796191a66a1b43bb87ef04bbcce420d.js" type="text/javascript"></script>
+
+
+
+  <script src="/assets/scrollappear-e2da8ea567e418637e31266cc5302126eaa79f62a2273739086358b589a89ee6.js" type="text/javascript"></script>
+
+
+<script src="/assets/application-6542ce1f4b08c8bb3dedf929d13653238a86988e0e972326e4e1f7875b1fe49f.js" type="text/javascript"></script>
+
+</body>
+</html>

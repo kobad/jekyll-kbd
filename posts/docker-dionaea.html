@@ -1,0 +1,423 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>kobadbadbad | DockerでDionaea構築</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <meta property="og:title" content="DockerでDionaea構築">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="/posts/docker-dionaea">
+  <meta property="og:description" content="">
+  <meta property="og:site_name" content="kobadbadbad">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:url" content="/posts/docker-dionaea">
+  <meta name="twitter:title" content="DockerでDionaea構築">
+  <meta name="twitter:description" content="">
+
+  
+    <meta property="og:image" content="/assets/og-image-ee46bbc61b334e821e81534b1fd43f3fee6f020ec174b3c2114445695fd48c01.jpg">
+    <meta name="twitter:image" content="/assets/og-image-ee46bbc61b334e821e81534b1fd43f3fee6f020ec174b3c2114445695fd48c01.jpg">
+  
+
+  <link href="/feed.xml" type="application/rss+xml" rel="alternate" title="kobadbadbad Last 10 blog posts" />
+
+  
+
+  
+    <link rel="icon" type="image/x-icon" href="/assets/favicon-light-11327753546b2135c989eee5cd83497a2734b702928d016839d795f6c706e3d5.ico">
+    <link rel="apple-touch-icon" href="/assets/apple-touch-icon-light-d161409442b7e523089f24d08d0a55951549ece7504207c376d53b020713494d.png">
+    <link rel="stylesheet" type="text/css" href="/assets/light-9292c3bf9174b806d63296935d8603541802db853eb635d9b92797feb904b915.css">
+  
+</head>
+
+<body>
+  <main>
+    <div class="grid grid-centered">
+      <div class="grid-cell">
+        <nav class="header-nav scrollappear">
+  <a href="/" class="header-logo" title="kobadbadbad">kobadbadbad</a>
+  <ul class="header-links">
+    
+      <li>
+        <a href="/about" title="About me">
+          <svg xmlns="http://www.w3.org/2000/svg" class="icon-about">
+  <use href="/assets/about-ecf154b571ab8034ae00aeed91a3b7ad68db80b46d958753ad6216c919486e88.svg#icon-about" xlink:href="/assets/about-ecf154b571ab8034ae00aeed91a3b7ad68db80b46d958753ad6216c919486e88.svg#icon-about"></use>
+</svg>
+
+        </a>
+      </li>
+    
+    
+    
+    
+    
+      <li>
+        <a href="https://github.com/kobadlve" rel="noreferrer noopener" target="_blank" title="GitHub">
+          <svg xmlns="http://www.w3.org/2000/svg" class="icon-github">
+  <use href="/assets/github-094f81040819f34343ee6ffff0980f17e2807b08b595eaaf66ae3554934fd78d.svg#icon-github" xlink:href="/assets/github-094f81040819f34343ee6ffff0980f17e2807b08b595eaaf66ae3554934fd78d.svg#icon-github"></use>
+</svg>
+
+        </a>
+      </li>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      <li>
+        <a href="/feed.xml" rel="noreferrer noopener" target="_blank" title="RSS">
+          <svg xmlns="http://www.w3.org/2000/svg" class="icon-rss">
+  <use href="/assets/rss-541ec5cea9cefd10d2fcfec01888f3f231a8829940249835fa7b7b3a12ae0d0d.svg#icon-rss" xlink:href="/assets/rss-541ec5cea9cefd10d2fcfec01888f3f231a8829940249835fa7b7b3a12ae0d0d.svg#icon-rss"></use>
+</svg>
+
+        </a>
+      </li>
+    
+  </ul>
+</nav>
+
+        <article class="article scrollappear">
+          <header class="article-header">
+            <h1>DockerでDionaea構築</h1>
+            <p></p>
+            <div class="article-list-footer">
+              <span class="article-list-date">
+                June 10, 2017
+              </span>
+              <span class="article-list-divider">-</span>
+              <span class="article-list-minutes">
+                
+                
+                  4 minute read
+                
+              </span>
+              <span class="article-list-divider">-</span>
+              <div class="article-list-tags">
+                
+                  <a href="/tag/security">security</a>
+                
+              </div>
+            </div>
+          </header>
+
+          <div class="article-content">
+            <p>低対話型ハニーポットであるDionaeaを構築するDockerfileを作成しました。(https://github.com/kobadlve/docker-dionaea)</p>
+
+<p>手順とかをまとめておく。</p>
+
+<h2 id="dionaea-構築">Dionaea 構築</h2>
+
+<p>image: Ubuntu16.04</p>
+
+<p>ほぼ<a href="https://gist.github.com/ytn86/7bc4130aca64ce77d1d6">ココ</a>通りですが、変更点を書く。</p>
+
+<p>Python, Cython等のバージョンを最新にする。</p>
+
+<ul>
+  <li>LibEv - http://dist.schmorp.de/libev/Attic/</li>
+  <li>LibPcap - http://www.tcpdump.org/release/</li>
+  <li>Python - http://www.python.org/ftp/python/</li>
+  <li>Cython - https://pypi.python.org/pypi?%3Aaction=search&amp;term=cython&amp;submit=search</li>
+  <li>OpenSSL - https://github.com/openssl/openssl/</li>
+</ul>
+
+<p>Dionaeaインストール時の</p>
+
+<p><code class="highlighter-rouge">find ./ -type f | xargs sed -i "s/-Werror//g"</code>だと、ビルドでこけるので、</p>
+
+<p><code class="highlighter-rouge">find ./ -type f -print0 | xargs -0 sed -i "s/-Werror//g"</code>に変更。</p>
+
+<h2 id="dionaea-設定">Dionaea 設定</h2>
+
+<h3 id="ログ制御---最低限のログ出力にする-optdionaeaetcdionaeadionaeaconf">ログ制御 - 最低限のログ出力にする (/opt/dionaea/etc/dionaea/dionaea.conf)</h3>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>logging = {
+	default = {
+		// file not starting with / is taken relative to LOCALESTATEDIR (e.g. /opt/dionaea/var)
+		file = "log/dionaea.log"
+		levels = "all, -debug"
+		domains = "*"
+    }
+
+	errors = {
+		// file not starting with / is taken relative to LOCALESTATEDIR (e.g. /opt/dionaea/var)
+		file = "log/dionaea-errors.log"
+		levels = "error"
+		domains = "*"
+	}
+}
+</code></pre></div></div>
+
+<h3 id="nmap-検知回避">Nmap 検知回避</h3>
+<p>デフォルトだとNmapに検知されるので、それをある程度防ぐ。</p>
+
+<h4 id="ftppy---welcome-massage-を変更する-optdionaealibdionaeapythondionaeaftppy">ftp.py - welcome massage を変更する (/opt/dionaea/lib/dionaea/python/dionaea/ftp.py)</h4>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>def handle_established(self):
+  self.processors()
+  self.reply(WELCOME_MSG, "Start the ftp service")
+</code></pre></div></div>
+
+<h4 id="mssqlpy---tokentype-を変更0x01-optdionaealibdionaeapythondionaeamssqlmssqlpy">mssql.py - TokenType を変更(0x01) (/opt/dionaea/lib/dionaea/python/dionaea/mssql/mssql.py)</h4>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>if PacketType == TDS_TYPES_PRE_LOGIN:
+			r = TDS_Prelogin_Response()
+			#FIXME: any better way to initialise this?
+			r.VersionToken.TokenType = 0x01
+			r.VersionToken.Offset = 26
+			r.VersionToken.Len = 6
+			r.EncryptionToken.TokenType = 0x01
+			r.EncryptionToken.Offset = 32
+			r.EncryptionToken.Len = 1
+			r.InstanceToken.TokenType = 0x02
+			r.InstanceToken.Offset = 33
+			r.InstanceToken.Len = 1
+			r.ThreadIDToken.TokenType = 0x03
+			r.ThreadIDToken.Offset = 34
+			r.ThreadIDToken.Len = 0
+			r.MARSToken.TokenType = 0x04
+			r.MARSToken.Offset = 34
+			r.MARSToken.Len = 1
+</code></pre></div></div>
+
+<h4 id="indexhtml---indexページを作成-optdionaeavardionaeawwwroot">index.html - indexページを作成 (/opt/dionaea/var/dionaea/wwwroot/)</h4>
+<p>任意のhtmlを置いておく。</p>
+
+<h2 id="dockerfile">Dockerfile</h2>
+
+<p>一連の流れを記入し、dionaea用のユーザに登録して終わり。</p>
+
+<ul>
+  <li>Build - <code class="highlighter-rouge">$ docker build -t dionaea .</code></li>
+  <li>Run -
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ docker run -u dionaea -it -p 21:21 -p 42:42 -p 69:69/udp -p 80:80 -p 135:135 -p 443:443 -p 445:445 -p 1433:1433 -p 1723:1723 -p 1883:1883 -p 1900:1900/udp -p 3306:3306 -p 5060:5060 -p 5060:5060/udp -p 5061:5061 -p 11211:11211 dionaea
+</code></pre></div>    </div>
+  </li>
+  <li>Start - <code class="highlighter-rouge">container$ /opt/dionaea/bin/dionaea -D</code></li>
+  <li>Detach - <code class="highlighter-rouge">Ctrl-p, Ctrl-q</code></li>
+</ul>
+
+<p>結果</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+Starting Nmap 7.40 ( https://nmap.org ) at 2017-06-07 15:49 JST
+Nmap scan report for localhost (127.0.0.1)
+Host is up (0.00023s latency).
+Other addresses for localhost (not scanned): ::1
+Not shown: 987 closed ports
+PORT      STATE SERVICE
+21/tcp    open  ftp
+42/tcp    open  nameserver
+80/tcp    open  http
+135/tcp   open  msrpc
+443/tcp   open  https
+445/tcp   open  microsoft-ds
+1433/tcp  open  ms-sql-s
+1723/tcp  open  pptp
+3306/tcp  open  mysql
+5060/tcp  open  sip
+5061/tcp  open  sip-tls
+49152/tcp open  unknown
+49153/tcp open  unknown
+
+Nmap done: 1 IP address (1 host up) scanned in 9.25 secondss
+</code></pre></div></div>
+<hr />
+<p>以下、完成したDockerfile</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>FROM ubuntu:16.04
+
+# Libraries
+RUN apt-get update
+RUN set -x &amp;&amp; \
+  apt-get -y install \
+  wget \
+  curl \
+  libudns-dev \
+  libglib2.0-dev \
+  libssl-dev \
+  libcurl4-openssl-dev \
+  libreadline-dev \
+  libsqlite3-dev \
+  python-dev \
+  libtool \
+  automake \
+  autoconf \
+  build-essential \
+  subversion \
+  git-core \
+  flex \
+  bison \
+  pkg-config \
+  libnl-3-dev \
+  libnl-genl-3-dev \
+  libnl-nf-3-dev \
+  libnl-route-3-dev \
+  sqlite3
+
+# Clone Dionaea
+RUN cd /opt/ &amp;&amp; git clone https://github.com/rep/dionaea.git dionaea
+
+# Install Liblcfg
+RUN set -x &amp;&amp; \
+  cd /usr/local/src &amp;&amp; \
+  git clone https://github.com/pb-/liblcfg.git liblcfg &amp;&amp; \
+  cd liblcfg/code &amp;&amp; \
+  autoreconf -vi &amp;&amp; \
+  ./configure -prefix=/opt/dionaea &amp;&amp; \
+  make install
+
+# Install Libemu
+RUN set -x &amp;&amp; \
+  cd /usr/local/src &amp;&amp; \
+  git clone https://github.com/cperdana/libemu.git libemu &amp;&amp; \
+  cd libemu &amp;&amp; \
+  autoreconf -vi &amp;&amp; \
+  find ./ -type f | xargs sed -i "s/-Werror//g" &amp;&amp; \
+  ./configure -prefix=/opt/dionaea &amp;&amp; \
+  make &amp;&amp; \
+  make install
+
+# Install LibEv
+RUN set -x &amp;&amp; \
+  cd /usr/local/src &amp;&amp;  \
+  wget http://dist.schmorp.de/libev/Attic/libev-4.20.tar.gz &amp;&amp; \
+  tar xzf libev-4.20.tar.gz &amp;&amp; \
+  cd libev-4.20 &amp;&amp; \
+  ./configure -prefix=/opt/dionaea &amp;&amp; \
+  make install
+
+# Install Libpcap
+RUN set -x &amp;&amp; \
+  cd /usr/local/src &amp;&amp; \
+  wget http://www.tcpdump.org/release/libpcap-1.8.1.tar.gz &amp;&amp; \
+  tar xzf libpcap-1.8.1.tar.gz &amp;&amp; \
+  cd libpcap-1.8.1 &amp;&amp; \
+  ./configure -prefix=/opt/dionaea &amp;&amp; \
+  make install
+
+# Install Python
+RUN set -x &amp;&amp; \
+  cd /usr/local/src &amp;&amp; \
+  wget http://www.python.org/ftp/python/3.6.1/Python-3.6.1.tgz &amp;&amp; \
+  tar xzf Python-3.6.1.tgz &amp;&amp; \
+  cd Python-3.6.1 &amp;&amp; \
+  ./configure --enable-shared -prefix=/opt/dionaea --with-computed-gotos -enable-ipv6 LDFLAGS="-Wl,-rpath=/opt/dionaea/lib -L/usr/lib/x86_64-linux-gnu/" &amp;&amp; \
+  make &amp;&amp; \
+  make install
+
+# Install Cython
+RUN set -x &amp;&amp; \
+  cd /usr/local/src &amp;&amp; \
+  wget https://pypi.python.org/packages/c6/fe/97319581905de40f1be7015a0ea1bd336a756f6249914b148a17eefa75dc/Cython-0.24.1.tar.gz &amp;&amp; \
+  tar xzf Cython-0.24.1.tar.gz &amp;&amp; \
+  cd Cython-0.24.1 &amp;&amp; \
+  /opt/dionaea/bin/python3 setup.py install
+
+# Install Openssl
+RUN set -x &amp;&amp; \
+  cd /usr/local/src &amp;&amp; \
+  wget https://github.com/openssl/openssl/archive/OpenSSL_1_0_1p.tar.gz &amp;&amp; \
+  tar xzf OpenSSL_1_0_1p.tar.gz &amp;&amp; \
+  cd openssl-OpenSSL_1_0_1p &amp;&amp; \
+  ./Configure shared --prefix=/opt/dionaea linux-x86_64 &amp;&amp; \
+  make &amp;&amp; \
+  make install
+
+# Install Dionaea
+RUN set -x &amp;&amp; \
+  cd /opt/dionaea &amp;&amp; \
+  autoreconf -vi &amp;&amp; \
+  find ./ -type f -print0 | xargs -0 sed -i "s/-Werror//g" &amp;&amp; \
+  rm -rf /opt/dionaea/modules/python/util/gnuplotsql &amp;&amp; \
+  ./configure --with-lcfg-include=/opt/dionaea/include/ \
+      --with-lcfg-lib=/opt/dionaea/lib/ \
+      --with-python=/opt/dionaea/bin/python3.6 \
+      --with-cython-dir=/opt/dionaea/bin \
+      --with-udns-include=/opt/dionaea/include/ \
+      --with-udns-lib=/opt/dionaea/lib/ \
+      --with-emu-include=/opt/dionaea/include/ \
+      --with-emu-lib=/opt/dionaea/lib/ \
+      --with-gc-include=/usr/include/gc \
+      --with-ev-include=/opt/dionaea/include \
+      --with-ev-lib=/opt/dionaea/lib \
+      --with-nl-include=/opt/dionaea/include \
+      --with-nl-lib=/opt/dionaea/lib/ \
+      --with-curl-config=/usr/bin/ \
+      --with-pcap-include=/opt/dionaea/include \
+      --with-pcap-lib=/opt/dionaea/lib/ \
+      --with-ssl-include=/opt/dionaea/include/ \
+      --with-ssl-lib=/opt/dionaea/lib/ &amp;&amp; \
+  make &amp;&amp; \
+  make install
+
+# Setup Dionaea
+ADD config /opt/dionaea/etc/dionaea/config
+RUN /bin/bash /opt/dionaea/etc/dionaea/config/setup.sh
+
+# Add User
+RUN groupadd --gid 1000 dionaea &amp;&amp; \
+  useradd -m --uid 1000 --gid 1000 dionaea &amp;&amp; \
+  chown -R dionaea:dionaea /opt/dionaea/var
+
+
+</code></pre></div></div>
+
+          </div>
+          <div class="article-share">
+            
+            
+            <a href="https://twitter.com/home?status=Docker%E3%81%A7Dionaea%E6%A7%8B%E7%AF%89%20-%20/posts/docker-dionaea" title="Share on Twitter" rel="noreferrer noopener" target="_blank">
+              <svg viewBox="0 0 512 512"><path d="M492 109.5c-17.4 7.7-36 12.9-55.6 15.3 20-12 35.4-31 42.6-53.6 -18.7 11.1-39.4 19.2-61.5 23.5C399.8 75.8 374.6 64 346.8 64c-53.5 0-96.8 43.4-96.8 96.9 0 7.6 0.8 15 2.5 22.1 -80.5-4-151.9-42.6-199.6-101.3 -8.3 14.3-13.1 31-13.1 48.7 0 33.6 17.2 63.3 43.2 80.7C67 210.7 52 206.3 39 199c0 0.4 0 0.8 0 1.2 0 47 33.4 86.1 77.7 95 -8.1 2.2-16.7 3.4-25.5 3.4 -6.2 0-12.3-0.6-18.2-1.8 12.3 38.5 48.1 66.5 90.5 67.3 -33.1 26-74.9 41.5-120.3 41.5 -7.8 0-15.5-0.5-23.1-1.4C62.8 432 113.7 448 168.3 448 346.6 448 444 300.3 444 172.2c0-4.2-0.1-8.4-0.3-12.5C462.6 146 479 129 492 109.5z"/></svg>
+            </a>
+            <a href="https://www.facebook.com/sharer/sharer.php?u=/posts/docker-dionaea" title="Share on Facebook" rel="noreferrer noopener" target="_blank">
+              <svg viewBox="0 0 512 512"><path d="M288 192v-38.1c0-17.2 3.8-25.9 30.5-25.9H352V64h-55.9c-68.5 0-91.1 31.4-91.1 85.3V192h-45v64h45v192h83V256h56.4l7.6-64H288z"/></svg>
+            </a>
+            <a href="https://plus.google.com/share?url=/posts/docker-dionaea" title="Share on Google+" rel="noreferrer noopener" target="_blank">
+              <svg viewBox="0 0 128 128"><path d="M40.7 55.9v16.1c0 0 15.6 0 22 0C59.2 82.5 53.8 88.2 40.7 88.2c-13.3 0-23.7-10.8-23.7-24.2s10.4-24.2 23.7-24.2c7.1 0 11.6 2.5 15.8 5.9 3.3-3.3 3.1-3.8 11.6-11.9 -7.2-6.6-16.8-10.6-27.4-10.6C18.2 23.3 0 41.5 0 64c0 22.5 18.2 40.7 40.7 40.7 33.6 0 41.8-29.3 39-48.8H40.7zM113.9 56.7V42.6h-10.1v14.1H89.4v10.1h14.5v14.5h10.1V66.8H128V56.7H113.9z"/></svg>
+            </a>
+          </div>
+
+          
+        </article>
+        <footer class="footer scrollappear">
+  <p>
+    Chalk is a high quality, completely customizable, performant and 100% free
+    blog template for Jekyll built by
+    <a href="/about" title="About me">Nielsen Ramon</a>. Download it <a href="https://github.com/nielsenramon/chalk" rel="noreferrer noopener" target="_blank" title="Download Chalk">here</a>.
+  </p>
+</footer>
+
+      </div>
+    </div>
+  </main>
+  
+
+<script src="/assets/vendor-63ea9477fcfd6d93c69d70b59ef115261b687f763d55df063804ab63b982b9e5.js" type="text/javascript"></script>
+
+
+  <script src="/assets/webfonts-e3010885de8c083c4b2935d463b1649e8796191a66a1b43bb87ef04bbcce420d.js" type="text/javascript"></script>
+
+
+
+  <script src="/assets/scrollappear-e2da8ea567e418637e31266cc5302126eaa79f62a2273739086358b589a89ee6.js" type="text/javascript"></script>
+
+
+<script src="/assets/application-6542ce1f4b08c8bb3dedf929d13653238a86988e0e972326e4e1f7875b1fe49f.js" type="text/javascript"></script>
+
+</body>
+</html>

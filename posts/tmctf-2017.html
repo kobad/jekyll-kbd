@@ -1,0 +1,309 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>kobadbadbad | TMCTF 2017 Writeup</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <meta property="og:title" content="TMCTF 2017 Writeup">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="/posts/tmctf-2017">
+  <meta property="og:description" content="">
+  <meta property="og:site_name" content="kobadbadbad">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:url" content="/posts/tmctf-2017">
+  <meta name="twitter:title" content="TMCTF 2017 Writeup">
+  <meta name="twitter:description" content="">
+
+  
+    <meta property="og:image" content="/assets/og-image-ee46bbc61b334e821e81534b1fd43f3fee6f020ec174b3c2114445695fd48c01.jpg">
+    <meta name="twitter:image" content="/assets/og-image-ee46bbc61b334e821e81534b1fd43f3fee6f020ec174b3c2114445695fd48c01.jpg">
+  
+
+  <link href="/feed.xml" type="application/rss+xml" rel="alternate" title="kobadbadbad Last 10 blog posts" />
+
+  
+
+  
+    <link rel="icon" type="image/x-icon" href="/assets/favicon-light-11327753546b2135c989eee5cd83497a2734b702928d016839d795f6c706e3d5.ico">
+    <link rel="apple-touch-icon" href="/assets/apple-touch-icon-light-d161409442b7e523089f24d08d0a55951549ece7504207c376d53b020713494d.png">
+    <link rel="stylesheet" type="text/css" href="/assets/light-9292c3bf9174b806d63296935d8603541802db853eb635d9b92797feb904b915.css">
+  
+</head>
+
+<body>
+  <main>
+    <div class="grid grid-centered">
+      <div class="grid-cell">
+        <nav class="header-nav scrollappear">
+  <a href="/" class="header-logo" title="kobadbadbad">kobadbadbad</a>
+  <ul class="header-links">
+    
+      <li>
+        <a href="/about" title="About me">
+          <svg xmlns="http://www.w3.org/2000/svg" class="icon-about">
+  <use href="/assets/about-ecf154b571ab8034ae00aeed91a3b7ad68db80b46d958753ad6216c919486e88.svg#icon-about" xlink:href="/assets/about-ecf154b571ab8034ae00aeed91a3b7ad68db80b46d958753ad6216c919486e88.svg#icon-about"></use>
+</svg>
+
+        </a>
+      </li>
+    
+    
+    
+    
+    
+      <li>
+        <a href="https://github.com/kobadlve" rel="noreferrer noopener" target="_blank" title="GitHub">
+          <svg xmlns="http://www.w3.org/2000/svg" class="icon-github">
+  <use href="/assets/github-094f81040819f34343ee6ffff0980f17e2807b08b595eaaf66ae3554934fd78d.svg#icon-github" xlink:href="/assets/github-094f81040819f34343ee6ffff0980f17e2807b08b595eaaf66ae3554934fd78d.svg#icon-github"></use>
+</svg>
+
+        </a>
+      </li>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      <li>
+        <a href="/feed.xml" rel="noreferrer noopener" target="_blank" title="RSS">
+          <svg xmlns="http://www.w3.org/2000/svg" class="icon-rss">
+  <use href="/assets/rss-541ec5cea9cefd10d2fcfec01888f3f231a8829940249835fa7b7b3a12ae0d0d.svg#icon-rss" xlink:href="/assets/rss-541ec5cea9cefd10d2fcfec01888f3f231a8829940249835fa7b7b3a12ae0d0d.svg#icon-rss"></use>
+</svg>
+
+        </a>
+      </li>
+    
+  </ul>
+</nav>
+
+        <article class="article scrollappear">
+          <header class="article-header">
+            <h1>TMCTF 2017 Writeup</h1>
+            <p></p>
+            <div class="article-list-footer">
+              <span class="article-list-date">
+                June 25, 2017
+              </span>
+              <span class="article-list-divider">-</span>
+              <span class="article-list-minutes">
+                
+                
+                  3 minute read
+                
+              </span>
+              <span class="article-list-divider">-</span>
+              <div class="article-list-tags">
+                
+                  <a href="/tag/ctf">ctf</a>
+                
+              </div>
+            </div>
+          </header>
+
+          <div class="article-content">
+            <h2 id="reversing-100">Reversing 100</h2>
+<p>RARファイルが渡されるので解凍.</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ unrar e biscuit
+</code></pre></div></div>
+<p>すると、PEとZipが出てくる。</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ file biscuit1 biscuit2
+biscuit1: PE32 executable (console) Intel 80386 (stripped to external PDB), for MS Windows
+biscuit2: Zip archive data, at least v2.0 to extract
+</code></pre></div></div>
+
+<p>biscuit1を解析することで、biscuit2のパスワードが出てくるようだ。
+biscuit1を実行すると、<code class="highlighter-rouge">Please find sweets name starting from m for biscuit2</code>と表示される。</p>
+
+<p>これをふまえて、Ollydbgで実行していくと<code class="highlighter-rouge">macaron</code>という文字列があったので、これを使ったら解凍でき、３つのファイルが出てきた。</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ file biscuit3 biscuit4 biscuit5
+biscuit3: JPEG image data, JFIF standard 1.01, aspect ratio, density 1x1, segment length 16, comment: "Optimized by JPEGmini 3.13.3.15 0x411b5876", baseline, precision 8, 150x150, frames 3
+biscuit4: ASCII text, with CRLF line terminators
+biscuit5: PE32 executable (console) Intel 80386 (stripped to external PDB), for MS Windows
+</code></pre></div></div>
+<p>まず、biscuit4をみるとFlagのヒントが書かれていて、biscuit3, 5にあるのを繋げるらしい</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ cat biscuit4
+Please create flag.
+
+hint:
+
+Flag = TMCTF{biscuit3_ biscuit5}
+</code></pre></div></div>
+<p>biscuit3をbinwalkで見るとZipが隠れているのがわかったので、foremostで展開</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ binwalk biscuit3
+
+DECIMAL       HEXADECIMAL     DESCRIPTION
+--------------------------------------------------------------------------------
+0             0x0             JPEG image data, JFIF standard 1.01
+382           0x17E           Copyright string: "Copyright (c) 1998 Hewlett-Packard Company"
+14253         0x37AD          Zip archive data, at least v1.0 to extract, compressed size: 5, uncompressed size: 5, name: biscuit.txt
+14356         0x3814          End of Zip archive
+
+$ foremost biscuit3
+</code></pre></div></div>
+<p>出てきたZipを展開するとテキストファイルがあり、その中に１つ目の文字列(cream)があった。</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ unzip 00000027.zip
+Archive:  00000027.zip
+extracting: biscuit.txt
+$ cat  biscuit.txt
+cream
+</code></pre></div></div>
+
+<p>次に、biscuit5をOllydbgでみる.挙動はbiscuit1と似ていたので、違いを見ると<code class="highlighter-rouge">shift_char</code>という関数があった。</p>
+
+<p>ここにブレークポイントを設定して処理を追っていくと、biscuitの前半５文字<code class="highlighter-rouge">biscu</code>を<code class="highlighter-rouge">abcdefghijklmnopqrstuvwxyz</code>となんやかんやして別の文字列にしているっぽい。さらに追っていくと、最終的に、<code class="highlighter-rouge">choux</code>という文字列が生成された。</p>
+
+<p>ヒントを見ると、<code class="highlighter-rouge">TMCTF{biscuit3_ biscuit5}</code>とあったので、<code class="highlighter-rouge">TMCTF{cream_ choux}</code>で送るもダメ</p>
+
+<p><code class="highlighter-rouge">TMCTF{cream_choux}</code>で送ってもダメで違うのかと思っているとチームメイトがクリアしていた。</p>
+
+<p>答えは、<code class="highlighter-rouge">TMCTF{choux_cream}</code>だった。ヒントに騙された…</p>
+
+<h2 id="analysis-offensive-100">Analysis-Offensive-100</h2>
+<p><code class="highlighter-rouge">Forensic_Encyption</code>のマジックナンバーがMZになってるので、PKに直してunzip(ここに最初気付かずチームメイトに教えてもらった. 変えずにunzipするとpcapが展開されない。)</p>
+
+<p>すると</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>file_1(jpeg)
+file_2(zip) パスワード付き
+file_3(pcap)
+</code></pre></div></div>
+<p>exiftoolでfile_1を見ると、User Commentに怪しい文字列があった</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ exiftool file_1
+ExifTool Version Number         : 10.53
+File Name                       : file_1
+Directory                       : .
+File Size                       : 20 kB
+File Modification Date/Time     : 2017:05:01 12:40:54+09:00
+File Access Date/Time           : 2017:06:25 14:37:28+09:00
+File Inode Change Date/Time     : 2017:06:24 23:00:58+09:00
+File Permissions                : rw-r--r--
+File Type                       : JPEG
+File Type Extension             : jpg
+MIME Type                       : image/jpeg
+Exif Byte Order                 : Big-endian (Motorola, MM)
+Image Description               :
+X Resolution                    : 72
+Y Resolution                    : 72
+Resolution Unit                 : inches
+Software                        :
+Exif Version                    : 0210
+Components Configuration        : Y, Cb, Cr, -
+User Comment                    : VHVyaW5nX01hY2hpbmVfYXV0b21hdG9u
+Exif Image Width                : 753
+Exif Image Height               : 417
+Compression                     : JPEG (old-style)
+Thumbnail Offset                : 332
+Thumbnail Length                : 2273
+JFIF Version                    : 1.01
+Image Width                     : 641
+Image Height                    : 417
+Encoding Process                : Baseline DCT, Huffman coding
+Bits Per Sample                 : 8
+Color Components                : 3
+Y Cb Cr Sub Sampling            : YCbCr4:2:0 (2 2)
+Image Size                      : 641x417
+Megapixels                      : 0.267
+Thumbnail Image                 : (Binary data 2273 bytes, use -b option to extract)
+</code></pre></div></div>
+<p><code class="highlighter-rouge">VHVyaW5nX01hY2hpbmVfYXV0b21hdG9u</code>とあり、base64でデコードすると<code class="highlighter-rouge">Turing_Machine_automaton</code></p>
+
+<p>これがfile_2(.zip) のパスワードだった。</p>
+
+<p><code class="highlighter-rouge">$unzip file_2.zip</code>するもエラーを吐くので、調べると<code class="highlighter-rouge">7z</code>ならいける</p>
+
+<p><code class="highlighter-rouge">$ 7z file_2.zip</code>でパスワードを入力すると展開できた。
+key.txtが出てくる.</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>src 192.168.30.211 dst 192.168.30.251
+        proto esp spi 0xc300fae7 reqid 1 mode transport
+        replay-window 32
+        auth hmac(sha1) 0x2f279b853294aad4547d5773e5108de7717f5284
+        enc cbc(aes) 0x9d1d2cfa9fa8be81f3e735090c7bd272
+        sel src 192.168.30.211/32 dst 192.168.30.251/32
+src 192.168.30.251 dst 192.168.30.211
+        proto esp spi 0xce66f4fa reqid 1 mode transport
+        replay-window 32
+        auth hmac(sha1) 0x3bf9c1a31f707731a762ea45a85e21a2192797a3
+        enc cbc(aes) 0x886f7e33d21c79ea5bac61e3e17c0422
+        sel src 192.168.30.251/32 dst 192.168.30.211/32
+</code></pre></div></div>
+<p>この情報を使うことでpcapのESPで暗号化されていた部分の中身が見える.</p>
+
+<p>復号方法はここの通りやればできる。
+http://saitoh.hatenablog.jp/entry/2014/09/29/022926</p>
+
+<p>すると、通信の中フラグの情報がある。</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>M4 Navy
+Reflector:C Thin, beta, I, IV, II (T M J F), Plugboard: L-X/A-C/B-Y
+
+TMCTF{APZTQQHYCKDLQZRG}
+
+APZTQQHYCKDLQZRG is encrypted.
+</code></pre></div></div>
+<p>ぱっとみエニグマ暗号なので、サイトで復号(http://enigma.louisedade.co.uk/enigma.html)してフラグゲット!</p>
+
+<p>TMCTF{RISINGSUNANDMOON}</p>
+
+<p><img src="https://kobadlve.github.io/assets/images/enigma.png" alt="enigma" /></p>
+
+          </div>
+          <div class="article-share">
+            
+            
+            <a href="https://twitter.com/home?status=TMCTF+2017+Writeup%20-%20/posts/tmctf-2017" title="Share on Twitter" rel="noreferrer noopener" target="_blank">
+              <svg viewBox="0 0 512 512"><path d="M492 109.5c-17.4 7.7-36 12.9-55.6 15.3 20-12 35.4-31 42.6-53.6 -18.7 11.1-39.4 19.2-61.5 23.5C399.8 75.8 374.6 64 346.8 64c-53.5 0-96.8 43.4-96.8 96.9 0 7.6 0.8 15 2.5 22.1 -80.5-4-151.9-42.6-199.6-101.3 -8.3 14.3-13.1 31-13.1 48.7 0 33.6 17.2 63.3 43.2 80.7C67 210.7 52 206.3 39 199c0 0.4 0 0.8 0 1.2 0 47 33.4 86.1 77.7 95 -8.1 2.2-16.7 3.4-25.5 3.4 -6.2 0-12.3-0.6-18.2-1.8 12.3 38.5 48.1 66.5 90.5 67.3 -33.1 26-74.9 41.5-120.3 41.5 -7.8 0-15.5-0.5-23.1-1.4C62.8 432 113.7 448 168.3 448 346.6 448 444 300.3 444 172.2c0-4.2-0.1-8.4-0.3-12.5C462.6 146 479 129 492 109.5z"/></svg>
+            </a>
+            <a href="https://www.facebook.com/sharer/sharer.php?u=/posts/tmctf-2017" title="Share on Facebook" rel="noreferrer noopener" target="_blank">
+              <svg viewBox="0 0 512 512"><path d="M288 192v-38.1c0-17.2 3.8-25.9 30.5-25.9H352V64h-55.9c-68.5 0-91.1 31.4-91.1 85.3V192h-45v64h45v192h83V256h56.4l7.6-64H288z"/></svg>
+            </a>
+            <a href="https://plus.google.com/share?url=/posts/tmctf-2017" title="Share on Google+" rel="noreferrer noopener" target="_blank">
+              <svg viewBox="0 0 128 128"><path d="M40.7 55.9v16.1c0 0 15.6 0 22 0C59.2 82.5 53.8 88.2 40.7 88.2c-13.3 0-23.7-10.8-23.7-24.2s10.4-24.2 23.7-24.2c7.1 0 11.6 2.5 15.8 5.9 3.3-3.3 3.1-3.8 11.6-11.9 -7.2-6.6-16.8-10.6-27.4-10.6C18.2 23.3 0 41.5 0 64c0 22.5 18.2 40.7 40.7 40.7 33.6 0 41.8-29.3 39-48.8H40.7zM113.9 56.7V42.6h-10.1v14.1H89.4v10.1h14.5v14.5h10.1V66.8H128V56.7H113.9z"/></svg>
+            </a>
+          </div>
+
+          
+        </article>
+        <footer class="footer scrollappear">
+  <p>
+    Chalk is a high quality, completely customizable, performant and 100% free
+    blog template for Jekyll built by
+    <a href="/about" title="About me">Nielsen Ramon</a>. Download it <a href="https://github.com/nielsenramon/chalk" rel="noreferrer noopener" target="_blank" title="Download Chalk">here</a>.
+  </p>
+</footer>
+
+      </div>
+    </div>
+  </main>
+  
+
+<script src="/assets/vendor-63ea9477fcfd6d93c69d70b59ef115261b687f763d55df063804ab63b982b9e5.js" type="text/javascript"></script>
+
+
+  <script src="/assets/webfonts-e3010885de8c083c4b2935d463b1649e8796191a66a1b43bb87ef04bbcce420d.js" type="text/javascript"></script>
+
+
+
+  <script src="/assets/scrollappear-e2da8ea567e418637e31266cc5302126eaa79f62a2273739086358b589a89ee6.js" type="text/javascript"></script>
+
+
+<script src="/assets/application-6542ce1f4b08c8bb3dedf929d13653238a86988e0e972326e4e1f7875b1fe49f.js" type="text/javascript"></script>
+
+</body>
+</html>

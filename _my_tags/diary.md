@@ -1,4 +1,0 @@
----
-slug: diary 
-name: Diary 
----
